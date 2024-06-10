@@ -7,7 +7,7 @@ export const addUsuarios = async (usuarios: Usuarios): Promise<boolean> => {
     return res != null;
 }
 
-export const getOneUser= async (id: number): Promise<Usuarios | null> => {
+export const getOneUser = async (id: number): Promise<Usuarios | null> => {
     let user = await DB.getRepository(Usuarios).findOne({
         where: [
             { id: id }]
@@ -16,7 +16,7 @@ export const getOneUser= async (id: number): Promise<Usuarios | null> => {
     return user;
 }
 
-export const getAllUsers = async () => {
+export const getAllUsers = async ():Promise<Usuarios[]> => {
     let users = await DB.getRepository(Usuarios).find();
     return users;
 }

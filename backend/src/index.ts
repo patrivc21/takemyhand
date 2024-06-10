@@ -8,8 +8,6 @@ import usuariosRoutes from './routes/usuarios.routes';
 const server: Server = new Server();
 const app = express();
 
-// app.use('/usuarios', usuariosRoutes);
-
 server.start(async () => {
     console.log(`[server]: Server is running at http://localhost:${config.PORT}`);
     await initOrm();

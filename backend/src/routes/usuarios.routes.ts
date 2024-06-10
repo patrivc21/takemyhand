@@ -5,7 +5,7 @@ import usuariosController from '../controllers/usuarios.controller';
 const router = express.Router();
 
 router.post('/addUser', [usuariosController.addNewUser]);
-router.get('/getOneUser', [usuariosController.getOneUser]);
-router.get('/getAllUsers', [usuariosController.getAllUsers]);
+router.get('/getOneUser', [usuariosController.getOneUserController]);
+router.get('/getAllUsers', [usuariosController.getAllUsersControllers]);
 
 export default router;

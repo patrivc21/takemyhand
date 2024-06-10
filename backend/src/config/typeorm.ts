@@ -11,10 +11,10 @@ export const DB = new DataSource({
     port: configEnv.db.port,
     username: configEnv.db.user,
     password: configEnv.db.password,
-    database: "tfg",
+    database: "tfg_bd",
     entities: [path.join(__dirname, "../entities/*")], // Ajuste aquí si es necesario
     synchronize: true, // Para desarrollo, establece en false para producción
-    logging: true,
+    // logging: true,
 });
 
 export const initOrm = async () => {

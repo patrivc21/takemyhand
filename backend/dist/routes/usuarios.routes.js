@@ -8,7 +8,7 @@ var usuarios_controller_1 = __importDefault(require("../controllers/usuarios.con
 // import { AuthGuard } from '../guards/auth.guard';
 var router = express_1.default.Router();
 router.post('/addUser', [usuarios_controller_1.default.addNewUser]);
-router.get('/getOneUser', [usuarios_controller_1.default.getOneUser]);
-router.get('/getAllUsers', [usuarios_controller_1.default.getAllUsers]);
+router.get('/getOneUser', [usuarios_controller_1.default.getOneUserController]);
+router.get('/getAllUsers', [usuarios_controller_1.default.getAllUsersControllers]);
 exports.default = router;
 //# sourceMappingURL=usuarios.routes.js.map

@@ -51,10 +51,10 @@ exports.DB = new typeorm_1.DataSource({
     port: config_1.default.db.port,
     username: config_1.default.db.user,
     password: config_1.default.db.password,
-    database: "tfg",
+    database: "tfg_bd",
     entities: [path_1.default.join(__dirname, "../entities/*")], // Ajuste aquí si es necesario
     synchronize: true, // Para desarrollo, establece en false para producción
-    logging: true,
+    // logging: true,
 });
 var initOrm = function () { return __awaiter(void 0, void 0, void 0, function () {
     var error_1;

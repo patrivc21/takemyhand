@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsersController = exports.getOneUserController = exports.addNewUser = void 0;
+exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var usuarios_service_1 = require("../services/usuarios.service");
 var addNewUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -56,6 +56,7 @@ var addNewUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, (0, usuarios_service_1.addUsuarios)(user)];
             case 2:
                 result = _a.sent();
+                resp.msg = "Usuario anadido con exito";
                 resp.cod = result ? 200 : 400;
                 return [3 /*break*/, 4];
             case 3:
@@ -71,7 +72,7 @@ var addNewUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.addNewUser = addNewUser;
 var getOneUserController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, iduser, user, e_2;
+    var resp, body, user, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -79,8 +80,8 @@ var getOneUserController = function (req, res) { return __awaiter(void 0, void 0
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                iduser = req.body.id;
-                return [4 /*yield*/, (0, usuarios_service_1.getOneUser)(iduser)];
+                body = req.body;
+                return [4 /*yield*/, (0, usuarios_service_1.getOneUser)(body.id)];
             case 2:
                 user = _a.sent();
                 resp.data = { user: user };
@@ -88,7 +89,6 @@ var getOneUserController = function (req, res) { return __awaiter(void 0, void 0
                 return [3 /*break*/, 4];
             case 3:
                 e_2 = _a.sent();
-                console.log(e_2);
                 resp.msg = e_2;
                 resp.cod = 500;
                 return [3 /*break*/, 4];
@@ -99,8 +99,8 @@ var getOneUserController = function (req, res) { return __awaiter(void 0, void 0
     });
 }); };
 exports.getOneUserController = getOneUserController;
-var getAllUsersController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, result, e_3;
+var getAllUsersControllers = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, users, e_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -110,8 +110,9 @@ var getAllUsersController = function (req, res) { return __awaiter(void 0, void 
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, (0, usuarios_service_1.getAllUsers)()];
             case 2:
-                result = _a.sent();
-                resp.cod = result ? 200 : 400;
+                users = _a.sent();
+                resp.data = { Usuarios: users };
+                resp.cod = 200;
                 return [3 /*break*/, 4];
             case 3:
                 e_3 = _a.sent();
@@ -119,11 +120,11 @@ var getAllUsersController = function (req, res) { return __awaiter(void 0, void 
                 resp.cod = 500;
                 return [3 /*break*/, 4];
             case 4:
-                res.json(resp); // Devolvemos objeto respuesta siempre
+                res.json(resp);
                 return [2 /*return*/];
         }
     });
 }); };
-exports.getAllUsersController = getAllUsersController;
-exports.default = { addNewUser: exports.addNewUser, getAllUsers: usuarios_service_1.getAllUsers, getOneUser: usuarios_service_1.getOneUser };
+exports.getAllUsersControllers = getAllUsersControllers;
+exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController };
 //# sourceMappingURL=usuarios.controller.js.map

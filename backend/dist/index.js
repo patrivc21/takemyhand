@@ -46,7 +46,6 @@ var typeorm_1 = require("./config/typeorm");
 var express_2 = __importDefault(require("express"));
 var server = new express_1.default();
 var app = (0, express_2.default)();
-// app.use('/usuarios', usuariosRoutes);
 server.start(function () { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
