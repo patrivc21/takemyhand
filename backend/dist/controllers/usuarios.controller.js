@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -39,9 +50,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
+exports.getUserByUsernameController = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var usuarios_service_1 = require("../services/usuarios.service");
+var auth_helper_1 = __importDefault(require("../helpers/auth.helper"));
 var addNewUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var resp, user, result, e_1;
     return __generator(this, function (_a) {
@@ -126,5 +138,118 @@ var getAllUsersControllers = function (_req, res) { return __awaiter(void 0, voi
     });
 }); };
 exports.getAllUsersControllers = getAllUsersControllers;
-exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController };
+var getUserByUsernameController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, user, e_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body.username;
+                return [4 /*yield*/, (0, usuarios_service_1.getUserByUsername)(body)];
+            case 2:
+                user = _a.sent();
+                resp.data = { user: user };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_4 = _a.sent();
+                resp.msg = e_4;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getUserByUsernameController = getUserByUsernameController;
+var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, user, exist_user, original_password, hash, result, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                user = req.body;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 5, , 6]);
+                return [4 /*yield*/, (0, usuarios_service_1.getOneUser)(user.id)];
+            case 2:
+                exist_user = _a.sent();
+                if (exist_user) {
+                    resp.msg = "User already exists";
+                    resp.cod = 400;
+                    res.json(resp);
+                    return [2 /*return*/];
+                }
+                original_password = user.password;
+                return [4 /*yield*/, auth_helper_1.default.hashPassword(user.password)];
+            case 3:
+                hash = _a.sent();
+                user.password = hash;
+                return [4 /*yield*/, (0, usuarios_service_1.addUsuarios)(user)];
+            case 4:
+                result = _a.sent();
+                resp.data = { user: __assign(__assign({}, user), { password: '' }) };
+                resp.cod = result ? 200 : 400;
+                return [3 /*break*/, 6];
+            case 5:
+                e_5 = _a.sent();
+                console.error(e_5);
+                resp.msg = e_5;
+                resp.cod = 500;
+                return [3 /*break*/, 6];
+            case 6:
+                res.json(resp); // Devolvemos objeto respuesta siempre
+                return [2 /*return*/];
+        }
+    });
+}); };
+var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, _a, username, password, user, valid, token, e_6;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a = req.body, username = _a.username, password = _a.password;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 6, , 7]);
+                return [4 /*yield*/, (0, usuarios_service_1.getUserByUsername)(username)];
+            case 2:
+                user = _b.sent();
+                if (!!user) return [3 /*break*/, 3];
+                resp.msg = "User not found";
+                resp.cod = 204;
+                return [3 /*break*/, 5];
+            case 3: return [4 /*yield*/, auth_helper_1.default.validatePassword(password, user.password)];
+            case 4:
+                valid = _b.sent();
+                if (!valid) {
+                    resp.msg = "Invalid password";
+                    resp.cod = 401;
+                }
+                else {
+                    user = __assign(__assign({}, user), { password: '' });
+                    token = auth_helper_1.default.generateToken(user);
+                    resp.data = { user: user, token: token };
+                    resp.cod = 200;
+                }
+                _b.label = 5;
+            case 5: return [3 /*break*/, 7];
+            case 6:
+                e_6 = _b.sent();
+                resp.msg = e_6;
+                resp.cod = 500;
+                return [3 /*break*/, 7];
+            case 7:
+                res.json(resp); // Devolvemos objeto respuesta siempre
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, getUserByUsernameController: exports.getUserByUsernameController, login: login, register: register };
 //# sourceMappingURL=usuarios.controller.js.map

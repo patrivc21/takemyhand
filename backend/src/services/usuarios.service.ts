@@ -20,3 +20,12 @@ export const getAllUsers = async ():Promise<Usuarios[]> => {
     let users = await DB.getRepository(Usuarios).find();
     return users;
 }
+
+export const getUserByUsername = async (username: string): Promise<Usuarios | null> => {
+    let user = await DB.getRepository(Usuarios).findOne({
+        where: [
+            { username: username }]
+    });
+
+    return user;
+}

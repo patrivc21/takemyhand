@@ -19,6 +19,9 @@ export class Usuarios {
   password!: string;
 
   @Column()
+  username!: string;
+
+  @Column()
   rol!: number;
 
   @ManyToOne(() => RolUsuarios, rolusuarios => rolusuarios.id)

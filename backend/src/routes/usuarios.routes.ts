@@ -8,8 +8,9 @@ const router = express.Router();
 router.post('/addUser', [usuariosController.addNewUser]);
 router.get('/getOneUser', [usuariosController.getOneUserController]);
 router.get('/getAllUsers', [usuariosController.getAllUsersControllers]);
+router.get('/getUserByUsername', [usuariosController.getUserByUsernameController]);
 
 router.post('/login', [UserLoginValidator, usuariosController.login]);
-router.post('/register', [AuthGuard, UserValidator, usuariosController.register]);
+router.post('/register', [UserValidator, usuariosController.register]);
 
 export default router;

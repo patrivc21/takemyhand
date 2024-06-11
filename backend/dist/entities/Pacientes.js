@@ -9,47 +9,53 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Profesionales = void 0;
+exports.Pacientes = void 0;
 var typeorm_1 = require("typeorm");
-var Profesionales = /** @class */ (function () {
-    function Profesionales() {
+var RolPacientes_1 = require("./RolPacientes");
+var Pacientes = /** @class */ (function () {
+    function Pacientes() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Profesionales.prototype, "id", void 0);
+    ], Pacientes.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "nombre", void 0);
+    ], Pacientes.prototype, "nombre", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "apellidos", void 0);
+    ], Pacientes.prototype, "apellidos", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "username", void 0);
+    ], Pacientes.prototype, "username", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "email", void 0);
+    ], Pacientes.prototype, "email", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "password", void 0);
+    ], Pacientes.prototype, "password", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", Number)
-    ], Profesionales.prototype, "activo", void 0);
+    ], Pacientes.prototype, "activo", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "especialidad", void 0);
-    Profesionales = __decorate([
-        (0, typeorm_1.Entity)({ name: 'profesionales' })
-    ], Profesionales);
-    return Profesionales;
+        __metadata("design:type", Number)
+    ], Pacientes.prototype, "rol", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return RolPacientes_1.RolPaciente; }, function (rolPaciente) { return rolPaciente.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'rol' }),
+        __metadata("design:type", RolPacientes_1.RolPaciente)
+    ], Pacientes.prototype, "rolPaciente", void 0);
+    Pacientes = __decorate([
+        (0, typeorm_1.Entity)({ name: 'pacientes' })
+    ], Pacientes);
+    return Pacientes;
 }());
-exports.Profesionales = Profesionales;
-//# sourceMappingURL=Profesional.js.map
+exports.Pacientes = Pacientes;
+//# sourceMappingURL=Pacientes.js.map

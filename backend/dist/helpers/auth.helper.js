@@ -35,64 +35,69 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserByUsername = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
-var Usuarios_1 = require("../entities/Usuarios");
-var typeorm_1 = require("../config/typeorm");
-var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
-    var res;
+exports.decodeToken = exports.validateToken = exports.generateToken = exports.validatePassword = exports.hashPassword = exports.ADMIN_CIF = void 0;
+var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+var config_1 = __importDefault(require("../config/config"));
+exports.ADMIN_CIF = "B29484821";
+var hashPassword = function (password) { return __awaiter(void 0, void 0, void 0, function () {
+    var salt;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).save(usuarios)];
+            case 0: return [4 /*yield*/, bcrypt_1.default.genSalt(10)];
             case 1:
-                res = _a.sent();
-                return [2 /*return*/, res != null];
+                salt = _a.sent();
+                return [4 /*yield*/, bcrypt_1.default.hash(password, salt)];
+            case 2: return [2 /*return*/, _a.sent()];
         }
     });
 }); };
-exports.addUsuarios = addUsuarios;
-var getOneUser = function (id) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
+exports.hashPassword = hashPassword;
+var validatePassword = function (password, hash) { return __awaiter(void 0, void 0, void 0, function () {
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
-                    where: [
-                        { id: id }
-                    ]
-                })];
-            case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
+            case 0: return [4 /*yield*/, bcrypt_1.default.compare(password, hash)];
+            case 1: return [2 /*return*/, _a.sent()];
         }
     });
 }); };
-exports.getOneUser = getOneUser;
-var getAllUsers = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).find()];
-            case 1:
-                users = _a.sent();
-                return [2 /*return*/, users];
-        }
-    });
-}); };
-exports.getAllUsers = getAllUsers;
-var getUserByUsername = function (username) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
-                    where: [
-                        { username: username }
-                    ]
-                })];
-            case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
-        }
-    });
-}); };
-exports.getUserByUsername = getUserByUsername;
-//# sourceMappingURL=usuarios.service.js.map
+exports.validatePassword = validatePassword;
+var generateToken = function (user, duration) {
+    if (duration === void 0) { duration = "8h"; }
+    return jsonwebtoken_1.default.sign({ user: user }, config_1.default.SECRET_KEY, { expiresIn: duration });
+};
+exports.generateToken = generateToken;
+var validateToken = function (token) {
+    var decode;
+    try {
+        decode = jsonwebtoken_1.default.verify(token, config_1.default.SECRET_KEY);
+    }
+    catch (e) {
+        return false;
+    }
+    return decode;
+};
+exports.validateToken = validateToken;
+var decodeToken = function (token) {
+    var decode;
+    try {
+        decode = jsonwebtoken_1.default.decode(token, config_1.default.SECRET_KEY);
+    }
+    catch (e) {
+        return null;
+    }
+    return decode;
+};
+exports.decodeToken = decodeToken;
+exports.default = {
+    hashPassword: exports.hashPassword,
+    validatePassword: exports.validatePassword,
+    generateToken: exports.generateToken,
+    validateToken: exports.validateToken,
+    decodeToken: exports.decodeToken
+};
+//# sourceMappingURL=auth.helper.js.map

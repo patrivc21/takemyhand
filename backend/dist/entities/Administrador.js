@@ -9,47 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Profesionales = void 0;
+exports.Administradores = void 0;
 var typeorm_1 = require("typeorm");
-var Profesionales = /** @class */ (function () {
-    function Profesionales() {
+var Administradores = /** @class */ (function () {
+    function Administradores() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Profesionales.prototype, "id", void 0);
+    ], Administradores.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "nombre", void 0);
+    ], Administradores.prototype, "nombre", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "apellidos", void 0);
+    ], Administradores.prototype, "username", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "username", void 0);
+    ], Administradores.prototype, "email", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "email", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "password", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", Number)
-    ], Profesionales.prototype, "activo", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "especialidad", void 0);
-    Profesionales = __decorate([
-        (0, typeorm_1.Entity)({ name: 'profesionales' })
-    ], Profesionales);
-    return Profesionales;
+    ], Administradores.prototype, "password", void 0);
+    Administradores = __decorate([
+        (0, typeorm_1.Entity)({ name: 'administradores' })
+    ], Administradores);
+    return Administradores;
 }());
-exports.Profesionales = Profesionales;
-//# sourceMappingURL=Profesional.js.map
+exports.Administradores = Administradores;
+//# sourceMappingURL=Administrador.js.map

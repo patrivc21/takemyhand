@@ -3,11 +3,11 @@ import Joi from 'joi';
 
 const userSchema = Joi.object({
     nombre: Joi.string().min(3).required(),
-    apellidos: Joi.string().min(6).required(),
+    apellidos: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().min(9).required(),
     rol: Joi.number().required(),
-    // activo: Joi.boolean().default(true)
+    username: Joi.string().required(),
 });
 
 
@@ -22,7 +22,7 @@ export const UserValidator = (req: Request, res: Response, next: NextFunction) =
 }
 
 const userLoginSchema = Joi.object({
-    email: Joi.string().required(),
+    username: Joi.string().required(),
     password: Joi.string().required(),
 });
 

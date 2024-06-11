@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Usuarios = void 0;
 var typeorm_1 = require("typeorm");
+var RolUsuarios_1 = require("./RolUsuarios");
 var Usuarios = /** @class */ (function () {
     function Usuarios() {
     }
@@ -36,8 +37,17 @@ var Usuarios = /** @class */ (function () {
     ], Usuarios.prototype, "password", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Usuarios.prototype, "username", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
         __metadata("design:type", Number)
     ], Usuarios.prototype, "rol", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return RolUsuarios_1.RolUsuarios; }, function (rolusuarios) { return rolusuarios.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'rol' }),
+        __metadata("design:type", RolUsuarios_1.RolUsuarios)
+    ], Usuarios.prototype, "rolusuarios", void 0);
     Usuarios = __decorate([
         (0, typeorm_1.Entity)({ name: 'usuarios' })
     ], Usuarios);

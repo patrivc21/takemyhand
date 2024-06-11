@@ -36,63 +36,47 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserByUsername = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
-var Usuarios_1 = require("../entities/Usuarios");
+exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = void 0;
+var Pacientes_1 = require("../entities/Pacientes");
 var typeorm_1 = require("../config/typeorm");
-var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
+var addPaciente = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).save(usuarios)];
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).save(admin)];
             case 1:
                 res = _a.sent();
                 return [2 /*return*/, res != null];
         }
     });
 }); };
-exports.addUsuarios = addUsuarios;
-var getOneUser = function (id) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
+exports.addPaciente = addPaciente;
+var getOnePaciente = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).findOne({
                     where: [
                         { id: id }
                     ]
                 })];
             case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
+                res = _a.sent();
+                return [2 /*return*/, res];
         }
     });
 }); };
-exports.getOneUser = getOneUser;
-var getAllUsers = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var users;
+exports.getOnePaciente = getOnePaciente;
+var getAllPacientes = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).find()];
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).find()];
             case 1:
-                users = _a.sent();
-                return [2 /*return*/, users];
+                res = _a.sent();
+                return [2 /*return*/, res];
         }
     });
 }); };
-exports.getAllUsers = getAllUsers;
-var getUserByUsername = function (username) { return __awaiter(void 0, void 0, void 0, function () {
-    var user;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
-                    where: [
-                        { username: username }
-                    ]
-                })];
-            case 1:
-                user = _a.sent();
-                return [2 /*return*/, user];
-        }
-    });
-}); };
-exports.getUserByUsername = getUserByUsername;
-//# sourceMappingURL=usuarios.service.js.map
+exports.getAllPacientes = getAllPacientes;
+//# sourceMappingURL=pacientes.service.js.map

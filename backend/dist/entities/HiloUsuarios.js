@@ -9,47 +9,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Profesionales = void 0;
+exports.HiloUsuarios = void 0;
 var typeorm_1 = require("typeorm");
-var Profesionales = /** @class */ (function () {
-    function Profesionales() {
+var HiloUsuarios = /** @class */ (function () {
+    function HiloUsuarios() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Profesionales.prototype, "id", void 0);
+    ], HiloUsuarios.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "nombre", void 0);
+    ], HiloUsuarios.prototype, "titulo", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "apellidos", void 0);
+    ], HiloUsuarios.prototype, "mensaje", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Profesionales.prototype, "username", void 0);
+    ], HiloUsuarios.prototype, "archivo_adjunto", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "email", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "password", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", Number)
-    ], Profesionales.prototype, "activo", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "especialidad", void 0);
-    Profesionales = __decorate([
-        (0, typeorm_1.Entity)({ name: 'profesionales' })
-    ], Profesionales);
-    return Profesionales;
+        __metadata("design:type", Date)
+    ], HiloUsuarios.prototype, "fecha_hora", void 0);
+    HiloUsuarios = __decorate([
+        (0, typeorm_1.Entity)({ name: 'hilo_usuarios' })
+    ], HiloUsuarios);
+    return HiloUsuarios;
 }());
-exports.Profesionales = Profesionales;
-//# sourceMappingURL=Profesional.js.map
+exports.HiloUsuarios = HiloUsuarios;
+//# sourceMappingURL=HiloUsuarios.js.map

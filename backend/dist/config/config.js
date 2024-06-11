@@ -15,7 +15,8 @@ var envSchema = Joi.object({
     DB_PORT: Joi.number().required(),
     DB_USER: Joi.string().required(),
     DB_PASSWORD: Joi.string().required(),
-    FRONTEND_URL: Joi.string().required()
+    FRONTEND_URL: Joi.string().required(),
+    SECRET_KEY: Joi.string().required(),
 }).unknown().required();
 var _a = envSchema.validate(process.env), error = _a.error, value = _a.value;
 if (error) {
@@ -31,6 +32,7 @@ var configEnv = {
         password: value.DB_PASSWORD,
     },
     FRONTEND_URL: value.FRONTEND_URL,
+    SECRET_KEY: value.SECRET_KEY,
 };
 exports.default = configEnv;
 //# sourceMappingURL=config.js.map

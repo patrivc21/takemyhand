@@ -7,29 +7,29 @@ export class Cita {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'int', nullable: false, default: 0 })
+  @Column()
   id_profesional!: number;
 
-  @Column({ type: 'int', nullable: false, default: 0 })
+  @Column()
   id_paciente!: number;
 
-  @Column({ type: 'text', nullable: false, collation: 'utf8mb4_general_ci' })
+  @Column()
   tema!: string;
 
-  @Column({ type: 'double', nullable: false, default: 0 })
+  @Column()
   duracion!: number;
 
-  @Column({ type: 'datetime', nullable: false, default: () => "'0000-00-00 00:00:00'" })
+  @Column()
   fecha_hora_inicio!: Date;
 
-  @Column({ type: 'datetime', nullable: false, default: () => "'0000-00-00 00:00:00'" })
+  @Column()
   fecha_hora_fin!: Date;
 
-  @ManyToOne(() => Profesionales, profesional => profesional.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => Profesionales, profesional => profesional.id)
   @JoinColumn({ name: 'id_profesional' })
   profesional!: Profesionales;
 
-  @ManyToOne(() => Pacientes, paciente => paciente.id, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  @ManyToOne(() => Pacientes, paciente => paciente.id)
   @JoinColumn({ name: 'id_paciente' })
   paciente!: Pacientes;
 }

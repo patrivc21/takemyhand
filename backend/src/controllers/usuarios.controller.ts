@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Usuarios } from '../entities/Usuarios';
-import { addUsuarios, getAllUsers, getOneUser} from '../services/usuarios.service';
+import { addUsuarios, getAllUsers, getOneUser, getUserByUsername} from '../services/usuarios.service';
 import authHelper from '../helpers/auth.helper';
 
 import util from 'util';
@@ -50,17 +50,25 @@ export const getAllUsersControllers = async (_req:Request, res:Response) => {
     res.json(resp); 
 }
 
+export const getUserByUsernameController = async (req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let body = req.body.username;
+        let user = await getUserByUsername(body);
+        resp.data = {user: user};
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
+
 const register = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
     let user: Usuarios = req.body as Usuarios;
-    const user_auth = authHelper.decodeToken(req.headers['authorization']?.replace('Bearer ', '').trim() || '').user;
 
     try {
-        // if (user_auth.idperfil !== 1 && user.iddistribuidor !== user_auth.iddistribuidor) {
-        //     resp.msg = "Invalid distributor";
-        //     resp.cod = 401;
-        //     return res.json(resp);
-        // }
         // call the services
         let exist_user = await getOneUser(user.id);
 
@@ -98,7 +106,7 @@ const login = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
     let { username, password } = req.body;
     try {
-        let user = await getOneUser(username);
+        let user = await getUserByUsername(username);
         if (!user) {
             resp.msg = "User not found";
             resp.cod = 204;
@@ -122,4 +130,4 @@ const login = async (req: Request, res: Response) => {
     res.json(resp); // Devolvemos objeto respuesta siempre
 }
 
-export default { addNewUser, getAllUsersControllers, getOneUserController, login, register};
+export default { addNewUser, getAllUsersControllers, getOneUserController, getUserByUsernameController, login, register};
