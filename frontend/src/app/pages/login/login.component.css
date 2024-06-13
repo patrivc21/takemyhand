@@ -2,7 +2,7 @@
   height: 100%;
   overflow: hidden; 
   position: relative;
-  background-color: #F7CAC9;
+  background-color: #98CDDF;
 }
 
 .parte-logo{
@@ -16,15 +16,17 @@
 }
 
 .texto {
-  color: #F7CAC9;
+  color: #98CDDF;
+  font-family: "Monserrat";
 }
 
 .texto:hover {
-  color: #F7CAC9;
+  color: #98CDDF;
+  font-family: "Monserrat";
 }
 
 .titulo-login{
-    color: #F7CAC9;
+    color: #85B6C8;
     font-weight: 700;
     font-size: 40px;
     text-align: center;
@@ -41,7 +43,7 @@
 }
 
 .boton-login .p-button {
-    background-color: #F7CAC9;
+    background-color: #98CDDF;
     color: #FFFFFF;
     border: none;
     border-radius: 27px;
@@ -52,16 +54,18 @@
 }
 
 .text-login {
-    color: #F7CAC9;
+    color: #98CDDF;
     font-weight: 400;
     font-size: 20px;
     margin-top: 10px;
+    font-family: "Monserrat";
 }
 
 .input-login .p-inputtext{
-    border-color: #F7CAC9 1px;
+    border-color: #98CDDF 1px;
     background-color: #F4F4F1;
     width: 100%;
+    font-family: "Monserrat";
 }
 
 .logo{
@@ -71,29 +75,6 @@
     align-items: center;
     margin-left: 7%;
     margin-top: 20%;
-}
-
-.mask-arriba{
-    position: absolute; 
-    top: 0;
-    left: 0;
-    z-index: 1;
-    height: 60%;
-}
-
-.mask-abajo{
-    position:absolute; 
-    bottom: 0; 
-    right: 0; 
-    z-index: 1;
-    height: 60%;
-}
-
-.img-verde{
-    position: relative;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
 }
 
 .organizacion{
@@ -108,5 +89,8 @@
     width: 60%;
 }
 
+.monserrat{
+  font-family: "Monserrat";
+}
 
 

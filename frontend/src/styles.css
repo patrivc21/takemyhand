@@ -5,14 +5,30 @@
 @import "../node_modules/primeflex/primeflex.css";
 @import "../node_modules/primeng/resources/primeng.min.css";
 
+@import "ngx-toastr/toastr";
+
+
+@font-face {
+  font-family: "Monserrat";
+  src: url("./assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 ol, ul {
     padding-left: 0;
 }
 
+.field .p-inputtext{
+  border-color: #F7CAC9 1px;
+  background-color: #F4F4F1;
+  width: 100%;
+  font-family: "Monserrat";
+}
 
-
-.p-button .boton-volver{
-    background-color: none;
-    color: blue;
-    border: none;
+.p-dropdown{
+  border-color: #F7CAC9 1px;
+  background-color: #F4F4F1;
+  width: 100%;
+  font-family: "Monserrat";
 }

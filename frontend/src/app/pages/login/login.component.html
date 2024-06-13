@@ -19,7 +19,7 @@
         
         <div class="input-login d-flex flex-column mt-4">
           <label class="text-login">Contraseña</label>
-          <p-password [style]="{'width': '100%'}" inputStyleClass="w-full p-3" formControlName="password" placeholder="contraseña"></p-password>
+          <p-password [style]="{'width': '100%'}" [inputStyle]="{'width':'100%'}" inputStyleClass="w-full p-3" formControlName="password" class="password" [toggleMask]="true" [feedback]="false" placeholder="contraseña"></p-password>
           <small class="ml-2 p-error block" *ngIf="password?.invalid && (password?.dirty || password?.touched || enviado)">
             Campo requerido
           </small>
@@ -28,7 +28,7 @@
           <button pButton [loading]="loadingButton$ | async" type="submit" class="d-flex justify-content-center align-items-center">Iniciar sesión</button>
         </div>
         <div class="mt-4 text-center">
-          <span>¿No tienes cuenta?  <a routerLink="/register" style="color: #F7CAC9;" class="texto">Pulsa aquí para registrarte</a></span>
+          <span class="monserrat">¿No tienes cuenta?  <a routerLink="/register" style="color: #98CDDF;" class="texto">Pulsa aquí para registrarte</a></span>
         </div>
       </form>
     </div>
