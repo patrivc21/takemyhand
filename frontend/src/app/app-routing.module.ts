@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from '../app/pages/login/login.component'; // Ajusta la ruta según sea necesario
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }
+  {
+    path: 'login',
+    title: 'Iniciar sesión',
+    loadComponent: () => import('./pages/login/login.component').then((c) => c.LoginComponent)
+  },
+  { path: 'register', loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroModule) },
+  { path: 'home', loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) },
 ];
 
 @NgModule({

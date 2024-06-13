@@ -6,11 +6,15 @@ import { ToastrService } from 'ngx-toastr'
 import { Router } from '@angular/router'
 import { UserLogin, User} from '../interfaces/Usuarios'
 import { CookieService } from 'ngx-cookie-service';
+import { IRoles } from '../interfaces/IRoles'
+import { GenericResponse } from '../interfaces/GenericResponse'
 
 interface IAuthState {
     user: User;
     users: User[];
     token: string;
+    loadingButton: boolean
+    allRoles?: IRoles[]
 }
 
 @Injectable({
@@ -19,7 +23,7 @@ interface IAuthState {
 export class AuthState {
   private readonly initialState: IAuthState = { user: {} as User,
   token: '',
-  users: [], }
+  users: [], loadingButton: false}
 
   private readonly _state: BehaviorSubject<IAuthState> = new BehaviorSubject(
     this.initialState
@@ -35,6 +39,14 @@ export class AuthState {
   public readonly users$: Observable<User[]> = this._state
     .asObservable()
     .pipe(map((state) => state && state.users))
+
+  public readonly loadingButton$: Observable<boolean> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.loadingButton))
+
+  public readonly allRoles$: Observable<IRoles[]> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.allRoles))
 
   private get state() {
     return this._state.getValue()
@@ -60,25 +72,30 @@ export class AuthState {
   }
 
   public async login(data: UserLogin): Promise<void> {
-    this.authService.login(data).subscribe((res: any) => {
+    this._state.next({ ...this.state, loadingButton: true })
+    this.authService.login(data).subscribe(res => {
       if (res.cod == 200) {
         this.setUser(res.data.user);
         localStorage.setItem('token', res.data.token);
-        this.router.navigate(['/']);
+        this.toastr.success('Sesion iniciada con éxito', 'Éxito')
+        this.router.navigate(['/home']);
       } else {
+        this._state.next({ ...this.state, loadingButton: false })
         this.toastr.error('Error al iniciar sesion', 'Error')
       }
     });
   }
 
-  public register = (data: any) => {
+  public register(data: any): void {
     this.authService.register(data).subscribe((res: any) => {
       if (res.cod == 200) {
-        this.getUsers();
-        this.setDialog(false);
+        // this.getUsers();
+        // this.setDialog(false);
+        this.toastr.success('¡Usuario creado con éxito!', 'Éxito')
+        this.router.navigate(['/home']);
         return true
       } else {
-        this.toastr.error('Error al registrarse', 'Error')
+        this.toastr.error('Error al crear el usuario', 'Error')
         return false
       }
     });
@@ -126,6 +143,15 @@ export class AuthState {
       }
     }
     );
+  }
+
+  public getRoles(): void {
+    this.authService.getRolesUsuarios().pipe(take(1)).subscribe((roles) => {
+      this._state.next({
+        ...this._state.value,
+        allRoles: roles
+      });
+    });
   }
 
 

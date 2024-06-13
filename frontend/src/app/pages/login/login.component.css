@@ -1,0 +1,112 @@
+.imagen-completa{
+  height: 100%;
+  overflow: hidden; 
+  position: relative;
+  background-color: #F7CAC9;
+}
+
+.parte-logo{
+  width: 50%;
+}
+
+.fondo{
+  background-color: white;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.texto {
+  color: #F7CAC9;
+}
+
+.texto:hover {
+  color: #F7CAC9;
+}
+
+.titulo-login{
+    color: #F7CAC9;
+    font-weight: 700;
+    font-size: 40px;
+    text-align: center;
+    margin-left:5%;
+    margin-right: 5%;
+}
+
+.parte-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.boton-login .p-button {
+    background-color: #F7CAC9;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 27px;
+    border: 1px;
+    opacity: 0px;
+    width: 177px;
+    margin-top: 35px;
+}
+
+.text-login {
+    color: #F7CAC9;
+    font-weight: 400;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+.input-login .p-inputtext{
+    border-color: #F7CAC9 1px;
+    background-color: #F4F4F1;
+    width: 100%;
+}
+
+.logo{
+    position: absolute; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 7%;
+    margin-top: 20%;
+}
+
+.mask-arriba{
+    position: absolute; 
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 60%;
+}
+
+.mask-abajo{
+    position:absolute; 
+    bottom: 0; 
+    right: 0; 
+    z-index: 1;
+    height: 60%;
+}
+
+.img-verde{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.organizacion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10rem;
+    margin-bottom: 10rem;
+}
+
+.form-w{
+    width: 60%;
+}
+
+
+

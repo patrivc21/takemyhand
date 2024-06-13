@@ -1,0 +1,39 @@
+.parte-login {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    height: 100vh;
+    overflow: hidden;
+}
+
+  .texto {
+    color: #BB8FFF;
+  }
+  
+  .texto:hover {
+    color: #BB8FFF;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .button-save-form button {
+    width: 10%;
+    padding: 15px;
+    background-color: #D6BCFF;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+  .button-save-form button:hover {
+    background-color: #D6BCFF;
+  }
+  
+  

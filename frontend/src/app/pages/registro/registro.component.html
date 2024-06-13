@@ -1,0 +1,73 @@
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+<div class="parte-login">
+  <div class="d-flex justify-content-start align-items-center">
+    <i class="pi pi-arrow-left"></i> <a routerLink="/login" class="texto ml-3">Volver al inicio de sesión</a>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="crear()" class="mx-5">
+    <h2 class="text-center mb-4 mt-4">Registro de Usuario</h2>
+
+      <div class="field mt-5 mb-2">
+          <span class="p-float-label">
+            <input class="w-full" type="text" pInputText formControlName="nombre" />
+            <label for="nombre">Nombre *</label>
+          </span>
+          <small class="ml-2 p-error block" *ngIf="nombre?.invalid && (nombre?.dirty||nombre?.touched)">Nombre es requerido</small>
+      </div>
+
+      <div class="field mt-4 mb-2">
+        <span class="p-float-label">
+          <input class="w-full" type="text" pInputText formControlName="apellidos" />
+          <label for="apellidos">Apellidos *</label>
+        </span>
+        <small class="ml-2 p-error block" *ngIf="apellidos?.invalid && (apellidos?.dirty||apellidos?.touched)">Apellidos es requerido</small>
+      </div>
+
+      <div class="field mt-4 mb-2">
+        <span class="p-float-label">
+          <input id="email" type="email" pInputText formControlName="email" class="w-full" />
+          <label for="email">Email *</label>
+        </span>
+        <small class="ml-2 p-error block" *ngIf="email?.invalid && (email?.dirty||email?.touched)">Email es requerido y debe ser válido</small>
+      </div>
+
+      <div class="field mt-4 mb-2">
+        <span class="p-float-label">
+          <p-password [style]="{'width': '100%'}" inputStyleClass="w-full" formControlName="password" placeholder="contraseña"></p-password>
+          <label for="password">Contraseña *</label>
+        </span>
+        <small class="ml-2 p-error block" *ngIf="password?.invalid && (password?.dirty||password?.touched)">Campo requerido</small>
+      </div>
+
+      <div class="field mt-4 mb-2">
+        <span class="p-float-label">
+          <input id="username" type="text" pInputText formControlName="username" class="w-full" />
+          <label for="username">Username *</label>
+        </span>
+        <small class="ml-2 p-error block" *ngIf="username?.invalid && (username?.dirty||username?.touched)">Campo requerido</small>
+      </div>
+
+      <div class="field mt-4 mb-2">        
+          <span class="p-float-label">
+            <p-dropdown id="rol" [style]="{'width': '100%'}" formControlName="rol" [options]="allRoles$ | async" optionLabel="nombre" optionValue="id" placeholder="Seleccione un rol" class="w-full"></p-dropdown>
+            <label for="rol">Rol *</label>
+          </span>
+          <small class="ml-2 p-error block" *ngIf="rol?.invalid && (rol?.dirty||rol?.touched)">Campo requerido</small>
+       </div>
+
+
+       <div class="field mt-4 mb-2" *ngIf="rol?.value === 3">
+        <span class="p-float-label">
+          <input id="especialidad" type="text" pInputText formControlName="especialidad" class="w-full" />
+          <label for="especialidad">Especialidad </label>
+        </span>
+         <small class="ml-2 p-error block" *ngIf="especialidad?.invalid && (especialidad?.dirty||especialidad?.touched)">Campo requerido</small> 
+      </div>
+
+
+    <div class="button-save-form d-flex justify-content-center align-items-center mt-4">
+      <button pButton pRipple type="button" [disabled]="!form.valid" [loading]="loading" class="button-save-form"  label="Registrarse" type="submit"></button>
+    </div>
+  </form>
+</div>

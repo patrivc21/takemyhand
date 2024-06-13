@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { UserLogin } from '../interfaces/Usuarios';
-import { shareReplay } from 'rxjs';
+import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 import { GenericResponse } from '../interfaces/GenericResponse';
+import { IRoles } from '../interfaces/IRoles';
 
 const BACKEND_API = environment.BACKEND_API + "usuarios"
 
@@ -24,6 +25,15 @@ export class AuthService {
 
   public getUsers = () => {
     return this.http.get<GenericResponse>(`${BACKEND_API}/getAllUsers`).pipe(shareReplay());
+  }
+
+  public getRolesUsuarios(): Observable<IRoles[]> {
+    return this.http.get<GenericResponse>(`${BACKEND_API}/getAllRoles`).pipe(
+      map((response) => response.data),
+      catchError(() => {
+        return throwError(() => new Error('Error al ver los roles'));
+      })
+    );
   }
 
 }
