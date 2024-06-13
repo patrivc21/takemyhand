@@ -8,6 +8,9 @@ const userSchema = Joi.object({
     password: Joi.string().min(9).required(),
     rol: Joi.number().required(),
     username: Joi.string().required(),
+    especialidad: Joi.string(),
+    activo: Joi.boolean().default(true),
+    rolpaciente: Joi.number()
 });
 
 
@@ -22,7 +25,7 @@ export const UserValidator = (req: Request, res: Response, next: NextFunction) =
 }
 
 const userLoginSchema = Joi.object({
-    username: Joi.string().required(),
+    email: Joi.string().required(),
     password: Joi.string().required(),
 });
 

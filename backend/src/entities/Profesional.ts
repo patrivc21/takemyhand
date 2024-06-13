@@ -21,7 +21,7 @@ export class Profesionales {
   password!: string;
 
   @Column()
-  activo!: number;
+  activo!: boolean;
 
   @Column()
   especialidad!: string;

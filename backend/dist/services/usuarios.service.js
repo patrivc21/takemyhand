@@ -36,9 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserByUsername = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
+exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
 var Usuarios_1 = require("../entities/Usuarios");
 var typeorm_1 = require("../config/typeorm");
+var RolUsuarios_1 = require("../entities/RolUsuarios");
 var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -79,13 +80,13 @@ var getAllUsers = function () { return __awaiter(void 0, void 0, void 0, functio
     });
 }); };
 exports.getAllUsers = getAllUsers;
-var getUserByUsername = function (username) { return __awaiter(void 0, void 0, void 0, function () {
+var getUserByEmail = function (email) { return __awaiter(void 0, void 0, void 0, function () {
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
                     where: [
-                        { username: username }
+                        { email: email }
                     ]
                 })];
             case 1:
@@ -94,5 +95,17 @@ var getUserByUsername = function (username) { return __awaiter(void 0, void 0, v
         }
     });
 }); };
-exports.getUserByUsername = getUserByUsername;
+exports.getUserByEmail = getUserByEmail;
+var getAllRoles = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var roles;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(RolUsuarios_1.RolUsuarios).find()];
+            case 1:
+                roles = _a.sent();
+                return [2 /*return*/, roles];
+        }
+    });
+}); };
+exports.getAllRoles = getAllRoles;
 //# sourceMappingURL=usuarios.service.js.map

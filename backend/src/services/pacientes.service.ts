@@ -20,3 +20,8 @@ export const getAllPacientes = async ():Promise<Pacientes[]> => {
     let res = await DB.getRepository(Pacientes).find();
     return res;
 }
+
+export const getAllRoles = async ():Promise<Pacientes[]> => {
+    let roles = await DB.getRepository(Pacientes).find();
+    return roles;
+}

@@ -7,5 +7,6 @@ const router = express.Router();
 router.post('/addPaciente', [pacientesController.addNewPaciente]);
 router.get('/getOnePaciente', [pacientesController.getOnePacienteController]);
 router.get('/getAllPacientes', [pacientesController.getAllPacientesControllers]);
+router.get('/getAllRoles', [pacientesController.getAllRolesC]);
 
 export default router;

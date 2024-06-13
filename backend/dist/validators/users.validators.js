@@ -12,7 +12,9 @@ var userSchema = joi_1.default.object({
     password: joi_1.default.string().min(9).required(),
     rol: joi_1.default.number().required(),
     username: joi_1.default.string().required(),
-    // activo: Joi.boolean().default(true)
+    especialidad: joi_1.default.string(),
+    activo: joi_1.default.boolean().default(true),
+    rolpaciente: joi_1.default.number()
 });
 var UserValidator = function (req, res, next) {
     var error = userSchema.validate(req.body).error;
@@ -26,7 +28,7 @@ var UserValidator = function (req, res, next) {
 };
 exports.UserValidator = UserValidator;
 var userLoginSchema = joi_1.default.object({
-    username: joi_1.default.string().required(),
+    email: joi_1.default.string().required(),
     password: joi_1.default.string().required(),
 });
 var UserLoginValidator = function (req, res, next) {

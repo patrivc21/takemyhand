@@ -41,15 +41,15 @@ var Pacientes = /** @class */ (function () {
     ], Pacientes.prototype, "password", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", Number)
+        __metadata("design:type", Boolean)
     ], Pacientes.prototype, "activo", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", Number)
-    ], Pacientes.prototype, "rol", void 0);
+    ], Pacientes.prototype, "rolpaciente", void 0);
     __decorate([
         (0, typeorm_1.ManyToOne)(function () { return RolPacientes_1.RolPaciente; }, function (rolPaciente) { return rolPaciente.id; }),
-        (0, typeorm_1.JoinColumn)({ name: 'rol' }),
+        (0, typeorm_1.JoinColumn)({ name: 'rolpaciente' }),
         __metadata("design:type", RolPacientes_1.RolPaciente)
     ], Pacientes.prototype, "rolPaciente", void 0);
     Pacientes = __decorate([

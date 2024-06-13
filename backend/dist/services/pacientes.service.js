@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = void 0;
+exports.getAllRoles = exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = void 0;
 var Pacientes_1 = require("../entities/Pacientes");
 var typeorm_1 = require("../config/typeorm");
 var addPaciente = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
@@ -79,4 +79,16 @@ var getAllPacientes = function () { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.getAllPacientes = getAllPacientes;
+var getAllRoles = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var roles;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).find()];
+            case 1:
+                roles = _a.sent();
+                return [2 /*return*/, roles];
+        }
+    });
+}); };
+exports.getAllRoles = getAllRoles;
 //# sourceMappingURL=pacientes.service.js.map

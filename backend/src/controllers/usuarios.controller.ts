@@ -1,10 +1,13 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Usuarios } from '../entities/Usuarios';
-import { addUsuarios, getAllUsers, getOneUser, getUserByUsername} from '../services/usuarios.service';
+import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles} from '../services/usuarios.service';
 import authHelper from '../helpers/auth.helper';
+import { sendLoginEmail } from '../helpers/mail.helper';
 
-import util from 'util';
+import { addPaciente} from '../services/pacientes.service';
+import { addProfesional} from '../services/profesional.service';
+import { addAdmin} from '../services/administradores.service';
 
 export const addNewUser = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -50,27 +53,14 @@ export const getAllUsersControllers = async (_req:Request, res:Response) => {
     res.json(resp); 
 }
 
-export const getUserByUsernameController = async (req:Request, res:Response) => {
-    let resp = new RespGeneric();
-    try {
-        let body = req.body.username;
-        let user = await getUserByUsername(body);
-        resp.data = {user: user};
-        resp.cod = 200;
-    } catch (e) {
-        resp.msg = e as string;
-        resp.cod = 500;
-    }
-    res.json(resp);
-}
-
 const register = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
-    let user: Usuarios = req.body as Usuarios;
+    let user = req.body;
 
     try {
+        console.log(user)
         // call the services
-        let exist_user = await getOneUser(user.id);
+        let exist_user = await getUserByEmail(user.email);
 
         if (exist_user) {
             resp.msg = "User already exists";
@@ -78,21 +68,30 @@ const register = async (req: Request, res: Response) => {
             res.json(resp);
             return
         }
+
         let original_password = user.password;
         let hash = await authHelper.hashPassword(user.password);
         user.password = hash;
         let result = await addUsuarios(user);
+
+        if(user.rol == 1){
+            await addAdmin(user)
+        }else if(user.rol == 2){
+            await addPaciente(user)
+        }else if(user.rol == 3){
+            await addProfesional(user)
+        }
+
         resp.data = { user: { ...user, password: '' } };
         resp.cod = result ? 200 : 400;
 
-        // if (result) {
-        //     // send email
-        //     let email = await sendLoginEmail({ ...user, password: original_password });
-        //     if (!email) {
-        //         resp.msg = "Error sending email";
-        //         resp.cod = 500;
-        //     }
-        // }
+        if (result) {
+            let email = await sendLoginEmail({ ...user, password: original_password });
+            if (!email) {
+                resp.msg = "Error al enviar el email de registro.";
+                resp.cod = 500;
+            }
+        }
 
     } catch (e) {
         console.error(e);
@@ -104,17 +103,17 @@ const register = async (req: Request, res: Response) => {
 
 const login = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
-    let { username, password } = req.body;
+    let { email, password } = req.body;
     try {
-        let user = await getUserByUsername(username);
+        let user = await getUserByEmail(email);
         if (!user) {
-            resp.msg = "User not found";
+            resp.msg = "Usuario no encontrado.";
             resp.cod = 204;
         } else {
             let valid = await authHelper.validatePassword(password, user.password);
 
             if (!valid) {
-                resp.msg = "Invalid password";
+                resp.msg = "Contraseña incorrecta.";
                 resp.cod = 401;
             } else {
                 user = { ...user, password: '' };
@@ -127,7 +126,23 @@ const login = async (req: Request, res: Response) => {
         resp.msg = e as string;
         resp.cod = 500;
     }
-    res.json(resp); // Devolvemos objeto respuesta siempre
+    res.json(resp);
 }
 
-export default { addNewUser, getAllUsersControllers, getOneUserController, getUserByUsernameController, login, register};
+export const getAllRolesC = async (_req: Request, res: Response) => {
+    try {
+        const roles = await getAllRoles();
+        res.status(200).json({
+            message: "Roles obtenidos con éxito",
+            data: roles,
+        });
+    } catch (e) {
+        console.error('Error al obtener los roles:', e);
+        res.status(500).json({
+            message: "Error al obtener los roles",
+            error: e instanceof Error ? e.message : String(e),
+        });
+    }
+};
+
+export default { addNewUser, getAllUsersControllers, getOneUserController, login, register, getAllRolesC};

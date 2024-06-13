@@ -10,5 +10,6 @@ var router = express_1.default.Router();
 router.post('/addPaciente', [pacientes_controller_1.default.addNewPaciente]);
 router.get('/getOnePaciente', [pacientes_controller_1.default.getOnePacienteController]);
 router.get('/getAllPacientes', [pacientes_controller_1.default.getAllPacientesControllers]);
+router.get('/getAllRoles', [pacientes_controller_1.default.getAllRolesC]);
 exports.default = router;
 //# sourceMappingURL=pacientes.routes.js.map

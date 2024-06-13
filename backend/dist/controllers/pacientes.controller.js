@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllPacientesControllers = exports.getOnePacienteController = exports.addNewPaciente = void 0;
+exports.getAllRolesC = exports.getAllPacientesControllers = exports.getOnePacienteController = exports.addNewPaciente = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var pacientes_service_1 = require("../services/pacientes.service");
 var addNewPaciente = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -125,5 +125,32 @@ var getAllPacientesControllers = function (_req, res) { return __awaiter(void 0,
     });
 }); };
 exports.getAllPacientesControllers = getAllPacientesControllers;
-exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers };
+var getAllRolesC = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var roles, e_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, (0, pacientes_service_1.getAllRoles)()];
+            case 1:
+                roles = _a.sent();
+                res.status(200).json({
+                    message: "Roles obtenidos con éxito",
+                    data: roles,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                e_4 = _a.sent();
+                console.error('Error al obtener los roles:', e_4);
+                res.status(500).json({
+                    message: "Error al obtener los roles",
+                    error: e_4 instanceof Error ? e_4.message : String(e_4),
+                });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllRolesC = getAllRolesC;
+exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC };
 //# sourceMappingURL=pacientes.controller.js.map

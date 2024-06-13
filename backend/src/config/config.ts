@@ -16,6 +16,8 @@ const envSchema = Joi.object({
     DB_PASSWORD: Joi.string().required(),
     FRONTEND_URL: Joi.string().required(),
     SECRET_KEY: Joi.string().required(),
+    SECRET_KEY_EMAIL: Joi.string().required(),
+    EMAIL_USER: Joi.string().required(),
 }).unknown().required();
 
 const { error, value } = envSchema.validate(process.env);
@@ -35,6 +37,8 @@ const configEnv = {
     },
     FRONTEND_URL: value.FRONTEND_URL,
     SECRET_KEY: value.SECRET_KEY,
+    SECRET_KEY_EMAIL: value.SECRET_KEY_EMAIL,
+    EMAIL_USER: value.EMAIL_USER
 };
 
 export default configEnv;

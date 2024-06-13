@@ -1,6 +1,7 @@
 import { Usuarios } from "../entities/Usuarios";
 import { DB } from "../config/typeorm";
 import { SelectQueryBuilder } from "typeorm";
+import { RolUsuarios } from "../entities/RolUsuarios";
 
 export const addUsuarios = async (usuarios: Usuarios): Promise<boolean> => {
     let res = await DB.getRepository(Usuarios).save(usuarios);
@@ -21,11 +22,16 @@ export const getAllUsers = async ():Promise<Usuarios[]> => {
     return users;
 }
 
-export const getUserByUsername = async (username: string): Promise<Usuarios | null> => {
+export const getUserByEmail = async (email: string): Promise<Usuarios | null> => {
     let user = await DB.getRepository(Usuarios).findOne({
         where: [
-            { username: username }]
+            { email: email }]
     });
 
     return user;
+}
+
+export const getAllRoles = async ():Promise<RolUsuarios[]> => {
+    let roles = await DB.getRepository(RolUsuarios).find();
+    return roles;
 }

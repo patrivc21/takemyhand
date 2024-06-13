@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Pacientes } from '../entities/Pacientes';
-import { addPaciente, getAllPacientes, getOnePaciente} from '../services/pacientes.service';
+import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles} from '../services/pacientes.service';
 
 export const addNewPaciente = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -46,4 +46,20 @@ export const getAllPacientesControllers = async (_req:Request, res:Response) => 
     res.json(resp); 
 }
 
-export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers};
+export const getAllRolesC = async (_req: Request, res: Response) => {
+    try {
+        const roles = await getAllRoles();
+        res.status(200).json({
+            message: "Roles obtenidos con éxito",
+            data: roles,
+        });
+    } catch (e) {
+        console.error('Error al obtener los roles:', e);
+        res.status(500).json({
+            message: "Error al obtener los roles",
+            error: e instanceof Error ? e.message : String(e),
+        });
+    }
+};
+
+export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC};

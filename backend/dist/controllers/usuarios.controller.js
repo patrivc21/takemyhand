@@ -50,10 +50,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUserByUsernameController = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
+exports.getAllRolesC = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var usuarios_service_1 = require("../services/usuarios.service");
 var auth_helper_1 = __importDefault(require("../helpers/auth.helper"));
+var mail_helper_1 = require("../helpers/mail.helper");
+var pacientes_service_1 = require("../services/pacientes.service");
+var profesional_service_1 = require("../services/profesional.service");
+var administradores_service_1 = require("../services/administradores.service");
 var addNewUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var resp, user, result, e_1;
     return __generator(this, function (_a) {
@@ -138,36 +142,8 @@ var getAllUsersControllers = function (_req, res) { return __awaiter(void 0, voi
     });
 }); };
 exports.getAllUsersControllers = getAllUsersControllers;
-var getUserByUsernameController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, body, user, e_4;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                resp = new RespGeneric_1.default();
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                body = req.body.username;
-                return [4 /*yield*/, (0, usuarios_service_1.getUserByUsername)(body)];
-            case 2:
-                user = _a.sent();
-                resp.data = { user: user };
-                resp.cod = 200;
-                return [3 /*break*/, 4];
-            case 3:
-                e_4 = _a.sent();
-                resp.msg = e_4;
-                resp.cod = 500;
-                return [3 /*break*/, 4];
-            case 4:
-                res.json(resp);
-                return [2 /*return*/];
-        }
-    });
-}); };
-exports.getUserByUsernameController = getUserByUsernameController;
 var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, user, exist_user, original_password, hash, result, e_5;
+    var resp, user, exist_user, original_password, hash, result, email, e_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -175,8 +151,9 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 user = req.body;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 5, , 6]);
-                return [4 /*yield*/, (0, usuarios_service_1.getOneUser)(user.id)];
+                _a.trys.push([1, 13, , 14]);
+                console.log(user);
+                return [4 /*yield*/, (0, usuarios_service_1.getUserByEmail)(user.email)];
             case 2:
                 exist_user = _a.sent();
                 if (exist_user) {
@@ -193,43 +170,70 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, (0, usuarios_service_1.addUsuarios)(user)];
             case 4:
                 result = _a.sent();
+                if (!(user.rol == 1)) return [3 /*break*/, 6];
+                return [4 /*yield*/, (0, administradores_service_1.addAdmin)(user)];
+            case 5:
+                _a.sent();
+                return [3 /*break*/, 10];
+            case 6:
+                if (!(user.rol == 2)) return [3 /*break*/, 8];
+                return [4 /*yield*/, (0, pacientes_service_1.addPaciente)(user)];
+            case 7:
+                _a.sent();
+                return [3 /*break*/, 10];
+            case 8:
+                if (!(user.rol == 3)) return [3 /*break*/, 10];
+                return [4 /*yield*/, (0, profesional_service_1.addProfesional)(user)];
+            case 9:
+                _a.sent();
+                _a.label = 10;
+            case 10:
                 resp.data = { user: __assign(__assign({}, user), { password: '' }) };
                 resp.cod = result ? 200 : 400;
-                return [3 /*break*/, 6];
-            case 5:
-                e_5 = _a.sent();
-                console.error(e_5);
-                resp.msg = e_5;
+                if (!result) return [3 /*break*/, 12];
+                return [4 /*yield*/, (0, mail_helper_1.sendLoginEmail)(__assign(__assign({}, user), { password: original_password }))];
+            case 11:
+                email = _a.sent();
+                if (!email) {
+                    resp.msg = "Error al enviar el email de registro.";
+                    resp.cod = 500;
+                }
+                _a.label = 12;
+            case 12: return [3 /*break*/, 14];
+            case 13:
+                e_4 = _a.sent();
+                console.error(e_4);
+                resp.msg = e_4;
                 resp.cod = 500;
-                return [3 /*break*/, 6];
-            case 6:
+                return [3 /*break*/, 14];
+            case 14:
                 res.json(resp); // Devolvemos objeto respuesta siempre
                 return [2 /*return*/];
         }
     });
 }); };
 var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, _a, username, password, user, valid, token, e_6;
+    var resp, _a, email, password, user, valid, token, e_5;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 resp = new RespGeneric_1.default();
-                _a = req.body, username = _a.username, password = _a.password;
+                _a = req.body, email = _a.email, password = _a.password;
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 6, , 7]);
-                return [4 /*yield*/, (0, usuarios_service_1.getUserByUsername)(username)];
+                return [4 /*yield*/, (0, usuarios_service_1.getUserByEmail)(email)];
             case 2:
                 user = _b.sent();
                 if (!!user) return [3 /*break*/, 3];
-                resp.msg = "User not found";
+                resp.msg = "Usuario no encontrado.";
                 resp.cod = 204;
                 return [3 /*break*/, 5];
             case 3: return [4 /*yield*/, auth_helper_1.default.validatePassword(password, user.password)];
             case 4:
                 valid = _b.sent();
                 if (!valid) {
-                    resp.msg = "Invalid password";
+                    resp.msg = "Contraseña incorrecta.";
                     resp.cod = 401;
                 }
                 else {
@@ -241,15 +245,42 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
                 _b.label = 5;
             case 5: return [3 /*break*/, 7];
             case 6:
-                e_6 = _b.sent();
-                resp.msg = e_6;
+                e_5 = _b.sent();
+                resp.msg = e_5;
                 resp.cod = 500;
                 return [3 /*break*/, 7];
             case 7:
-                res.json(resp); // Devolvemos objeto respuesta siempre
+                res.json(resp);
                 return [2 /*return*/];
         }
     });
 }); };
-exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, getUserByUsernameController: exports.getUserByUsernameController, login: login, register: register };
+var getAllRolesC = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var roles, e_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, (0, usuarios_service_1.getAllRoles)()];
+            case 1:
+                roles = _a.sent();
+                res.status(200).json({
+                    message: "Roles obtenidos con éxito",
+                    data: roles,
+                });
+                return [3 /*break*/, 3];
+            case 2:
+                e_6 = _a.sent();
+                console.error('Error al obtener los roles:', e_6);
+                res.status(500).json({
+                    message: "Error al obtener los roles",
+                    error: e_6 instanceof Error ? e_6.message : String(e_6),
+                });
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllRolesC = getAllRolesC;
+exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, login: login, register: register, getAllRolesC: exports.getAllRolesC };
 //# sourceMappingURL=usuarios.controller.js.map

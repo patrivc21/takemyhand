@@ -22,12 +22,12 @@ export class Pacientes {
   password!: string;
 
   @Column()
-  activo!: number;
+  activo!: boolean;
 
   @Column()
-  rol!: number;
+  rolpaciente!: number;
 
   @ManyToOne(() => RolPaciente, rolPaciente => rolPaciente.id)
-  @JoinColumn({ name: 'rol' })
+  @JoinColumn({ name: 'rolpaciente' })
   rolPaciente!: RolPaciente;
 }
