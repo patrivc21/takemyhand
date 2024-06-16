@@ -3,11 +3,11 @@ import { MenuItem } from 'primeng/api';
 import { AuthState } from 'src/app/state/auth.state';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-home-profesional',
+  templateUrl: './home-profesional.component.html',
+  styleUrls: ['./home-profesional.component.css']
 })
-export class HomeComponent {
+export class HomeProfesionalComponent {
   private readonly authState = inject(AuthState);
   public items: MenuItem[] | undefined;
   @ViewChild('profileMenu') profileMenu: any;
@@ -32,5 +32,4 @@ export class HomeComponent {
   public cerrar(){
     this.authState.logout()
   }
-
 }

@@ -1,7 +1,6 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegistroComponent } from './registro.component';
+import { HomeAdminComponent } from './home-admin.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -16,18 +15,24 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { RouterModule, Routes } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
+import { MenubarModule } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { RippleModule } from 'primeng/ripple';
+import { MenuModule } from 'primeng/menu';
 
-
-const routes: Routes = [{ path: '', component: RegistroComponent }];
-
+const routes: Routes = [{ path: '', component: HomeAdminComponent }];
 
 @NgModule({
-  providers: [ConfirmationService],
   declarations: [
-    RegistroComponent
+    HomeAdminComponent
   ],
   imports: [
     CommonModule,
+    BadgeModule,
+    MenuModule,
+    AvatarModule,
+    RippleModule,
     ButtonModule,
     TableModule,
     InputTextModule,
@@ -41,7 +46,8 @@ const routes: Routes = [{ path: '', component: RegistroComponent }];
     MultiSelectModule,
     CascadeSelectModule,
     RouterModule.forChild(routes),
-    PasswordModule
+    PasswordModule,
+    MenubarModule
   ]
 })
-export class RegistroModule { }
+export class HomeAdminModule { }

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule, FormBuilder, Validators, FormGroup, A
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { AuthState } from 'src/app/state/auth.state';
 import { UserLogin } from 'src/app/interfaces/Usuarios';
 import { Observable } from 'rxjs';
@@ -25,13 +25,14 @@ export class LoginComponent {
   public enviado: boolean = false;
 
   public loadingButton$: Observable<boolean>;
-  router: any;
+ 
 
   ngOnInit(): void {
     this.generateLoginForm();
+    this.authState.checkSession();
   }
 
-  constructor() {
+  constructor( private readonly router: Router) {
     this.setStateSelector();
   }
 
@@ -51,6 +52,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       const data: UserLogin = this.loginForm.value;
       this.authState.login(data);
+      // this.authState.checkSession();
     }
   }
 

@@ -27,9 +27,15 @@ export class AuthService {
     return this.http.get<GenericResponse>(`${BACKEND_API}/getAllUsers`).pipe(shareReplay());
   }
 
+  // public getRolesUsuarios = () => {
+  //   return this.http.get<IRoles[]>(`${BACKEND_API}/getAllRoles`).pipe(shareReplay());
+  // }
+
+
   public getRolesUsuarios(): Observable<IRoles[]> {
     return this.http.get<GenericResponse>(`${BACKEND_API}/getAllRoles`).pipe(
       map((response) => response.data),
+      
       catchError(() => {
         return throwError(() => new Error('Error al ver los roles'));
       })

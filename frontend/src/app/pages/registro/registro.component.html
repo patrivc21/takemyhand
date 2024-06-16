@@ -61,13 +61,13 @@
         <small class="ml-2 p-error block" *ngIf="rol?.invalid && (rol?.dirty||rol?.touched)">Campo requerido</small>
       </div>
 
-      <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
+      <!-- <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
         <span class="p-float-label">
           <input id="especialidad" type="text" pInputText formControlName="especialidad" class="w-full" />
-          <label for="especialidad">Especialidad </label>
+          <label for="especialidad">Especialidad</label>
         </span>
-        <small class="ml-2 p-error block" *ngIf="especialidad?.invalid && (especialidad?.dirty||especialidad?.touched)">Campo requerido</small> 
-      </div>
+        <small class="ml-2 p-error block" *ngIf="especialidad?.invalid && (especialidad?.dirty || especialidad?.touched)">Campo requerido</small> 
+      </div>       -->
 
       <div class="button-save-form d-flex justify-content-center align-items-center mt-4">
         <button pButton pRipple type="button" [disabled]="!form.valid" [loading]="loading" class="button-save-form" label="Registrarse" type="submit"></button>

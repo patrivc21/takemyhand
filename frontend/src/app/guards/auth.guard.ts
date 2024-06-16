@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable, map, take } from 'rxjs';
 import { AuthState } from '../state/auth.state';
 
 @Injectable({
@@ -19,10 +19,8 @@ export class AuthGuard {
     }
     else {
       // console.log('false')
-      // alert('No tienes acceso a esta página.\r\nIntroduce unas credenciales válidas.');
       this.authState.logout();
       return false;
     }
   }
-
 }

@@ -15,6 +15,11 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { RouterModule, Routes } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
+import { MenubarModule } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { RippleModule } from 'primeng/ripple';
+import { MenuModule } from 'primeng/menu';
 
 const routes: Routes = [{ path: '', component: HomeComponent }];
 
@@ -25,6 +30,10 @@ const routes: Routes = [{ path: '', component: HomeComponent }];
   ],
   imports: [
     CommonModule,
+    BadgeModule,
+    MenuModule,
+    AvatarModule,
+    RippleModule,
     ButtonModule,
     TableModule,
     InputTextModule,
@@ -38,7 +47,8 @@ const routes: Routes = [{ path: '', component: HomeComponent }];
     MultiSelectModule,
     CascadeSelectModule,
     RouterModule.forChild(routes),
-    PasswordModule
+    PasswordModule,
+    MenubarModule
   ]
 })
 export class HomeModule { }

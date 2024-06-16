@@ -2,7 +2,7 @@
   height: 100%;
   overflow: hidden; 
   position: relative;
-  background-color: #98CDDF;
+  background-color: #167496;
 }
 
 .parte-logo{
@@ -16,17 +16,17 @@
 }
 
 .texto {
-  color: #98CDDF;
+  color: #167496;
   font-family: "Monserrat";
 }
 
 .texto:hover {
-  color: #98CDDF;
+  color: #167496;
   font-family: "Monserrat";
 }
 
 .titulo-login{
-    color: #85B6C8;
+    color: #167496;
     font-weight: 700;
     font-size: 40px;
     text-align: center;
@@ -43,7 +43,7 @@
 }
 
 .boton-login .p-button {
-    background-color: #98CDDF;
+    background-color: #167496;
     color: #FFFFFF;
     border: none;
     border-radius: 27px;

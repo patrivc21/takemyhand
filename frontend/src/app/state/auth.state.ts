@@ -8,6 +8,7 @@ import { UserLogin, User} from '../interfaces/Usuarios'
 import { CookieService } from 'ngx-cookie-service';
 import { IRoles } from '../interfaces/IRoles'
 import { GenericResponse } from '../interfaces/GenericResponse'
+import { environment } from 'src/environments/environment'
 
 interface IAuthState {
     user: User;
@@ -58,7 +59,6 @@ export class AuthState {
     this._state.next(this.initialState)
   }
 
-
   public getUser(): any {
     return this._state.getValue().user;
   }
@@ -71,14 +71,28 @@ export class AuthState {
     this._showDialog.next(status);
   }
 
+  public getToken(): string | null {
+    return localStorage.getItem('token')
+  }
+
+
   public async login(data: UserLogin): Promise<void> {
     this._state.next({ ...this.state, loadingButton: true })
     this.authService.login(data).subscribe(res => {
+      console.log('login', res)
       if (res.cod == 200) {
         this.setUser(res.data.user);
+        console.log(res.data.token)
         localStorage.setItem('token', res.data.token);
         this.toastr.success('Sesion iniciada con éxito', 'Éxito')
-        this.router.navigate(['/home']);
+        console.log('login', res.data.rol)
+        if(res.data.user.rol == 1){
+          this.router.navigate(['/home-admin']);
+        }else if(res.data.user.rol == 2){
+          this.router.navigate(['/home']);
+        }else if(res.data.user.rol == 3){
+          this.router.navigate(['/home-prof']);
+        }
       } else {
         this._state.next({ ...this.state, loadingButton: false })
         this.toastr.error('Error al iniciar sesion', 'Error')
@@ -87,12 +101,22 @@ export class AuthState {
   }
 
   public register(data: any): void {
-    this.authService.register(data).subscribe((res: any) => {
+    this.authService.register(data).pipe(take(1)).subscribe(res => {
+      console.log(res)
       if (res.cod == 200) {
         // this.getUsers();
-        // this.setDialog(false);
+        localStorage.setItem('token', res.data.token);
+        this.setDialog(false);
         this.toastr.success('¡Usuario creado con éxito!', 'Éxito')
-        this.router.navigate(['/home']);
+
+        if(res.data.user.rol == 1){
+          this.router.navigate(['/home-admin']);
+        }else if(res.data.user.rol == 2){
+          this.router.navigate(['/home']);
+        }else if(res.data.user.rol == 3){
+          this.router.navigate(['/home-prof']);
+        }
+        
         return true
       } else {
         this.toastr.error('Error al crear el usuario', 'Error')
@@ -107,25 +131,36 @@ export class AuthState {
     this.router.navigate(['/login']);
   }
 
+  public isLoggedIn(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token; // Devuelve true si el token existe
+  }
+
+
+
   public checkSession(): boolean {
     const token = this.cookie.get('token') || localStorage.getItem('token');
+    console.log('Token:', token);
     if (token) {
       const token_data = this.parseJwt(token);
+      console.log('Token data:', token_data);
       if (token_data.exp < Date.now() / 1000) {
         this.logout();
+        console.log('Token expired');
         return false;
-
       } else {
         const user = token_data.user;
         this.setUser(user);
         return true;
-
       }
     } else {
       this.logout();
+      console.log('No token found');
       return false;
     }
   }
+  
+
 
   private parseJwt = (token: string) => {
     return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
@@ -147,6 +182,7 @@ export class AuthState {
 
   public getRoles(): void {
     this.authService.getRolesUsuarios().pipe(take(1)).subscribe((roles) => {
+      console.log(roles)
       this._state.next({
         ...this._state.value,
         allRoles: roles

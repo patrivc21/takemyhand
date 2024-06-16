@@ -40,8 +40,19 @@ export class RegistroComponent {
       apellidos: ['', Validators.required],
       username: ['', Validators.required],
       rol: [null, Validators.required],
-      especialidad: ['']
+      // especialidad: ['']
     });
+
+    // para que especialidad solo sea obligatorio para los profesionales
+    // this.form.get('rol').valueChanges.subscribe(rol => {
+    //   const especialidad = this.form.get('especialidad');
+    //   if (rol === 3) {
+    //     especialidad.setValidators([Validators.required]);
+    //   } else {
+    //     especialidad.clearValidators();
+    //   }
+    //   especialidad.updateValueAndValidity();
+    // });
   }
 
   private setStateSelector() {
@@ -71,7 +82,7 @@ export class RegistroComponent {
     console.log(data)
 
     if (this.form.valid) {
-      this.loading = false
+      this.loading = true
       this.authState.register(data)
     }
   }
@@ -95,5 +106,5 @@ export class RegistroComponent {
   get username(): AbstractControl | null { return this.form.get('username'); }
   get password(): AbstractControl | null { return this.form.get('password'); }
   get rol(): AbstractControl | null { return this.form.get('rol'); }
-  get especialidad(): AbstractControl | null { return this.form.get('especialidad'); }
+  // get especialidad(): AbstractControl | null { return this.form.get('especialidad'); }
 }
