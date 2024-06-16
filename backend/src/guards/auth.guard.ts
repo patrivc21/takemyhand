@@ -3,6 +3,7 @@ import { validateToken, decodeToken} from '../helpers/auth.helper';
 
 export const AuthGuard = (req: Request, res: Response, next: NextFunction) => {
     let token = req.headers['authorization'];
+    console.log(req.headers)
     if (token) {
         token = token.replace('Bearer ', '').trim();
         if (validateToken(token)) {

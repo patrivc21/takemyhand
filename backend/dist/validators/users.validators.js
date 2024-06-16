@@ -12,7 +12,11 @@ var userSchema = joi_1.default.object({
     password: joi_1.default.string().min(9).required(),
     rol: joi_1.default.number().required(),
     username: joi_1.default.string().required(),
-    especialidad: joi_1.default.string(),
+    // especialidad: Joi.when('rol', {
+    //   is: 3,
+    //   then: Joi.string().required(),
+    //   otherwise: Joi.string().optional()
+    // }),
     activo: joi_1.default.boolean().default(true),
     rolpaciente: joi_1.default.number()
 });

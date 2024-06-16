@@ -42,10 +42,6 @@ var Profesionales = /** @class */ (function () {
         (0, typeorm_1.Column)(),
         __metadata("design:type", Boolean)
     ], Profesionales.prototype, "activo", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Profesionales.prototype, "especialidad", void 0);
     Profesionales = __decorate([
         (0, typeorm_1.Entity)({ name: 'profesionales' })
     ], Profesionales);

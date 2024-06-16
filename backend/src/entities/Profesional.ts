@@ -23,6 +23,6 @@ export class Profesionales {
   @Column()
   activo!: boolean;
 
-  @Column()
-  especialidad!: string;
+  // @Column()
+  // especialidad!: string;
 }

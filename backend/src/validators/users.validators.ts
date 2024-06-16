@@ -8,12 +8,15 @@ const userSchema = Joi.object({
     password: Joi.string().min(9).required(),
     rol: Joi.number().required(),
     username: Joi.string().required(),
-    especialidad: Joi.string(),
+    // especialidad: Joi.when('rol', {
+    //   is: 3,
+    //   then: Joi.string().required(),
+    //   otherwise: Joi.string().optional()
+    // }),
     activo: Joi.boolean().default(true),
     rolpaciente: Joi.number()
-});
-
-
+  });
+  
 export const UserValidator = (req: Request, res: Response, next: NextFunction) => {
     const { error } = userSchema.validate(req.body);
     if (error) {

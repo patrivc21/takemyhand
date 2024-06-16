@@ -11,6 +11,6 @@ router.get('/getAllUsers', [usuariosController.getAllUsersControllers]);
 router.get('/getAllRoles', [usuariosController.getAllRolesC]);
 
 router.post('/login', [UserLoginValidator, usuariosController.login]);
-router.post('/register', [AuthGuard, usuariosController.register]); //UserValidator
+router.post('/register', [ UserValidator, usuariosController.register]); //AuthGuard,
 
 export default router;

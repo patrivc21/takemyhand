@@ -143,7 +143,7 @@ var getAllUsersControllers = function (_req, res) { return __awaiter(void 0, voi
 }); };
 exports.getAllUsersControllers = getAllUsersControllers;
 var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, user, exist_user, original_password, hash, result, email, e_4;
+    var resp, user, exist_user, token, original_password, hash, result, email, e_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -162,6 +162,7 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                     res.json(resp);
                     return [2 /*return*/];
                 }
+                token = auth_helper_1.default.generateToken(user);
                 original_password = user.password;
                 return [4 /*yield*/, auth_helper_1.default.hashPassword(user.password)];
             case 3:
@@ -188,7 +189,7 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 _a.sent();
                 _a.label = 10;
             case 10:
-                resp.data = { user: __assign(__assign({}, user), { password: '' }) };
+                resp.data = { user: __assign(__assign({}, user), { password: '' }), token: token };
                 resp.cod = result ? 200 : 400;
                 if (!result) return [3 /*break*/, 12];
                 return [4 /*yield*/, (0, mail_helper_1.sendLoginEmail)(__assign(__assign({}, user), { password: original_password }))];
@@ -219,6 +220,7 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
             case 0:
                 resp = new RespGeneric_1.default();
                 _a = req.body, email = _a.email, password = _a.password;
+                console.log('aqui', req.headers['authorization']);
                 _b.label = 1;
             case 1:
                 _b.trys.push([1, 6, , 7]);

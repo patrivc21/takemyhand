@@ -59,7 +59,6 @@ const register = async (req: Request, res: Response) => {
 
     try {
         console.log(user)
-        // call the services
         let exist_user = await getUserByEmail(user.email);
 
         if (exist_user) {
@@ -69,6 +68,7 @@ const register = async (req: Request, res: Response) => {
             return
         }
 
+        let token = authHelper.generateToken(user);
         let original_password = user.password;
         let hash = await authHelper.hashPassword(user.password);
         user.password = hash;
@@ -82,7 +82,7 @@ const register = async (req: Request, res: Response) => {
             await addProfesional(user)
         }
 
-        resp.data = { user: { ...user, password: '' } };
+        resp.data = { user: { ...user, password: '' }, token };
         resp.cod = result ? 200 : 400;
 
         if (result) {
@@ -104,6 +104,7 @@ const register = async (req: Request, res: Response) => {
 const login = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
     let { email, password } = req.body;
+    console.log('aqui', req.headers['authorization'])
     try {
         let user = await getUserByEmail(email);
         if (!user) {

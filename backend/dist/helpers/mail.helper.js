@@ -61,8 +61,9 @@ var sendLoginEmail = function (user) { return __awaiter(void 0, void 0, void 0, 
                 return [4 /*yield*/, transporter.sendMail({
                         from: config_1.default.EMAIL_USER,
                         to: user.email,
-                        subject: "Registro en TakeMyHand ✔",
-                        text: "Buenas ".concat(user.nombre, ", su cuenta ha sido creada con \u00E9xito.\nSu contrase\u00F1a es: ").concat(user.password),
+                        subject: "🎉 Registro en TakeMyHand 🎉",
+                        text: "\u00A1Bienvenido ".concat(user.nombre, " ").concat(user.apellidos, "!\n Su cuenta ha sido creada con \u00E9xito.\n"),
+                        html: "\n                <div style=\"font-family: Arial, sans-serif; color: #167496;\">\n                    <h2 style=\"color: #4CAF50;\"> Registro en TakeMyHand \u2705 </h2>\n                    <p>Querido/a <strong>".concat(user.nombre, "</strong>,</p>\n                    <p>Nos complace informarle que su cuenta ha sido creada con \u00E9xito. \uD83C\uDF8A</p>\n                    <p>Su contrase\u00F1a es: <strong>").concat(user.password, "</strong></p>\n                    <p>Gracias por unirse a nosotros. \uD83D\uDE0A</p>\n                    <p>Atentamente,</p>\n                    <p><strong>El equipo de TakeMyHand</strong> \uD83E\uDD1D\uD83D\uDC99</p>\n                </div>\n            "),
                     })];
             case 1:
                 info = _a.sent();
