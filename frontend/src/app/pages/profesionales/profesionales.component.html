@@ -1,0 +1,48 @@
+<ng-container *ngIf="(allProfesionales$ | async) as profesionales">
+    <div class="card p-5">
+      <div class="flex flex-row justify-content-between mb-3">
+        <h2>Total Pacientes de la Aplicación</h2>
+      </div>
+
+      <div class="d-flex justify-content-end align-items-end mb-3 ml-4">
+        <div class="d-flex align-items-end">
+          <!-- <p-button class="boton-guardar mr-4" (onClick)="abrirModalCrear()">Añadir pacientes</p-button> -->
+          <p-button icon="pi pi-download" class="boton-tabla mr-4" (onClick)="descargarExcel()"></p-button>
+        </div>
+      </div>
+     
+      <p-table
+        #dt1
+        [value]="profesionales"
+        [loading]="!view"
+        [paginator]="true"
+        [rows]="10"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Página {currentPage} de {totalPages}"
+        styleClass="p-datatable-sm"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th class="text-header-table">Nombre</th>
+            <th class="text-header-table">Username</th>
+            <th class="text-header-table">Email</th>
+            <th class="text-header-table">Activo</th>
+            <th></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-pack>
+          <tr>
+            <td class="text-center">{{ pack.nombre }}</td>
+            <td class="text-center">{{ pack.username }}</td>
+            <td class="text-center">{{ pack.email }} </td>
+            <td class="text-center">{{ pack.activo ? 'Sí' : 'No' }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    
+    
+    </div>
+  </ng-container>
+  
+
+  

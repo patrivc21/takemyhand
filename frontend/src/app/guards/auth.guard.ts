@@ -14,13 +14,12 @@ export class AuthGuard {
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if(this.authState.checkSession()){
-      // console.log('true')
       return true;
     }
     else {
-      // console.log('false')
       this.authState.logout();
       return false;
     }
   }
 }
+

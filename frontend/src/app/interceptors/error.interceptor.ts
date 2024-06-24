@@ -21,7 +21,6 @@ export class ErrorInterceptor implements HttpInterceptor {
           errorMessage = error.msg || error.statusText;
         }
         
-        // aquí podrías agregar código que muestre el error en alguna parte fija de la pantalla.
         this.toastService.add({severity:'error', summary:'Error', detail: errorMessage});
         return throwError(errorMessage);
       })

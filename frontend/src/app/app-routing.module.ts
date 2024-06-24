@@ -28,6 +28,16 @@ const routes: Routes = [
     canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/home-profesional/home-profesional.module').then(m => m.HomeProfesionalModule) 
   },
+  { 
+    path: 'pacientes', 
+    // canActivate: [AuthGuard], 
+    loadChildren: () => import('./pages/pacientes/pacientes.module').then(m => m.PacientesModule) 
+  },
+  { 
+    path: 'profesionales', 
+    // canActivate: [AuthGuard], 
+    loadChildren: () => import('./pages/profesionales/profesionales.module').then(m => m.ProfesionalesModule) 
+  },
 ];
 
 @NgModule({
