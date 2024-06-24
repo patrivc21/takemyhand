@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.deleteProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
 var addProfesional = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
@@ -79,4 +79,41 @@ var getAllProfesionales = function () { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.getAllProfesionales = getAllProfesionales;
+var updateProfesionalesService = function (profesional) { return __awaiter(void 0, void 0, void 0, function () {
+    var profToUpdate, resp;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales).findOneBy({ id: profesional.id })];
+            case 1:
+                profToUpdate = _a.sent();
+                resp = null;
+                if (!profToUpdate) return [3 /*break*/, 3];
+                Object.assign(profToUpdate, profesional);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales).save(profToUpdate)];
+            case 2:
+                resp = _a.sent();
+                _a.label = 3;
+            case 3: return [2 /*return*/, resp != null];
+        }
+    });
+}); };
+exports.updateProfesionalesService = updateProfesionalesService;
+var deleteProfesionalesService = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var profToEliminate, resp;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales).findOneBy({ id: id })];
+            case 1:
+                profToEliminate = _a.sent();
+                resp = null;
+                if (!profToEliminate) return [3 /*break*/, 3];
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales).remove(profToEliminate)];
+            case 2:
+                resp = _a.sent();
+                _a.label = 3;
+            case 3: return [2 /*return*/, resp != null];
+        }
+    });
+}); };
+exports.deleteProfesionalesService = deleteProfesionalesService;
 //# sourceMappingURL=profesional.service.js.map

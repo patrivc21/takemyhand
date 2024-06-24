@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Profesionales } from '../entities/Profesional';
-import { addProfesional, getAllProfesionales, getOneProfesional} from '../services/profesional.service'
+import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService} from '../services/profesional.service'
 
 export const addNewProfesional = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -46,4 +46,20 @@ export const getAllProfesionalesControllers = async (_req:Request, res:Response)
     res.json(resp); 
 }
 
-export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers};
+
+export const updateProfesional = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        let prof : Profesionales = req.body as Profesionales;
+        let result = await updateProfesionalesService(prof);
+        resp.cod = result ? 200 : 400;
+        resp.data = {profesionales: result};
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp)
+}
+
+export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers, updateProfesional};

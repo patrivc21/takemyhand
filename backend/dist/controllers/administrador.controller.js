@@ -39,9 +39,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllAdministradoresControllers = exports.getOneAdminController = exports.addNewAdmin = void 0;
+exports.deletePaciente = exports.deleteProfesional = exports.getAllAdministradoresControllers = exports.getOneAdminController = exports.addNewAdmin = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var administradores_service_1 = require("../services/administradores.service");
+var profesional_service_1 = require("../services/profesional.service");
+var pacientes_service_1 = require("../services/pacientes.service");
 var addNewAdmin = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var resp, admin, result, e_1;
     return __generator(this, function (_a) {
@@ -125,5 +127,59 @@ var getAllAdministradoresControllers = function (_req, res) { return __awaiter(v
     });
 }); };
 exports.getAllAdministradoresControllers = getAllAdministradoresControllers;
-exports.default = { addNewAdmin: exports.addNewAdmin, getOneAdminController: exports.getOneAdminController, getAllAdministradoresControllers: exports.getAllAdministradoresControllers };
+var deleteProfesional = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, profesional_service_1.deleteProfesionalesService)(body.id)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                return [3 /*break*/, 4];
+            case 3:
+                e_4 = _a.sent();
+                resp.msg = e_4;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.deleteProfesional = deleteProfesional;
+var deletePaciente = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, pacientes_service_1.deletePacientesService)(body.id)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                return [3 /*break*/, 4];
+            case 3:
+                e_5 = _a.sent();
+                resp.msg = e_5;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.deletePaciente = deletePaciente;
+exports.default = { addNewAdmin: exports.addNewAdmin, getOneAdminController: exports.getOneAdminController, getAllAdministradoresControllers: exports.getAllAdministradoresControllers, deleteProfesional: exports.deleteProfesional, deletePaciente: exports.deletePaciente };
 //# sourceMappingURL=administrador.controller.js.map

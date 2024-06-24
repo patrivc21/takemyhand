@@ -26,6 +26,7 @@ var AdminGuard = function (req, res, next) {
         token = token.replace('Bearer ', '').trim();
         if ((0, auth_helper_1.validateToken)(token)) {
             var user = (0, auth_helper_1.decodeToken)(token);
+            console.log('aquiii', user);
             if (user.role === 'admin')
                 next();
             else

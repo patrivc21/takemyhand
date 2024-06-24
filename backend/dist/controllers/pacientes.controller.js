@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllRolesC = exports.getAllPacientesControllers = exports.getOnePacienteController = exports.addNewPaciente = void 0;
+exports.updatePaciente = exports.getAllRolesC = exports.getAllPacientesControllers = exports.getOnePacienteController = exports.addNewPaciente = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var pacientes_service_1 = require("../services/pacientes.service");
 var addNewPaciente = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -152,5 +152,33 @@ var getAllRolesC = function (_req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getAllRolesC = getAllRolesC;
-exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC };
+var updatePaciente = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, pac, result, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                pac = req.body;
+                return [4 /*yield*/, (0, pacientes_service_1.updatePacientesService)(pac)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                resp.data = { pacientes: result };
+                return [3 /*break*/, 4];
+            case 3:
+                e_5 = _a.sent();
+                resp.msg = e_5;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updatePaciente = updatePaciente;
+exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC, updatePaciente: exports.updatePaciente };
 //# sourceMappingURL=pacientes.controller.js.map

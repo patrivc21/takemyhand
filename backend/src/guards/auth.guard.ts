@@ -24,6 +24,7 @@ export const AdminGuard = (req: Request, res: Response, next: NextFunction) => {
         token = token.replace('Bearer ', '').trim();
         if (validateToken(token)) {
             const user = decodeToken(token);
+            console.log('aquiii',user)
             if (user.role === 'admin')
                 next();
             else

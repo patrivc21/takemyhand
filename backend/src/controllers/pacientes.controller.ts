@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Pacientes } from '../entities/Pacientes';
-import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles} from '../services/pacientes.service';
+import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles, updatePacientesService} from '../services/pacientes.service';
 
 export const addNewPaciente = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -62,4 +62,19 @@ export const getAllRolesC = async (_req: Request, res: Response) => {
     }
 };
 
-export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC};
+export const updatePaciente= async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        let pac : Pacientes = req.body as Pacientes;
+        let result = await updatePacientesService(pac);
+        resp.cod = result ? 200 : 400;
+        resp.data = {pacientes: result};
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp)
+}
+
+export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC, updatePaciente};

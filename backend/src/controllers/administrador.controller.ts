@@ -2,6 +2,8 @@ import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Administradores } from '../entities/Administrador';
 import { addAdmin, getAllAdmins, getOneAdmin} from '../services/administradores.service'
+import { deleteProfesionalesService} from '../services/profesional.service'
+import { deletePacientesService} from '../services/pacientes.service'
 
 export const addNewAdmin = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -46,4 +48,34 @@ export const getAllAdministradoresControllers = async (_req:Request, res:Respons
     res.json(resp); 
 }
 
-export default { addNewAdmin, getOneAdminController, getAllAdministradoresControllers};
+export const deleteProfesional = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        
+        let body = req.body;
+        let result = await deleteProfesionalesService(body.id);
+        resp.cod = result ? 200 : 400;
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp)
+}
+
+export const deletePaciente = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        
+        let body = req.body;
+        let result = await deletePacientesService(body.id);
+        resp.cod = result ? 200 : 400;
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp)
+}
+
+export default { addNewAdmin, getOneAdminController, getAllAdministradoresControllers, deleteProfesional, deletePaciente};

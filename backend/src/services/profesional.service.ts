@@ -20,3 +20,22 @@ export const getAllProfesionales = async ():Promise<Profesionales[]> => {
     let res = await DB.getRepository(Profesionales).find();
     return res;
 }
+
+export const updateProfesionalesService = async(profesional: Profesionales): Promise<boolean> => {
+    let profToUpdate = await DB.getRepository(Profesionales).findOneBy({id: profesional.id});
+    let resp = null;
+    if(profToUpdate){
+        Object.assign(profToUpdate, profesional);
+        resp = await DB.getRepository(Profesionales).save(profToUpdate);
+    }
+    return resp != null;
+}
+
+export const deleteProfesionalesService = async(id: number): Promise<boolean> => {
+    let profToEliminate = await DB.getRepository(Profesionales).findOneBy({id: id});
+    let resp = null;
+    if(profToEliminate){
+        resp = await DB.getRepository(Profesionales).remove(profToEliminate);
+    }
+    return resp != null;
+}
