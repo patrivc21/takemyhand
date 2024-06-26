@@ -1,0 +1,42 @@
+
+<p-dialog header="Editar Perfil" [(visible)]="editarPerfil" [modal]="true" [style]="{width: '50%'}" [draggable]="false" [resizable]="false" (onHide)="cerrar()">
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+
+    <form [formGroup]="form" (ngSubmit)="updatePerfil()" class="mx-5">
+        <div class="field mt-5 mb-4">
+            <span class="p-float-label">
+              <input class="w-full" type="text" pInputText formControlName="nombre" />
+              <label for="nombre">Nombre *</label>
+            </span>
+            <small class="ml-2 p-error block" *ngIf="nombre?.invalid && (nombre?.dirty||nombre?.touched)">Nombre es requerido</small>
+          </div>
+    
+          <div class="field mt-5 mb-4">
+            <span class="p-float-label">
+              <input class="w-full" type="text" pInputText formControlName="apellidos" />
+              <label for="apellidos">Apellidos *</label>
+            </span>
+            <small class="ml-2 p-error block" *ngIf="apellidos?.invalid && (apellidos?.dirty||apellidos?.touched)">Apellidos es requerido</small>
+          </div>
+    
+          <div class="field mt-5 mb-4">
+            <span class="p-float-label">
+              <input id="email" type="email" pInputText formControlName="email" class="w-full" />
+              <label for="email">Email *</label>
+            </span>
+            <small class="ml-2 p-error block" *ngIf="email?.invalid && (email?.dirty||email?.touched)">Email es requerido y debe ser válido</small>
+          </div>
+    
+          <div class="field mt-5 mb-4">
+            <span class="p-float-label">
+              <input id="username" type="text" pInputText formControlName="username" class="w-full" />
+              <label for="username">Username *</label>
+            </span>
+            <small class="ml-2 p-error block" *ngIf="username?.invalid && (username?.dirty||username?.touched)">Campo requerido</small>
+          </div>
+  
+      <div class="d-flex justify-content-center button-save-form">
+        <p-button [loading]="loading" class="button-save-form" label="Editar" type="submit"></p-button>
+      </div>
+    </form>
+</p-dialog>

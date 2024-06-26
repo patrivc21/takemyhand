@@ -31,6 +31,56 @@ h1 {
     cursor: pointer;
 }
 
+.logo-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
 .ui-inputgroup {
     margin-right: 1rem;
 }
+
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 2%;
+}
+.menu-item-left {
+    flex: 0 0 auto;
+    margin-left: 3%;
+}
+.menu-item-center {
+    flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+}
+.menu-item-right {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 4%;
+}
+
+.button-save-form button .p-button {
+    width: 50%;
+    padding: 15px;
+    background-color: #167496;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+
+.texto {
+    color: #167496;
+    font-family: "Monserrat";
+}
+  
+  
+

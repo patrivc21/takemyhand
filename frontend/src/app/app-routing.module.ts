@@ -24,11 +24,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home-admin/home-admin.module').then(m => m.HomeAdminModule) 
   },
   { 
-    path: 'home-prof', 
-    canActivate: [AuthGuard], 
-    loadChildren: () => import('./pages/home-profesional/home-profesional.module').then(m => m.HomeProfesionalModule) 
-  },
-  { 
     path: 'pacientes', 
     // canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/pacientes/pacientes.module').then(m => m.PacientesModule) 

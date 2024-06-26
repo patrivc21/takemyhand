@@ -15,7 +15,9 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { RouterModule, Routes } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
-
+import { SliderModule } from 'primeng/slider'
+import { InputTextareaModule } from 'primeng/inputtextarea'
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 const routes: Routes = [{ path: '', component: PacientesComponent }];
 
@@ -40,7 +42,10 @@ const routes: Routes = [{ path: '', component: PacientesComponent }];
     MultiSelectModule,
     CascadeSelectModule,
     RouterModule.forChild(routes),
-    PasswordModule
+    PasswordModule,
+    SliderModule,
+    InputTextareaModule,
+    ProgressSpinnerModule
   ]
 })
 export class PacientesModule { }

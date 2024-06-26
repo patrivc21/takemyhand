@@ -62,9 +62,10 @@ export class PacientesState {
         });
     }
 
-    // public borrarPaciente(id: number[]): Observable<GenericResponse> {
-    //     const data = this.service.borrarPacientes(id);
-    //     return data;
-    // }
+    public borrarPacientes(id: number[]): Observable<GenericResponse> {
+        const data = this.service.deletePacientes(id)
+        this.getAllPacientes()
+        return data
+    }
 
 }

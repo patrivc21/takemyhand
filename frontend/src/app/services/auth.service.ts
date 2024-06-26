@@ -37,4 +37,18 @@ export class AuthService {
     );
   }
 
+
+  public updateUser(user: any):  Observable<GenericResponse> {
+    return this.http.put<GenericResponse>(`${BACKEND_API}/updateUsuario`, user).pipe(shareReplay());
+  } 
+
+  public getUserByEmail(email: string): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getUserByEmail`, {email}).pipe(shareReplay());
+  }
+
+  public getAllUsersExceptMe(id: number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getAllUsersExceptMe`, {id}).pipe(shareReplay());
+  }
+
+
 }

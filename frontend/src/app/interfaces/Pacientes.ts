@@ -7,4 +7,5 @@ export interface Pacientes {
     email: string;
     password: string;
     activo: boolean
+    id_usuario: number;
 }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Pacientes } from 'src/app/interfaces/Pacientes';
 import { PacientesState } from 'src/app/state/paciente.state';
 import * as XLSX from 'xlsx'
+import { ToastrService } from 'ngx-toastr'
 
 @Component({
   selector: 'app-pacientes',
@@ -13,14 +14,14 @@ import * as XLSX from 'xlsx'
 })
 export class PacientesComponent {
   public allPacientes$: Observable<Pacientes[]>
-
   public view: boolean
+  public pacSeleccionados: number[] = [];
 
   ngOnInit(): void {
     this.iniciar()
   }
 
-  constructor(private readonly pacienteState: PacientesState, private router: Router) {
+  constructor(private readonly pacienteState: PacientesState, private router: Router, private readonly toastr: ToastrService) {
     this.setStateSelector()
   }
 
@@ -42,5 +43,21 @@ export class PacientesComponent {
       XLSX.utils.book_append_sheet(wb, ws, 'Datos');
       XLSX.writeFile(wb, 'pacientes.xlsx');
     })
+  }
+
+  public borrarPacientes(){
+    console.log(this.pacSeleccionados)
+    this.pacienteState.borrarPacientes(this.pacSeleccionados).pipe(take(1)).subscribe(dat => {
+      console.log(dat)
+      if (dat.cod == 200) {
+        this.toastr.success('Pacientes borrados con éxito.', 'Éxito')
+        this.iniciar()
+      } else {
+        this.toastr.error('Error al borrar los pacientes.', 'Error')
+      }
+    })
+
+    this.pacienteState.getAllPacientes()
+    this.pacSeleccionados = []
   }
 }

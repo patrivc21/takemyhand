@@ -91,7 +91,7 @@ export class AuthState {
         }else if(res.data.user.rol == 2){
           this.router.navigate(['/home']);
         }else if(res.data.user.rol == 3){
-          this.router.navigate(['/home-prof']);
+          this.router.navigate(['/home']);
         }
       } else {
         this._state.next({ ...this.state, loadingButton: false })
@@ -114,7 +114,7 @@ export class AuthState {
         }else if(res.data.user.rol == 2){
           this.router.navigate(['/home']);
         }else if(res.data.user.rol == 3){
-          this.router.navigate(['/home-prof']);
+          this.router.navigate(['/home']);
         }
         
         return true
@@ -169,8 +169,13 @@ export class AuthState {
 
   public getUsers = () => {
     this.authService.getUsers().pipe(take(1)).subscribe((res: any) => {
+      console.log(res.data)
       if (res.cod == 200) {
-        const users = res.data.users.map((user: any) => ({ ...user, activo: user.activo == 1 ? "Si" : "No", }));
+        const users = res.data.users.map((user: any) => (
+          { ...user, 
+          activo: user.activo == 1 ? "Si" : "No", 
+          rol: user.rol === 1 ? "Administrador" : user.rol === 2 ? "Paciente" : "Profesional"
+        }));
         this._state.next({ ...this._state.getValue(), users: users });
         return [];
       } else {
@@ -191,5 +196,47 @@ export class AuthState {
     });
   }
 
+
+  public updateUsuario(usuario: any): Observable<GenericResponse> {
+    const data = this.authService.updateUser(usuario);
+    data.pipe(take(1)).subscribe((response) => {
+        console.log(response);
+        if(response.cod==200){
+          this.setUser(response.data.user);
+        }
+        else {
+            return;
+        }
+        // this.getUsers();
+    });
+    return data
+  }
+
+  public getUserByEmail(email: string): Observable<GenericResponse> {
+    const data = this.authService.getUserByEmail(email);
+    console.log(data)
+    return data
+  }
+
+  public getAllUsersExceptMe(id: number): Observable<GenericResponse> {
+    const data = this.authService.getAllUsersExceptMe(id);
+    data.pipe(take(1)).subscribe((res) => {
+      console.log(res);
+      console.log(res.data)
+      if (res.cod == 200) {
+        const users = res.data.users.map((user: any) => (
+          { ...user, 
+          activo: user.activo == 1 ? "Si" : "No", 
+          rol: user.rol === 1 ? "Administrador" : user.rol === 2 ? "Paciente" : "Profesional"
+        }));
+        this._state.next({ ...this._state.getValue(), users: users });
+        return [];
+      } else {
+        this.toastr.error('Error al obtener a los usuarios', 'Error')
+        return [];
+      }
+  });
+    return data
+  }
 
 }

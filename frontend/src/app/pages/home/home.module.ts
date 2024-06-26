@@ -20,13 +20,18 @@ import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
+import { EditarPerfilComponent } from './Components/editar-perfil/editar-perfil.component';
 
-const routes: Routes = [{ path: '', component: HomeComponent }];
+const routes: Routes = [{ path: '', component: HomeComponent },
+  {path: 'editar', component: EditarPerfilComponent}
+];
 
 
 @NgModule({
+  providers: [ConfirmationService],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    EditarPerfilComponent
   ],
   imports: [
     CommonModule,

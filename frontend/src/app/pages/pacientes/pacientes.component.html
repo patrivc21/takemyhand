@@ -20,9 +20,12 @@
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Página {currentPage} de {totalPages}"
         styleClass="p-datatable-sm"
+        [(selection)]="pacSeleccionados"
       >
         <ng-template pTemplate="header">
           <tr>
+            <th *ngIf="pacSeleccionados.length > 0"><p-button icon="pi pi-trash" class="boton-borrar" (onClick)="borrarPacientes()"></p-button></th>
+            <th></th>
             <th class="text-header-table">Nombre</th>
             <th class="text-header-table">Username</th>
             <th class="text-header-table">Email</th>
@@ -33,6 +36,10 @@
         </ng-template>
         <ng-template pTemplate="body" let-pack>
           <tr>
+            <td>
+              <p-tableCheckbox [value]="pack.paciente_id"></p-tableCheckbox>
+            </td>
+            <td *ngIf="pacSeleccionados.length > 0"></td>
             <td class="text-center">{{ pack.paciente_nombre }}</td>
             <td class="text-center">{{ pack.paciente_username }}</td>
             <td class="text-center">{{ pack.paciente_email }} </td>

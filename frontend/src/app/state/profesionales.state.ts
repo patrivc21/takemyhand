@@ -62,9 +62,11 @@ export class ProfesionalesState {
     //     });
     // }
 
-    // public borrarPaciente(id: number[]): Observable<GenericResponse> {
-    //     const data = this.service.borrarPacientes(id);
-    //     return data;
-    // }
+    
+    public borrarProfesionales(id: number[]): Observable<GenericResponse> {
+      const data = this.service.deleteProfesionales(id)
+      this.getAllProfesionales()
+      return data
+  }
 
 }

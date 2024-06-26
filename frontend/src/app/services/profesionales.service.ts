@@ -25,6 +25,11 @@ export class ProfesionalesService {
     )
   }
 
+  public deleteProfesionales(ids: number[]): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/deleteProfesionales`, { ids }).pipe(shareReplay());
+  }
+
+
 //   public updatePaciente(paciente: Pacientes):  Observable<GenericResponse> {
 //     return this.http.put<GenericResponse>(`${BACKEND_API}/updatePaciente`, paciente).pipe(shareReplay());
 // }

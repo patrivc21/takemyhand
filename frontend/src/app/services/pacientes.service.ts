@@ -25,9 +25,13 @@ export class PacientesService {
     )
   }
 
-  public updatePaciente(paciente: Pacientes):  Observable<GenericResponse> {
+  public updatePaciente(paciente: any):  Observable<GenericResponse> {
     return this.http.put<GenericResponse>(`${BACKEND_API}/updatePaciente`, paciente).pipe(shareReplay());
-}
+  } 
+
+  public deletePacientes(ids: number[]): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/deletePacientes`, { ids }).pipe(shareReplay());
+  }
 
 
 }

@@ -12,8 +12,8 @@ import * as XLSX from 'xlsx'
 })
 export class ProfesionalesComponent {
   public allProfesionales$: Observable<Profesionales[]>
-
   public view: boolean
+  public profSeleccionados: number[] = [];
 
   ngOnInit(): void {
     this.iniciar()
@@ -41,5 +41,19 @@ export class ProfesionalesComponent {
       XLSX.utils.book_append_sheet(wb, ws, 'Datos');
       XLSX.writeFile(wb, 'pacientes.xlsx');
     })
+  }
+
+
+  public borrarProfesionales(){
+    console.log(this.profSeleccionados)
+    this.profState.borrarProfesionales(this.profSeleccionados).pipe(take(1)).subscribe(dat => {
+      console.log(dat)
+      if (dat.cod == 200) {
+        this.iniciar()
+      } 
+    })
+
+    this.profState.getAllProfesionales()
+    this.profSeleccionados = []
   }
 }
