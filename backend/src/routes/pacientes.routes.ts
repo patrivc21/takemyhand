@@ -8,7 +8,7 @@ router.post('/addPaciente', [pacientesController.addNewPaciente]);
 router.get('/getOnePaciente', [pacientesController.getOnePacienteController]);
 router.get('/getAllPacientes', [pacientesController.getAllPacientesControllers]);
 router.get('/getAllRoles', [pacientesController.getAllRolesC]);
-router.put('/updatePaciente', [AuthGuard, pacientesController.updatePaciente]);
-
+router.put('/updatePaciente', [pacientesController.updatePaciente]);
+router.post('/deletePacientes', [pacientesController.deletePacientesController]);
 
 export default router;

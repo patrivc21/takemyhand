@@ -27,5 +27,6 @@ export class Usuarios {
   @ManyToOne(() => RolUsuarios, rolusuarios => rolusuarios.id)
   @JoinColumn({ name: 'rol' })
   rolusuarios!: RolUsuarios;
+  
 
 }

@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Usuarios } from '../entities/Usuarios';
-import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles} from '../services/usuarios.service';
+import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe} from '../services/usuarios.service';
 import authHelper from '../helpers/auth.helper';
 import { sendLoginEmail } from '../helpers/mail.helper';
 
-import { addPaciente} from '../services/pacientes.service';
-import { addProfesional} from '../services/profesional.service';
+import { addPaciente, updatePacientesService} from '../services/pacientes.service';
+import { addProfesional, updateProfesionalesService} from '../services/profesional.service';
 import { addAdmin} from '../services/administradores.service';
 
 export const addNewUser = async (req: Request, res: Response) => {
@@ -44,7 +44,7 @@ export const getAllUsersControllers = async (_req:Request, res:Response) => {
     let resp = new RespGeneric();
     try {
         let users = await getAllUsers();
-        resp.data = {Usuarios: users};
+        resp.data = {users};
         resp.cod = 200;
     } catch (e) {
         resp.msg = e as string;
@@ -73,13 +73,14 @@ const register = async (req: Request, res: Response) => {
         let hash = await authHelper.hashPassword(user.password);
         user.password = hash;
         let result = await addUsuarios(user);
+        console.log(result)
 
         if(user.rol == 1){
-            await addAdmin(user)
+            await addAdmin({ ...user, id_usuario: result.id })
         }else if(user.rol == 2){
-            await addPaciente(user)
+            await addPaciente({ ...user, id_usuario: result.id })
         }else if(user.rol == 3){
-            await addProfesional(user)
+            await addProfesional({ ...user, id_usuario: result.id })
         }
 
         resp.data = { user: { ...user, password: '' }, token };
@@ -146,4 +147,62 @@ export const getAllRolesC = async (_req: Request, res: Response) => {
     }
 };
 
-export default { addNewUser, getAllUsersControllers, getOneUserController, login, register, getAllRolesC};
+export const updateUsuarios = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        let user = req.body;
+        console.log('user', user)
+        let result = await updateUsuariosService(user);
+        
+        if(user.rol == 1){
+            // await (user)
+        }else if(user.rol == 2){
+            await updatePacientesService(user)
+        }else if(user.rol == 3){
+            await updateProfesionalesService(user)
+        }
+
+        resp.cod = result ? 200 : 400;
+        resp.data = {user: result};
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+        resp.data = {e};
+    }
+    res.json(resp)
+}
+
+export const getUserByEmailC = async (req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let body = req.body;
+        console.log(body)
+        let user = await getUserByEmail(body.email);
+        console.log(user)
+        resp.data = {user: user};
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
+
+export const getAllUsersExceptMeC = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        
+        const id = req.body.id; 
+        let users = await getAllUsersExceptMe(id);
+        resp.data = { users };
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
+
+
+export default { addNewUser, getAllUsersControllers, getOneUserController, login, register, getAllRolesC, updateUsuarios, getUserByEmailC, getAllUsersExceptMeC};

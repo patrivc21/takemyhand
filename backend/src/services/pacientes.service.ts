@@ -2,6 +2,13 @@ import { Pacientes } from "../entities/Pacientes";
 import { DB } from "../config/typeorm";
 import { SelectQueryBuilder } from "typeorm";
 import { RolPaciente } from "../entities/RolPacientes";
+import { Usuarios } from "../entities/Usuarios";
+
+
+export const addUsuarios = async (usuarios: Usuarios): Promise<boolean> => {
+    let res = await DB.getRepository(Usuarios).save(usuarios);
+    return res != null;
+}
 
 export const addPaciente = async (admin: Pacientes): Promise<boolean> => {
     let res = await DB.getRepository(Pacientes).save(admin);
@@ -33,8 +40,9 @@ export const getAllRoles = async ():Promise<Pacientes[]> => {
 }
 
 
-export const updatePacientesService = async(paciente: Pacientes): Promise<boolean> => {
-    let pacToUpdate = await DB.getRepository(Pacientes).findOneBy({id: paciente.id});
+export const updatePacientesService = async(paciente: any): Promise<boolean> => {
+    console.log(paciente)
+    let pacToUpdate = await DB.getRepository(Pacientes).findOneBy({email: paciente.email});
     let resp = null;
     if(pacToUpdate){
         Object.assign(pacToUpdate, paciente);
@@ -43,7 +51,8 @@ export const updatePacientesService = async(paciente: Pacientes): Promise<boolea
     return resp != null;
 }
 
-export const deletePacientesService = async(id: number): Promise<boolean> => {
+
+export const deleteOnePacienteService = async(id: number): Promise<boolean> => {
     let pacToEliminate = await DB.getRepository(Pacientes).findOneBy({id: id});
     let resp = null;
     if(pacToEliminate){
@@ -51,3 +60,14 @@ export const deletePacientesService = async(id: number): Promise<boolean> => {
     }
     return resp != null;
 }
+
+export const deletePacientesService = async(ids: number[]): Promise<boolean> => {
+    try {
+        const deleteResult = await DB.getRepository(Pacientes).delete(ids);
+        return deleteResult.affected != null;
+    } catch (error) {
+        console.error('Error deleting patients:', error);
+        return false;
+    }
+}
+

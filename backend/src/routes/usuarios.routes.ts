@@ -9,8 +9,10 @@ router.post('/addUser', [usuariosController.addNewUser]);
 router.get('/getOneUser', [usuariosController.getOneUserController]);
 router.get('/getAllUsers', [usuariosController.getAllUsersControllers]);
 router.get('/getAllRoles', [usuariosController.getAllRolesC]);
-
+router.put('/updateUsuario', [usuariosController.updateUsuarios]);
 router.post('/login', [UserLoginValidator, usuariosController.login]);
 router.post('/register', [ UserValidator, usuariosController.register]); //AuthGuard,
+router.post('/getUserByEmail', [usuariosController.getUserByEmailC]);
+router.post('/getAllUsersExceptMe', [usuariosController.getAllUsersExceptMeC]);
 
 export default router;

@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
+import { RolUsuarios } from './RolUsuarios';
+import { Usuarios } from './Usuarios';
 
 @Entity({ name: 'profesionales' })
 export class Profesionales {
@@ -25,4 +27,11 @@ export class Profesionales {
 
   // @Column()
   // especialidad!: string;
+
+  @Column()
+  id_usuario!: number;
+
+  @ManyToOne(() => Usuarios, usuario => usuario.id)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario!: Usuarios;
 }

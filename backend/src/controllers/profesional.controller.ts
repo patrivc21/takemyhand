@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Profesionales } from '../entities/Profesional';
-import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService} from '../services/profesional.service'
+import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService} from '../services/profesional.service'
 
 export const addNewProfesional = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -62,4 +62,26 @@ export const updateProfesional = async (req: Request, res: Response) => {
     res.json(resp)
 }
 
-export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers, updateProfesional};
+
+export const deleteProfesionalesController = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        const ids: number[] = req.body.ids;
+
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' });
+        }
+
+        let result = await deleteProfesionalesService(ids);
+        resp.cod = result ? 200 : 400;
+        resp.data = {result};
+        resp.msg = "Profesionales eliminados con exito."
+
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+        resp.msg = "Error al eliminar profesionales"
+    }
+};
+
+export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers, updateProfesional, deleteProfesionalesController};

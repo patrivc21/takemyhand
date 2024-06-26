@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
 var addProfesional = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
@@ -98,7 +98,7 @@ var updateProfesionalesService = function (profesional) { return __awaiter(void 
     });
 }); };
 exports.updateProfesionalesService = updateProfesionalesService;
-var deleteProfesionalesService = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+var deleteOneProfesionalesService = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var profToEliminate, resp;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -112,6 +112,25 @@ var deleteProfesionalesService = function (id) { return __awaiter(void 0, void 0
                 resp = _a.sent();
                 _a.label = 3;
             case 3: return [2 /*return*/, resp != null];
+        }
+    });
+}); };
+exports.deleteOneProfesionalesService = deleteOneProfesionalesService;
+var deleteProfesionalesService = function (ids) { return __awaiter(void 0, void 0, void 0, function () {
+    var deleteResult, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales).delete(ids)];
+            case 1:
+                deleteResult = _a.sent();
+                return [2 /*return*/, deleteResult.affected != null];
+            case 2:
+                error_1 = _a.sent();
+                console.error('Error deleting profesionales:', error_1);
+                return [2 /*return*/, false];
+            case 3: return [2 /*return*/];
         }
     });
 }); };

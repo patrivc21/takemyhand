@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Pacientes = void 0;
 var typeorm_1 = require("typeorm");
 var RolPacientes_1 = require("./RolPacientes");
+var Usuarios_1 = require("./Usuarios");
 var Pacientes = /** @class */ (function () {
     function Pacientes() {
     }
@@ -52,6 +53,15 @@ var Pacientes = /** @class */ (function () {
         (0, typeorm_1.JoinColumn)({ name: 'rolpaciente' }),
         __metadata("design:type", RolPacientes_1.RolPaciente)
     ], Pacientes.prototype, "rolPaciente", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Pacientes.prototype, "id_usuario", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
+        __metadata("design:type", Usuarios_1.Usuarios)
+    ], Pacientes.prototype, "usuario", void 0);
     Pacientes = __decorate([
         (0, typeorm_1.Entity)({ name: 'pacientes' })
     ], Pacientes);

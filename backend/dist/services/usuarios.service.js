@@ -36,9 +36,10 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
+exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
 var Usuarios_1 = require("../entities/Usuarios");
 var typeorm_1 = require("../config/typeorm");
+var typeorm_2 = require("typeorm");
 var RolUsuarios_1 = require("../entities/RolUsuarios");
 var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
@@ -47,7 +48,7 @@ var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0,
             case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).save(usuarios)];
             case 1:
                 res = _a.sent();
-                return [2 /*return*/, res != null];
+                return [2 /*return*/, res];
         }
     });
 }); };
@@ -108,4 +109,41 @@ var getAllRoles = function () { return __awaiter(void 0, void 0, void 0, functio
     });
 }); };
 exports.getAllRoles = getAllRoles;
+var updateUsuariosService = function (paciente) { return __awaiter(void 0, void 0, void 0, function () {
+    var pacToUpdate, resp;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                console.log(paciente);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOneBy({ email: paciente.email })];
+            case 1:
+                pacToUpdate = _a.sent();
+                resp = null;
+                if (!pacToUpdate) return [3 /*break*/, 3];
+                Object.assign(pacToUpdate, paciente);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).save(pacToUpdate)];
+            case 2:
+                resp = _a.sent();
+                _a.label = 3;
+            case 3: return [2 /*return*/, resp != null];
+        }
+    });
+}); };
+exports.updateUsuariosService = updateUsuariosService;
+var getAllUsersExceptMe = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var users;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).find({
+                    where: {
+                        id: (0, typeorm_2.Not)(id)
+                    }
+                })];
+            case 1:
+                users = _a.sent();
+                return [2 /*return*/, users];
+        }
+    });
+}); };
+exports.getAllUsersExceptMe = getAllUsersExceptMe;
 //# sourceMappingURL=usuarios.service.js.map

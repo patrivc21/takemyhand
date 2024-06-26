@@ -7,6 +7,7 @@ const router = express.Router();
 router.post('/addProfesional', [profesionalController.addNewProfesional]);
 router.get('/getOneProfesional', [profesionalController.getOneProfesionalController]);
 router.get('/getAllProfesionales', [profesionalController.getAllProfesionalesControllers]);
-router.put('/updateProfesional', [AuthGuard, profesionalController.updateProfesional]);
+router.put('/updateProfesional', [ profesionalController.updateProfesional]);
+router.post('/deleteProfesionales', [profesionalController.deleteProfesionalesController]);
 
 export default router;

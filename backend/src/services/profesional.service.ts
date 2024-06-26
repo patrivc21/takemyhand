@@ -31,11 +31,21 @@ export const updateProfesionalesService = async(profesional: Profesionales): Pro
     return resp != null;
 }
 
-export const deleteProfesionalesService = async(id: number): Promise<boolean> => {
+export const deleteOneProfesionalesService = async(id: number): Promise<boolean> => {
     let profToEliminate = await DB.getRepository(Profesionales).findOneBy({id: id});
     let resp = null;
     if(profToEliminate){
         resp = await DB.getRepository(Profesionales).remove(profToEliminate);
     }
     return resp != null;
+}
+
+export const deleteProfesionalesService = async(ids: number[]): Promise<boolean> => {
+    try {
+        const deleteResult = await DB.getRepository(Profesionales).delete(ids);
+        return deleteResult.affected != null;
+    } catch (error) {
+        console.error('Error deleting profesionales:', error);
+        return false;
+    }
 }
