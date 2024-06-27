@@ -109,19 +109,17 @@ var getAllRoles = function () { return __awaiter(void 0, void 0, void 0, functio
     });
 }); };
 exports.getAllRoles = getAllRoles;
-var updateUsuariosService = function (paciente) { return __awaiter(void 0, void 0, void 0, function () {
-    var pacToUpdate, resp;
+var updateUsuariosService = function (usuario) { return __awaiter(void 0, void 0, void 0, function () {
+    var userToUpdate, resp;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                console.log(paciente);
-                return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOneBy({ email: paciente.email })];
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOneBy({ email: usuario.email })];
             case 1:
-                pacToUpdate = _a.sent();
+                userToUpdate = _a.sent();
                 resp = null;
-                if (!pacToUpdate) return [3 /*break*/, 3];
-                Object.assign(pacToUpdate, paciente);
-                return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).save(pacToUpdate)];
+                if (!userToUpdate) return [3 /*break*/, 3];
+                Object.assign(userToUpdate, usuario);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).save(userToUpdate)];
             case 2:
                 resp = _a.sent();
                 _a.label = 3;

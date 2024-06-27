@@ -128,7 +128,7 @@ var deleteProfesionalesService = function (ids) { return __awaiter(void 0, void 
                 return [2 /*return*/, deleteResult.affected != null];
             case 2:
                 error_1 = _a.sent();
-                console.error('Error deleting profesionales:', error_1);
+                console.error('Error al borrar los profesionales profesionales:', error_1);
                 return [2 /*return*/, false];
             case 3: return [2 /*return*/];
         }

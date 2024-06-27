@@ -151,12 +151,9 @@ export const updateUsuarios = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
     try {
         let user = req.body;
-        console.log('user', user)
         let result = await updateUsuariosService(user);
         
-        if(user.rol == 1){
-            // await (user)
-        }else if(user.rol == 2){
+        if(user.rol == 2){
             await updatePacientesService(user)
         }else if(user.rol == 3){
             await updateProfesionalesService(user)

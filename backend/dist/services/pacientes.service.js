@@ -112,9 +112,7 @@ var updatePacientesService = function (paciente) { return __awaiter(void 0, void
     var pacToUpdate, resp;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                console.log(paciente);
-                return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).findOneBy({ email: paciente.email })];
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).findOneBy({ email: paciente.email })];
             case 1:
                 pacToUpdate = _a.sent();
                 resp = null;

@@ -41,7 +41,6 @@ export const getAllRoles = async ():Promise<Pacientes[]> => {
 
 
 export const updatePacientesService = async(paciente: any): Promise<boolean> => {
-    console.log(paciente)
     let pacToUpdate = await DB.getRepository(Pacientes).findOneBy({email: paciente.email});
     let resp = null;
     if(pacToUpdate){

@@ -45,7 +45,8 @@ export const deleteProfesionalesService = async(ids: number[]): Promise<boolean>
         const deleteResult = await DB.getRepository(Profesionales).delete(ids);
         return deleteResult.affected != null;
     } catch (error) {
-        console.error('Error deleting profesionales:', error);
+        console.error('Error al borrar los profesionales profesionales:', error);
         return false;
     }
 }
+

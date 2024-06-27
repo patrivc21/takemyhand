@@ -36,13 +36,12 @@ export const getAllRoles = async ():Promise<RolUsuarios[]> => {
 }
 
 
-export const updateUsuariosService = async(paciente: any): Promise<boolean> => {
-    console.log(paciente)
-    let pacToUpdate = await DB.getRepository(Usuarios).findOneBy({email: paciente.email});
+export const updateUsuariosService = async(usuario: any): Promise<boolean> => {
+    let userToUpdate = await DB.getRepository(Usuarios).findOneBy({email: usuario.email});
     let resp = null;
-    if(pacToUpdate){
-        Object.assign(pacToUpdate, paciente);
-        resp = await DB.getRepository(Usuarios).save(pacToUpdate);
+    if(userToUpdate){
+        Object.assign(userToUpdate, usuario);
+        resp = await DB.getRepository(Usuarios).save(userToUpdate);
     }
     return resp != null;
 }

@@ -293,37 +293,33 @@ var updateUsuarios = function (req, res) { return __awaiter(void 0, void 0, void
                 resp = new RespGeneric_1.default();
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 8, , 9]);
+                _a.trys.push([1, 7, , 8]);
                 user = req.body;
-                console.log('user', user);
                 return [4 /*yield*/, (0, usuarios_service_1.updateUsuariosService)(user)];
             case 2:
                 result = _a.sent();
-                if (!(user.rol == 1)) return [3 /*break*/, 3];
-                return [3 /*break*/, 7];
-            case 3:
-                if (!(user.rol == 2)) return [3 /*break*/, 5];
+                if (!(user.rol == 2)) return [3 /*break*/, 4];
                 return [4 /*yield*/, (0, pacientes_service_1.updatePacientesService)(user)];
+            case 3:
+                _a.sent();
+                return [3 /*break*/, 6];
             case 4:
-                _a.sent();
-                return [3 /*break*/, 7];
-            case 5:
-                if (!(user.rol == 3)) return [3 /*break*/, 7];
+                if (!(user.rol == 3)) return [3 /*break*/, 6];
                 return [4 /*yield*/, (0, profesional_service_1.updateProfesionalesService)(user)];
-            case 6:
+            case 5:
                 _a.sent();
-                _a.label = 7;
-            case 7:
+                _a.label = 6;
+            case 6:
                 resp.cod = result ? 200 : 400;
                 resp.data = { user: result };
-                return [3 /*break*/, 9];
-            case 8:
+                return [3 /*break*/, 8];
+            case 7:
                 e_7 = _a.sent();
                 resp.msg = e_7;
                 resp.cod = 500;
                 resp.data = { e: e_7 };
-                return [3 /*break*/, 9];
-            case 9:
+                return [3 /*break*/, 8];
+            case 8:
                 res.json(resp);
                 return [2 /*return*/];
         }
