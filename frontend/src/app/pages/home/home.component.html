@@ -1,10 +1,10 @@
 <div class="card">
+    <div class="imagen-completa">
+        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil">
+    </div>
     <div class="menu-container">
         <div class="menu-item-left">
-            <img src="../../../assets/logos/1.png" alt="Foto de perfil" class="logo-pic">
-        </div>
-        <div class="menu-item-center">
-            <p-dropdown class="d-flex flex-align-center" [style]="{'width': '20rem'}" placeholder="Buscar perfiles..." 
+            <p-dropdown class="d-flex flex-align-center" [style]="{'width': '25rem'}" placeholder="Buscar perfiles..." 
                 [options]="users$ | async" [filter]="true" filterBy="nombre" appendTo="body" optionLabel="nombre" 
                 [(ngModel)]="selectedPerfil" (onChange)="buscar()">
                 <ng-template let-country pTemplate="item">
@@ -18,7 +18,7 @@
         <div class="menu-item-right">
             <img src="https://cdn.pixabay.com/photo/2021/02/12/07/03/icon-6007530_1280.png" alt="Foto de perfil" class="profile-pic" (click)="verPerfil()">
             <span>{{ usuario.nombre }}</span>
-            <div class="dropdown-content">
+            <div class="dropdown-content mb-4">
                 <a href="#" (click)="logOut()" style="color: #98CDDF;" class="texto">Cerrar sesión</a>
             </div>
         </div>

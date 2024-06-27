@@ -53,3 +53,20 @@ ol, ul {
   cursor: pointer;
 }
 
+.boton-tabla .p-button{
+  background-color: white;
+  color: #167496;
+  border: none;
+}
+
+.boton-borrar .p-button{
+  background-color: #de4c4c;
+  color: white;
+  border: none;
+  border-radius: 12px;
+}
+
+a {
+  color: #167496;
+}
+

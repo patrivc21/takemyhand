@@ -60,4 +60,8 @@ export class PacientesComponent {
     this.pacienteState.getAllPacientes()
     this.pacSeleccionados = []
   }
+
+  public volver(){
+    this.router.navigate(['/home-admin']);
+  }
 }

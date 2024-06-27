@@ -24,10 +24,8 @@ export class EditarPerfilComponent {
   public editarPerfil = true
 
   ngOnInit(): void {
-    console.log(this.usuario)
     this.generateLoginForm();
     this.authState.getUserByEmail(this.usuario.email).pipe(take(1)).subscribe(dat => {
-      console.log(dat)
       this.form.setValue(
         {
           email: dat.data.user.email,
@@ -46,8 +44,7 @@ export class EditarPerfilComponent {
 
   private generateLoginForm(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required]],
-      // password: ['', Validators.required],
+      email: [{value: '', disabled: true}, [Validators.required]],
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
       username: ['', Validators.required],

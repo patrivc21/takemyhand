@@ -32,8 +32,8 @@ h1 {
 }
 
 .logo-pic {
-    width: 120px;
-    height: 120px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     cursor: pointer;
 }
@@ -80,6 +80,15 @@ h1 {
 .texto {
     color: #167496;
     font-family: "Monserrat";
+}
+
+.imagen-completa{
+    width: 100%;
+    background-color: #167496;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }
   
   

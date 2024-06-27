@@ -20,6 +20,7 @@ import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 const routes: Routes = [{ path: '', component: HomeAdminComponent }];
 
@@ -47,7 +48,8 @@ const routes: Routes = [{ path: '', component: HomeAdminComponent }];
     CascadeSelectModule,
     RouterModule.forChild(routes),
     PasswordModule,
-    MenubarModule
+    MenubarModule,
+    TabMenuModule
   ]
 })
 export class HomeAdminModule { }

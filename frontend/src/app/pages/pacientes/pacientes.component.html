@@ -1,6 +1,7 @@
 <ng-container *ngIf="(allPacientes$ | async) as pacientes">
     <div class="card p-5">
-      <div class="flex flex-row justify-content-between mb-3">
+      <div class="flex flex-row mb-3">
+        <p-button icon="pi pi-arrow-left" class="boton-tabla mr-2" (onClick)="volver()"></p-button>
         <h2>Total Pacientes de la Aplicación</h2>
       </div>
 

@@ -1,0 +1,33 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    align-items: baseline;
+  }
+  
+  .main-menu {
+    flex-grow: 1;
+  }
+  
+  .logout-button {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-button i {
+    margin-right: 0.5rem;
+  }
+  
+  .imagen-completa{
+    width: 100%;
+    background-color: #167496;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }

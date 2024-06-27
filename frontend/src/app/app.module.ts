@@ -17,6 +17,7 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { MessageService } from 'primeng/api';
+import { NavigationComponent } from './components/navigation/navigation.component';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -30,6 +31,7 @@ export function HttpLoaderFactory (http: HttpClient): TranslateHttpLoader {
   imports: [
     BrowserModule,
     FormsModule,
+    NavigationComponent,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),

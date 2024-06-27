@@ -1,6 +1,7 @@
 <ng-container *ngIf="(allProfesionales$ | async) as profesionales">
     <div class="card p-5">
-      <div class="flex flex-row justify-content-between mb-3">
+      <div class="flex flex-row mb-3">
+        <p-button icon="pi pi-arrow-left" class="boton-tabla mr-4" (onClick)="volver()"></p-button>
         <h2>Total Pacientes de la Aplicación</h2>
       </div>
 
@@ -33,16 +34,16 @@
             <th></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-pack>
+        <ng-template pTemplate="body" let-pro>
           <tr>
             <td>
-              <p-tableCheckbox [value]="pack.id"></p-tableCheckbox>
+              <p-tableCheckbox [value]="pro.id"></p-tableCheckbox>
             </td>
             <td *ngIf="profSeleccionados.length > 0"></td>
-            <td class="text-center">{{ pack.nombre }}</td>
-            <td class="text-center">{{ pack.username }}</td>
-            <td class="text-center">{{ pack.email }} </td>
-            <td class="text-center">{{ pack.activo ? 'Sí' : 'No' }}</td>
+            <td class="text-center">{{ pro.nombre }}</td>
+            <td class="text-center">{{ pro.username }}</td>
+            <td class="text-center">{{ pro.email }} </td>
+            <td class="text-center">{{ pro.activo ? 'Sí' : 'No' }}</td>
           </tr>
         </ng-template>
       </p-table>

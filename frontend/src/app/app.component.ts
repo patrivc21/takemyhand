@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  public showNav: boolean = false
+
   title = 'frontend';
+
+  constructor(private router: Router){
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd){
+        const routesWithNavbar = ['/home-admin']
+        this.showNav = routesWithNavbar.includes(event.urlAfterRedirects)
+      }
+    })
+  }
 }

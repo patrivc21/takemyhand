@@ -56,4 +56,8 @@ export class ProfesionalesComponent {
     this.profState.getAllProfesionales()
     this.profSeleccionados = []
   }
+
+  public volver(){
+    this.router.navigate(['/home-admin']);
+  }
 }

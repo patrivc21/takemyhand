@@ -1,18 +1,24 @@
-import { Component, ViewChild, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { ButtonModule } from 'primeng/button';
 import { AuthState } from 'src/app/state/auth.state';
 
 @Component({
-  selector: 'app-home-admin',
-  templateUrl: './home-admin.component.html',
-  styleUrls: ['./home-admin.component.css']
+  selector: 'app-navigation',
+  standalone: true,
+  encapsulation: ViewEncapsulation.None,
+  imports: [TabMenuModule, ButtonModule],
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.css']
 })
-export class HomeAdminComponent {
+export class NavigationComponent {
   private readonly authState = inject(AuthState);
+  public usuario: any
   public items: MenuItem[] | undefined;
-  @ViewChild('profileMenu') profileMenu: any;
-  
+
   ngOnInit(): void {
+    this.usuario = this.authState.getUser();
   }
 
   constructor() {
@@ -27,19 +33,10 @@ export class HomeAdminComponent {
         icon: 'pi pi-user',
         routerLink: ['/profesionales']
       },
-      {
-        label: 'Cerrar sesión',
-        icon: 'pi pi-sign-out',
-        command: () => this.cerrar()
-      }
     ];
   }
 
-  toggleMenu() {
-    this.profileMenu.toggle(event);
-  }
-
-  public cerrar(){
+  public logOut(){
     this.authState.logout()
   }
 }

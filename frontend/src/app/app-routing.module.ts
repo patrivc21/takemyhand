@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { AdminGuard } from './guards/admin.guard';
+
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -20,7 +23,8 @@ const routes: Routes = [
   },
   { 
     path: 'home-admin', 
-    canActivate: [AuthGuard], 
+    canActivate: [AdminGuard], 
+    // component: NavigationComponent,
     loadChildren: () => import('./pages/home-admin/home-admin.module').then(m => m.HomeAdminModule) 
   },
   { 
