@@ -1,0 +1,20 @@
+<div class="card">
+    <div class="imagen-completa">
+        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil">
+    </div>
+
+    <form (ngSubmit)="enviarCuestionario()">
+        <div *ngFor="let pregunta of preguntas; let i = index" class="d-flex justify-content-center mt-2">
+          <label class="texto">{{ pregunta }}</label>
+          <select [(ngModel)]="respuestas[i]" name="respuesta{{ i }}" class="ml-3">
+            <option [value]="'SI'">Sí</option>
+            <option [value]="'NO'">No</option>
+          </select>
+        </div>
+        <div class="d-flex justify-content-center mt-4 mb-2">
+            <p-button type="submit" class="button-save-form">Enviar</p-button>
+        </div>
+    </form>
+      
+</div>
+

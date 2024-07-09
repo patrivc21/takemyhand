@@ -14,28 +14,39 @@ const routes: Routes = [
   },
   { 
     path: 'register', 
+    title: 'TMH • Registro',
     loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroModule) 
   },
   { 
     path: 'home', 
+    title: 'TMH • Homepage',
     canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule) 
   },
   { 
     path: 'home-admin', 
     canActivate: [AdminGuard], 
+    title: 'TMH • Homepage Administrador',
     // component: NavigationComponent,
     loadChildren: () => import('./pages/home-admin/home-admin.module').then(m => m.HomeAdminModule) 
   },
   { 
     path: 'pacientes', 
     // canActivate: [AuthGuard], 
+    title: 'TMH • Pacientes',
     loadChildren: () => import('./pages/pacientes/pacientes.module').then(m => m.PacientesModule) 
   },
   { 
     path: 'profesionales', 
+    title: 'TMH • Profesionales',
     // canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/profesionales/profesionales.module').then(m => m.ProfesionalesModule) 
+  },
+  { 
+    path: 'formulario', 
+    title: 'TMH • Formulario',
+    // canActivate: [AuthGuard], 
+    loadChildren: () => import('./pages/formulario/formulario.module').then(m => m.FormularioModule) 
   },
 ];
 

@@ -1,9 +1,13 @@
 import { Component, ViewChild, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { DropdownFilterOptions } from 'primeng/dropdown';
-import { Observable, take } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
 import { User } from 'src/app/interfaces/Usuarios';
+import { FormularioService } from 'src/app/services/formulario.service';
 import { AuthState } from 'src/app/state/auth.state';
+import { FormularioState } from 'src/app/state/formulario.state';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -22,17 +26,30 @@ export class HomeComponent {
   public selectedPerfil: any
   filterValue: string | undefined = '';
 
+  public verDialog$: Observable<boolean>
+  public displayDialog: boolean = false
+
+  public BACKEND_FILES = environment.BACKEND_FILES
+  public datos: any
+  public onePlan$: Observable<any>
+
   ngOnInit(): void {
-    this.usuario = this.authState.getUser();
-    console.log(this.usuario.email)
+    this.usuario = this.authState.getUser()
     this.authState.getUserByEmail(this.usuario.email).pipe(take(1)).subscribe(dat => {
       console.log(dat)
+      this.authState.getAllUsersExceptMe(dat.data.user.id)
     })
 
-    this.authState.getAllUsersExceptMe(this.usuario.id)
+    this.formularioService.getOnePlan(2).pipe(take(1)).subscribe(dat => {
+      console.log(dat)
+      this.datos = dat.data.plan.nombre_archivo
+      console.log(this.datos)
+    })
+
+    console.log(this.BACKEND_FILES + this.datos)
   }
 
-  constructor() {
+  constructor(private readonly router: Router, private formularioService: FormularioService, private formState: FormularioState) {
     this.items = [
       {
         label: 'Cerrar sesión',
@@ -45,6 +62,8 @@ export class HomeComponent {
 
   private setStateSelector() {
     this.users$ = this.authState.users$;
+    this.verDialog$ = this.authState.verDialog$;
+    this.onePlan$ = this.formState.onePlan$
   }
 
 
@@ -69,6 +88,16 @@ export class HomeComponent {
   public cerrarBusqueda(){
     this.selectedPerfil = []
     this.perfilBusqueda = false
+  }
+
+  public hideDialog() {
+    this.authState.closeDialog()
+    this.displayDialog = false
+  }
+
+  public navigateToForm() {
+    this.hideDialog();
+    this.router.navigate(['/formulario']);
   }
 
 }

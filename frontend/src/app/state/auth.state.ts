@@ -16,6 +16,7 @@ interface IAuthState {
     token: string;
     loadingButton: boolean
     allRoles?: IRoles[]
+    verDialog: boolean
 }
 
 @Injectable({
@@ -24,7 +25,10 @@ interface IAuthState {
 export class AuthState {
   private readonly initialState: IAuthState = { user: {} as User,
   token: '',
-  users: [], loadingButton: false}
+  users: [], 
+  loadingButton: false, 
+  verDialog: true
+  }
 
   private readonly _state: BehaviorSubject<IAuthState> = new BehaviorSubject(
     this.initialState
@@ -48,6 +52,10 @@ export class AuthState {
   public readonly allRoles$: Observable<IRoles[]> = this._state
     .asObservable()
     .pipe(map((state) => state && state.allRoles))
+
+  public readonly verDialog$: Observable<boolean> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.verDialog))
 
   private get state() {
     return this._state.getValue()
@@ -75,6 +83,14 @@ export class AuthState {
     return localStorage.getItem('token')
   }
 
+  public verDialog(){
+    this._state.next({...this.state, verDialog: true})
+  }
+
+  public closeDialog(){
+    this._state.next({...this.state, verDialog: false})
+  }
+
 
   public async login(data: UserLogin): Promise<void> {
     this._state.next({ ...this.state, loadingButton: true })
@@ -82,7 +98,6 @@ export class AuthState {
       console.log('login', res)
       if (res.cod == 200) {
         this.setUser(res.data.user);
-        console.log(res.data.token)
         localStorage.setItem('token', res.data.token);
         this.toastr.success('Sesion iniciada con éxito', 'Éxito')
         console.log('login', res.data.rol)
@@ -100,29 +115,28 @@ export class AuthState {
     });
   }
 
-  public register(data: any): void {
-    this.authService.register(data).pipe(take(1)).subscribe(res => {
-      console.log(res)
+  public register(dat: any): Observable<GenericResponse> {
+    const data = this.authService.register(dat)
+    data.pipe(take(1)).subscribe(res => {
       if (res.cod == 200) {
-        // this.getUsers();
         localStorage.setItem('token', res.data.token);
-        this.setDialog(false);
+        this.setDialog(true);
         this.toastr.success('¡Usuario creado con éxito!', 'Éxito')
 
         if(res.data.user.rol == 1){
           this.router.navigate(['/home-admin']);
         }else if(res.data.user.rol == 2){
           this.router.navigate(['/home']);
+          this.verDialog()
         }else if(res.data.user.rol == 3){
           this.router.navigate(['/home']);
         }
-        
-        return true
+   
       } else {
         this.toastr.error('Error al crear el usuario', 'Error')
-        return false
       }
     });
+    return data;
   }
 
   public async logout(): Promise<void> {

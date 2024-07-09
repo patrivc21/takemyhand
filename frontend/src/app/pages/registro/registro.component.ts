@@ -22,6 +22,7 @@ export class RegistroComponent {
   public loading = false
 
   public allRoles$: Observable<IRoles[]>;
+  public displayDialog: boolean = false;
 
   ngOnInit(): void {
     this.generateLoginForm();
@@ -40,19 +41,7 @@ export class RegistroComponent {
       apellidos: ['', Validators.required],
       username: ['', Validators.required],
       rol: [null, Validators.required],
-      // especialidad: ['']
     });
-
-    // para que especialidad solo sea obligatorio para los profesionales
-    // this.form.get('rol').valueChanges.subscribe(rol => {
-    //   const especialidad = this.form.get('especialidad');
-    //   if (rol === 3) {
-    //     especialidad.setValidators([Validators.required]);
-    //   } else {
-    //     especialidad.clearValidators();
-    //   }
-    //   especialidad.updateValueAndValidity();
-    // });
   }
 
   private setStateSelector() {
@@ -106,5 +95,4 @@ export class RegistroComponent {
   get username(): AbstractControl | null { return this.form.get('username'); }
   get password(): AbstractControl | null { return this.form.get('password'); }
   get rol(): AbstractControl | null { return this.form.get('rol'); }
-  // get especialidad(): AbstractControl | null { return this.form.get('especialidad'); }
 }

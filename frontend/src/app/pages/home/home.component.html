@@ -25,17 +25,42 @@
     </div>   
 </div>
 
-<div *ngIf="usuario.rol == 2">
-    <h2 class="titulo-login mt-8">¡WELCOME!</h2>  
-</div>
+<ng-container *ngIf="usuario.rol == 2">
+    <div class="homepage-container">
+        
+        <div class="homepage-item" [routerLink]="'/formulario'">
+            <div class="homepage-background" style="background-image: url('https://i.blogs.es/5c3d68/forms/1366_2000.jpg')"></div>
+            <div class="homepage-text">Formulario</div>
+        </div>
 
-<div *ngIf="usuario.rol == 3">
-    <h2 class="titulo-login mt-8">¡WELCOME PROFESIONAL!</h2>  
-</div>
+        <div class="homepage-item" [routerLink]="'/recursos'">
+            <div class="homepage-background" style="background-image: url('/assets/recursos.jpg')"></div>
+            <div class="homepage-text">Recursos</div>
+        </div>
+        <div class="homepage-item" [routerLink]="'/chat'">
+            <div class="homepage-background" style="background-image: url('/assets/chat.jpg')"></div>
+            <div class="homepage-text">Chat</div>
+        </div>
+        <div class="homepage-item" [routerLink]="'/proximamente'">
+            <div class="homepage-background" style="background-image: url('/assets/proximamente.jpg')"></div>
+            <div class="homepage-text">Próximamente</div>
+        </div>
+    </div>
+</ng-container>
+  
+
+<ng-container *ngIf="usuario.rol == 3">
+</ng-container>
 
 <div *ngIf="viewPerfil">
     <app-editar-perfil (res)="cerrar()" [usuario]="usuario"></app-editar-perfil>
 </div>
+
+
+    <!-- <img src="{{BACKEND_FILES}}/{{datos}}" 
+     />
+     {{BACKEND_FILES}}/{{datos}} -->
+
 
 
 
@@ -53,3 +78,13 @@
       <p-button class="d-flex justify-content-center align-items-center button-save-form" (onClick)="cerrarBusqueda()">Cancelar</p-button>
     </div>
 </p-dialog>
+
+<ng-container *ngIf="(verDialog$ | async)">
+    <p-dialog header="Formulario" [(visible)]="displayDialog" modal="true" [closable]="false">
+        <p>¿Te gustaría rellenar el formulario?</p>
+        <p-footer>
+          <p-button type="button" pButton label="Aceptar" icon="pi pi-check" (click)="navigateToForm()"></p-button>
+          <p-button type="button" pButton label="Cancelar" icon="pi pi-times" (click)="hideDialog()"></p-button>
+        </p-footer>
+      </p-dialog>
+</ng-container>

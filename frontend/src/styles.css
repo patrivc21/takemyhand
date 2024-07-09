@@ -51,12 +51,14 @@ ol, ul {
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  font-family: "Monserrat";
 }
 
 .boton-tabla .p-button{
   background-color: white;
   color: #167496;
   border: none;
+  font-family: "Monserrat";
 }
 
 .boton-borrar .p-button{
@@ -68,5 +70,6 @@ ol, ul {
 
 a {
   color: #167496;
+  font-family: "Monserrat";
 }
 

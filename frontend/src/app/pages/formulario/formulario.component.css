@@ -1,0 +1,17 @@
+
+.texto {
+    font-family: "Monserrat";
+    font-family: 14px;
+}
+
+.imagen-completa{
+    width: 100%;
+    background-color: #167496;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+  
+ 
