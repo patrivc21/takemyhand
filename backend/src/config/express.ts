@@ -28,19 +28,27 @@ export default class Server {
         this.app.use(express.urlencoded({ extended: true }));
 
         this.app.use(compress());
-        this.app.use(helmet());
+        this.app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
         // allow all
         this.app.use(cors({
-            origin: [config.FRONTEND_URL, 'http://localhost:4200', 'https://localhost:4200', 'localhost:4200'],
+            origin: [config.FRONTEND_URL, 'http://localhost:4200'],
             credentials: true
         }));
-
 
         this.app.get('/', (_req: Request, res: Response) => {
             res.send('Express + TypeScript Server');
         });
 
+        this.app.use('/assets', [ express.static(path.join(__dirname, '../../assets'))]);
         this.app.use('/api', [indexRoutes]);
         this.app.listen(this.port, () => callback(this.app));
+    }
+
+    private setFrameAncestors() {
+        return (_: Request, res: Response, next: any) => {
+            res.setHeader("Content-Security-Policy", `frame-ancestors ${config.FRONTEND_URL}`);
+            res.setHeader("X-Frame-Options", 'sameorigin');
+            next();
+        }
     }
 }

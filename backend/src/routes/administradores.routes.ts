@@ -1,5 +1,7 @@
 import express from 'express';
 import adminController from '../controllers/administrador.controller';
+
+import cuestionarioController from '../controllers/cuestionarios.controller';
 import { AuthGuard } from '../guards/auth.guard';
 
 const router = express.Router();

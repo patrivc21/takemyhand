@@ -27,17 +27,25 @@ var Server = /** @class */ (function () {
         this.app.use(express_1.default.json({ limit: '50mb' }));
         this.app.use(express_1.default.urlencoded({ extended: true }));
         this.app.use((0, compression_1.default)());
-        this.app.use((0, helmet_1.default)());
+        this.app.use(helmet_1.default.crossOriginResourcePolicy({ policy: "cross-origin" }));
         // allow all
         this.app.use((0, cors_1.default)({
-            origin: [config_1.default.FRONTEND_URL, 'http://localhost:4200', 'https://localhost:4200', 'localhost:4200'],
+            origin: [config_1.default.FRONTEND_URL, 'http://localhost:4200'],
             credentials: true
         }));
         this.app.get('/', function (_req, res) {
             res.send('Express + TypeScript Server');
         });
+        this.app.use('/assets', [express_1.default.static(path.join(__dirname, '../../assets'))]);
         this.app.use('/api', [index_routes_1.default]);
         this.app.listen(this.port, function () { return callback(_this.app); });
+    };
+    Server.prototype.setFrameAncestors = function () {
+        return function (_, res, next) {
+            res.setHeader("Content-Security-Policy", "frame-ancestors ".concat(config_1.default.FRONTEND_URL));
+            res.setHeader("X-Frame-Options", 'sameorigin');
+            next();
+        };
     };
     return Server;
 }());
