@@ -55,7 +55,6 @@ ol, ul {
 }
 
 .boton-tabla .p-button{
-  background-color: white;
   color: #167496;
   border: none;
   font-family: "Monserrat";
@@ -66,6 +65,29 @@ ol, ul {
   color: white;
   border: none;
   border-radius: 12px;
+}
+
+.boton-tabla-inverso .p-button{
+  background-color: #167496;
+  color: white;
+  border: none;
+  font-family: "Monserrat";
+  width: 100%;
+}
+
+.boton-tabla-inverso .p-button .pi {
+  color: white;
+  margin-left: 10%;
+}
+
+.button-add .p-button {
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  color: #167496;
+  border: 1px #167496;
+  border-radius: 5px;
+  font-family: "Monserrat";
 }
 
 a {

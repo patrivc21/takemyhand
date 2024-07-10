@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { Router } from '@angular/router';
 import { GenericResponse } from '../interfaces/GenericResponse';
-import { Pacientes } from '../interfaces/Pacientes';
-import { PacientesService } from '../services/pacientes.service';
 import { FormularioService } from '../services/formulario.service';
 
 interface IFormularioState {
@@ -34,21 +32,5 @@ export class FormularioState {
     public reset(): void {
         this._state.next(this.initialState);
     }
-
-
-    public getOnePlan(id:number): Observable<GenericResponse> {
-        const data = this.service.getOnePlan(id)
-        data.pipe(take(1)).subscribe((response) => {
-          // console.log(response)
-          if (response.cod == 200) {
-            this._state.next({
-              ...this.state,
-              onePlan: response.data.plan
-            })
-          }
-        })
-        return data
-      }
-
 
 }

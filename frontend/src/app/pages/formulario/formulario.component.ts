@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormularioService } from 'src/app/services/formulario.service';
 
 @Component({
@@ -25,13 +26,22 @@ export class FormularioComponent {
     '¿Ha intentado alguna vez quitarse la vida?'
   ];
   public respuestas: string[] = Array(this.preguntas.length).fill('NO');
+  public verForm: boolean = false
 
-  constructor(private cuestionarioService: FormularioService) {}
+  constructor(private cuestionarioService: FormularioService, private router: Router) {}
 
   public enviarCuestionario() {
     this.cuestionarioService.enviarRespuestas(this.respuestas)
       .subscribe(response => {
         console.log('Resultado:', response);
       });
+  }
+
+  public volver(){
+    this.router.navigate(['/home']);
+  }
+
+  public ver(){
+    this.verForm = true
   }
 }

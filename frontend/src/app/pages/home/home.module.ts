@@ -21,9 +21,13 @@ import { AvatarModule } from 'primeng/avatar';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
 import { EditarPerfilComponent } from './Components/editar-perfil/editar-perfil.component';
+import { CrearPlanComponent } from './Components/crear-plan/crear-plan.component';
+import { VerPlanComponent } from './Components/ver-plan/ver-plan.component';
 
 const routes: Routes = [{ path: '', component: HomeComponent },
-  {path: 'editar', component: EditarPerfilComponent}
+  {path: 'editar', component: EditarPerfilComponent},
+  // {path: 'crearPlan/:id', component: CrearPlanComponent},
+  {path: 'verPlan', component: VerPlanComponent}
 ];
 
 
@@ -31,7 +35,9 @@ const routes: Routes = [{ path: '', component: HomeComponent },
   providers: [ConfirmationService],
   declarations: [
     HomeComponent,
-    EditarPerfilComponent
+    EditarPerfilComponent,
+    CrearPlanComponent,
+    VerPlanComponent
   ],
   imports: [
     CommonModule,

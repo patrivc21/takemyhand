@@ -1,10 +1,19 @@
 <div class="card">
     <div class="imagen-completa">
-        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil">
+        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="120" >
+
+        <div class="menu-item-right">
+            <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" alt="Foto de perfil" class="profile-pic" (click)="verPerfil()">
+            <span style="color: white; font-family: 'Monserrat'">¡Hola de nuevo {{ usuario.nombre }}!</span>
+            <div>
+                <a href="#" (click)="logOut()" style="color: white; font-family: 'Monserrat'">Cerrar sesión</a>
+            </div>
+        </div>
     </div>
+    
     <div class="menu-container">
-        <div class="menu-item-left">
-            <p-dropdown class="d-flex flex-align-center" [style]="{'width': '25rem'}" placeholder="Buscar perfiles..." 
+        <div class="menu-item-left mb-4">
+            <p-dropdown class="d-flex flex-align-center" [style]="{'width': '22rem'}" placeholder="Buscar perfiles..." 
                 [options]="users$ | async" [filter]="true" filterBy="nombre" appendTo="body" optionLabel="nombre" 
                 [(ngModel)]="selectedPerfil" (onChange)="buscar()">
                 <ng-template let-country pTemplate="item">
@@ -15,13 +24,6 @@
                 </ng-template>
             </p-dropdown>
         </div>
-        <div class="menu-item-right">
-            <img src="https://cdn.pixabay.com/photo/2021/02/12/07/03/icon-6007530_1280.png" alt="Foto de perfil" class="profile-pic" (click)="verPerfil()">
-            <span>{{ usuario.nombre }}</span>
-            <div class="dropdown-content mb-4">
-                <a href="#" (click)="logOut()" style="color: #98CDDF;" class="texto">Cerrar sesión</a>
-            </div>
-        </div>
     </div>   
 </div>
 
@@ -30,7 +32,12 @@
         
         <div class="homepage-item" [routerLink]="'/formulario'">
             <div class="homepage-background" style="background-image: url('https://i.blogs.es/5c3d68/forms/1366_2000.jpg')"></div>
-            <div class="homepage-text">Formulario</div>
+            <div class="homepage-text">¡Comienza rellenado el formulario!</div>
+        </div>
+
+        <div class="homepage-item" [routerLink]="'/home/verPlan'">
+            <div class="homepage-background" style="background-image: url('https://live.staticflickr.com/2659/3823327893_68920103fb_b.jpg')"></div>
+            <div class="homepage-text">Plan de Seguridad</div>
         </div>
 
         <div class="homepage-item" [routerLink]="'/recursos'">

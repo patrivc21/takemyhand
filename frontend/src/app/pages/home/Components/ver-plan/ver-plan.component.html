@@ -1,0 +1,55 @@
+<ng-container>
+    <div class="imagen-completa">
+        <div class="menu-item-left">
+          <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+        </div>
+          <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="100">
+      </div>
+</ng-container>
+
+<div class="d-flex flex-column justify-content-center align-items-center texto mt-4">
+    <h2 style="font-weight: 900;"><i>¡Bienvenido a tu espacio seguro!</i></h2>
+    <!-- <h5>Rellena la información con momentos bonitos para poder revisarlos cuando quieras</h5> -->
+</div>
+
+<ng-container *ngIf="plan === null" class="mt-6">
+  <div class="texto d-flex flex-column justify-content-center align-items-center">
+    <h2 style="font-weight: 700;" class="mb-4">
+      Parece que aún no tienes un plan personalizado, ¡Creálo ahora!
+    </h2>
+    <p-button class="button-save-form" (onClick)="crearPlan(usuario.id)">Crear plan</p-button>
+  </div>
+</ng-container>
+
+<div *ngIf="verPlan">
+  <app-crear-plan [id_usuario]="id_usuario" (res)="cerrar()"></app-crear-plan>
+</div>
+
+
+<ng-container *ngIf="plan != null" class="mt-6">
+
+  <div class="texto d-flex flex-column justify-content-center align-items-center">
+    <div *ngIf="plan.lugares">
+      <h2>Estos luagres te encantan!</h2>
+      <p>{{plan.lugares}}</p>
+    </div>
+
+    <div *ngIf="plan.personas">
+      <h2>Estos luagres te encantan!</h2>
+      <p>{{plan.lugares}}</p>
+    </div>
+
+    <div *ngIf="plan.hobbies">
+      <h2>Estos luagres te encantan!</h2>
+      <p>{{plan.lugares}}</p>
+    </div>
+
+    <div>
+      <h2>Mira que bien los pasaste aqui</h2>
+      <img src="{{BACKEND_FILES}}/{{plan.nombre_archivo}}" height="70"
+      />
+    </div>
+    
+  </div>
+</ng-container>
+

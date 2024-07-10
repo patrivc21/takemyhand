@@ -1,6 +1,26 @@
-<div class="card">
+<div *ngIf="!verForm">
     <div class="imagen-completa">
-        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil">
+      <div class="menu-item-left">
+        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+      </div>
+        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="100">
+    </div>
+
+    <h2>Vamos a realizar un breve cuestionario para evaluar tu situacion</h2>
+    <h2>Te ayudaremos en todo!</h2>
+
+    <div class="d-flex justify-content-center mt-4 mb-2">
+      <p-button type="submit" class="button-save-form" (onClick)="ver()">Continuar</p-button>
+  </div>
+</div>
+
+
+<div *ngIf="verForm">
+    <div class="imagen-completa">
+      <div class="menu-item-left">
+        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+      </div>
+        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="100">
     </div>
 
     <form (ngSubmit)="enviarCuestionario()">
