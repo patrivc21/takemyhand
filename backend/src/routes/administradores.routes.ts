@@ -7,9 +7,9 @@ import { AuthGuard } from '../guards/auth.guard';
 const router = express.Router();
 
 router.post('/addAdmin', [adminController.addNewAdmin]);
-router.get('/getOneAdmin', [adminController.getOneAdminController]);
-router.get('/getAllAdministradores', [adminController.getAllAdministradoresControllers]);
-router.post('/deletePaciente', [AuthGuard, adminController.deletePaciente]);
-router.post('/deleteProfesional', [AuthGuard, adminController.deleteProfesional]);
+router.get('/getOneAdmin', AuthGuard, [adminController.getOneAdminController]);
+router.get('/getAllAdministradores', AuthGuard, [adminController.getAllAdministradoresControllers]);
+router.post('/deletePaciente', AuthGuard, [AuthGuard, adminController.deletePaciente]);
+router.post('/deleteProfesional', AuthGuard, [AuthGuard, adminController.deleteProfesional]);
 
 export default router;

@@ -5,9 +5,9 @@ import { AuthGuard } from '../guards/auth.guard';
 const router = express.Router();
 
 router.post('/addProfesional', [profesionalController.addNewProfesional]);
-router.get('/getOneProfesional', [profesionalController.getOneProfesionalController]);
-router.get('/getAllProfesionales', [profesionalController.getAllProfesionalesControllers]);
-router.put('/updateProfesional', [ profesionalController.updateProfesional]);
-router.post('/deleteProfesionales', [profesionalController.deleteProfesionalesController]);
+router.get('/getOneProfesional', AuthGuard, [profesionalController.getOneProfesionalController]);
+router.get('/getAllProfesionales', AuthGuard, [profesionalController.getAllProfesionalesControllers]);
+router.put('/updateProfesional', AuthGuard, [ profesionalController.updateProfesional]);
+router.post('/deleteProfesionales', AuthGuard, [profesionalController.deleteProfesionalesController]);
 
 export default router;

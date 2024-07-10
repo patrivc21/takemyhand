@@ -8,9 +8,9 @@ var administrador_controller_1 = __importDefault(require("../controllers/adminis
 var auth_guard_1 = require("../guards/auth.guard");
 var router = express_1.default.Router();
 router.post('/addAdmin', [administrador_controller_1.default.addNewAdmin]);
-router.get('/getOneAdmin', [administrador_controller_1.default.getOneAdminController]);
-router.get('/getAllAdministradores', [administrador_controller_1.default.getAllAdministradoresControllers]);
-router.post('/deletePaciente', [auth_guard_1.AuthGuard, administrador_controller_1.default.deletePaciente]);
-router.post('/deleteProfesional', [auth_guard_1.AuthGuard, administrador_controller_1.default.deleteProfesional]);
+router.get('/getOneAdmin', auth_guard_1.AuthGuard, [administrador_controller_1.default.getOneAdminController]);
+router.get('/getAllAdministradores', auth_guard_1.AuthGuard, [administrador_controller_1.default.getAllAdministradoresControllers]);
+router.post('/deletePaciente', auth_guard_1.AuthGuard, [auth_guard_1.AuthGuard, administrador_controller_1.default.deletePaciente]);
+router.post('/deleteProfesional', auth_guard_1.AuthGuard, [auth_guard_1.AuthGuard, administrador_controller_1.default.deleteProfesional]);
 exports.default = router;
 //# sourceMappingURL=administradores.routes.js.map

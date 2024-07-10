@@ -40,7 +40,7 @@ export default class Server {
         });
 
         this.app.use('/assets', [ express.static(path.join(__dirname, '../../assets'))]);
-        this.app.use('/api', [indexRoutes]);
+        this.app.use('/api', [this.setFrameAncestors(), indexRoutes]);
         this.app.listen(this.port, () => callback(this.app));
     }
 

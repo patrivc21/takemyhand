@@ -39,67 +39,83 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cuestionarioPlutchik = exports.cuestionarioProbabilidadEnDepresion = void 0;
-var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
-var cuestionarios_service_1 = require("../services/cuestionarios.service");
-var fs = require('fs');
-var cuestionarioProbabilidadEnDepresion = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, cuestionario, result, e_1;
+exports.getOnePlan = exports.addArchivo = exports.addPlanSeguridad = void 0;
+var typeorm_1 = require("../config/typeorm");
+var PlanSeguridad_1 = require("../entities/PlanSeguridad");
+var path_1 = __importDefault(require("path"));
+var addPlanSeguridad = function (plan) { return __awaiter(void 0, void 0, void 0, function () {
+    var datos, res;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                resp = new RespGeneric_1.default();
-                _a.label = 1;
+                datos = {
+                    id_usuario: plan.id_usuario,
+                    lugares: plan.lugares,
+                    hobbies: plan.hobbies,
+                    personas: plan.personas,
+                    nombre_archivo: ''
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).save(datos)];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                cuestionario = req.body;
-                return [4 /*yield*/, (0, cuestionarios_service_1.calcularResultadoRiesgoDespresion)(cuestionario)];
-            case 2:
-                result = _a.sent();
-                resp.msg = "Cuestionario finalizado";
-                resp.cod = result ? 200 : 400;
-                resp.data = { result: result };
-                return [3 /*break*/, 4];
-            case 3:
-                e_1 = _a.sent();
-                resp.msg = e_1;
-                resp.cod = 500;
-                return [3 /*break*/, 4];
-            case 4:
-                res.json(resp);
-                return [2 /*return*/];
+                res = _a.sent();
+                return [2 /*return*/, res];
         }
     });
 }); };
-exports.cuestionarioProbabilidadEnDepresion = cuestionarioProbabilidadEnDepresion;
-var cuestionarioPlutchik = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, cuestionario, result, e_2;
+exports.addPlanSeguridad = addPlanSeguridad;
+var addArchivo = function (plan, id) { return __awaiter(void 0, void 0, void 0, function () {
+    var filesSaved, _a, _b, _c, _i, key, file, tipoArchivo, archivo_com;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _a = plan;
+                _b = [];
+                for (_c in _a)
+                    _b.push(_c);
+                _i = 0;
+                _d.label = 1;
+            case 1:
+                if (!(_i < _b.length)) return [3 /*break*/, 4];
+                _c = _b[_i];
+                if (!(_c in _a)) return [3 /*break*/, 3];
+                key = _c;
+                if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
+                file = plan[key];
+                tipoArchivo = file ? path_1.default.basename(file.type) : '';
+                if (tipoArchivo === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+                    // Cambiar el tipo a "xlsx"
+                    tipoArchivo = 'xlsx';
+                }
+                archivo_com = {
+                    id: id,
+                    nombre_archivo: file ? path_1.default.basename(file.path) : '',
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).save(archivo_com)];
+            case 2:
+                filesSaved = _d.sent();
+                _d.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/, filesSaved != null];
+        }
+    });
+}); };
+exports.addArchivo = addArchivo;
+var getOnePlan = function (id_usuario) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                resp = new RespGeneric_1.default();
-                _a.label = 1;
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).findOne({
+                    where: [
+                        { id_usuario: id_usuario }
+                    ]
+                })];
             case 1:
-                _a.trys.push([1, 3, , 4]);
-                cuestionario = req.body.cuestionario;
-                return [4 /*yield*/, (0, cuestionarios_service_1.calcularResultadoPlutchik)(cuestionario)];
-            case 2:
-                result = _a.sent();
-                resp.msg = "Cuestionario finalizado";
-                resp.cod = result ? 200 : 400;
-                resp.data = { result: result, riesgo: result >= 6 };
-                return [3 /*break*/, 4];
-            case 3:
-                e_2 = _a.sent();
-                resp.msg = e_2;
-                resp.cod = 500;
-                return [3 /*break*/, 4];
-            case 4:
-                res.json(resp);
-                return [2 /*return*/];
+                res = _a.sent();
+                return [2 /*return*/, res];
         }
     });
 }); };
-exports.cuestionarioPlutchik = cuestionarioPlutchik;
-exports.default = { cuestionarioProbabilidadEnDepresion: exports.cuestionarioProbabilidadEnDepresion, cuestionarioPlutchik: exports.cuestionarioPlutchik };
-//# sourceMappingURL=cuestionarios.controller.js.map
+exports.getOnePlan = getOnePlan;
+//# sourceMappingURL=planseguridad.service.js.map

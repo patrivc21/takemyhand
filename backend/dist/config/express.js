@@ -37,7 +37,7 @@ var Server = /** @class */ (function () {
             res.send('Express + TypeScript Server');
         });
         this.app.use('/assets', [express_1.default.static(path.join(__dirname, '../../assets'))]);
-        this.app.use('/api', [index_routes_1.default]);
+        this.app.use('/api', [this.setFrameAncestors(), index_routes_1.default]);
         this.app.listen(this.port, function () { return callback(_this.app); });
     };
     Server.prototype.setFrameAncestors = function () {

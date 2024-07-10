@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlanSeguridad = void 0;
 var typeorm_1 = require("typeorm");
+var Usuarios_1 = require("./Usuarios");
 var PlanSeguridad = /** @class */ (function () {
     function PlanSeguridad() {
     }
@@ -22,6 +23,27 @@ var PlanSeguridad = /** @class */ (function () {
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
     ], PlanSeguridad.prototype, "nombre_archivo", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], PlanSeguridad.prototype, "lugares", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], PlanSeguridad.prototype, "personas", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], PlanSeguridad.prototype, "hobbies", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], PlanSeguridad.prototype, "id_usuario", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
+        __metadata("design:type", Usuarios_1.Usuarios)
+    ], PlanSeguridad.prototype, "usuario", void 0);
     PlanSeguridad = __decorate([
         (0, typeorm_1.Entity)({ name: 'plan_seguridad' })
     ], PlanSeguridad);

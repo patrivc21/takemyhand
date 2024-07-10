@@ -9,4 +9,21 @@ export class PlanSeguridad {
 
   @Column()
   nombre_archivo!: string;
+
+  @Column()
+  lugares!: string;
+
+  @Column()
+  personas!: string;
+
+  @Column()
+  hobbies!: string;
+
+  @Column()
+  id_usuario!: number;
+
+  @ManyToOne(() => Usuarios, usuario => usuario.id)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario!: Usuarios;
+
 }

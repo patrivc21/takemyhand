@@ -38,4 +38,7 @@ export class Pacientes {
   @ManyToOne(() => Usuarios, usuario => usuario.id)
   @JoinColumn({ name: 'id_usuario' })
   usuario!: Usuarios;
+
+  @Column()
+  resultado_formulario!: number;
 }

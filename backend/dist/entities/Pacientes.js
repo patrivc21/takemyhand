@@ -62,6 +62,10 @@ var Pacientes = /** @class */ (function () {
         (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
         __metadata("design:type", Usuarios_1.Usuarios)
     ], Pacientes.prototype, "usuario", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], Pacientes.prototype, "resultado_formulario", void 0);
     Pacientes = __decorate([
         (0, typeorm_1.Entity)({ name: 'pacientes' })
     ], Pacientes);
