@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePacientesService = exports.deleteOnePacienteService = exports.updatePacientesService = exports.getAllRoles = exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = exports.addUsuarios = void 0;
+exports.updatePacientesResultService = exports.deletePacientesService = exports.deleteOnePacienteService = exports.updatePacientesService = exports.getAllRoles = exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = exports.addUsuarios = void 0;
 var Pacientes_1 = require("../entities/Pacientes");
 var typeorm_1 = require("../config/typeorm");
 var Usuarios_1 = require("../entities/Usuarios");
@@ -164,4 +164,22 @@ var deletePacientesService = function (ids) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.deletePacientesService = deletePacientesService;
+var updatePacientesResultService = function (id_usuario, resultado) { return __awaiter(void 0, void 0, void 0, function () {
+    var pacToUpdate;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).findOneBy({ id_usuario: id_usuario })];
+            case 1:
+                pacToUpdate = _a.sent();
+                if (!pacToUpdate) return [3 /*break*/, 3];
+                pacToUpdate.resultado_formulario = resultado;
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).save(pacToUpdate)];
+            case 2:
+                _a.sent();
+                return [2 /*return*/, true];
+            case 3: return [2 /*return*/, false];
+        }
+    });
+}); };
+exports.updatePacientesResultService = updatePacientesResultService;
 //# sourceMappingURL=pacientes.service.js.map

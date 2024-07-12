@@ -61,7 +61,7 @@ var addPlanSeguridadC = function (req, res) { return __awaiter(void 0, void 0, v
                 planGuardado = _a.sent();
                 saveFiles = true;
                 if (!(nombre_archivo && planGuardado)) return [3 /*break*/, 4];
-                return [4 /*yield*/, (0, planseguridad_service_1.addArchivo)(nombre_archivo, planGuardado.id)];
+                return [4 /*yield*/, (0, planseguridad_service_1.addArchivo)(nombre_archivo, planGuardado.id, planGuardado.id_usuario)];
             case 3:
                 saveFiles = _a.sent();
                 _a.label = 4;

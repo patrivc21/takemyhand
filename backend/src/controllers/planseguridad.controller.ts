@@ -17,7 +17,7 @@ export const addPlanSeguridadC = async (req: Request, res: Response) => {
         let saveFiles = true;
         
         if (nombre_archivo && planGuardado) {
-            saveFiles = await addArchivo(nombre_archivo, planGuardado.id);
+            saveFiles = await addArchivo(nombre_archivo, planGuardado.id, planGuardado.id_usuario);
         }
         resp.data = { saveFiles: saveFiles };
         resp.cod = 200;
@@ -34,7 +34,7 @@ export const getOpnePlanC = async (req:Request, res:Response) => {
     try {
         let body = req.body;
         let plan = await getOnePlan(body.id_usuario);
-        resp.data = {plan};
+        resp.data = {plan: plan};
         resp.cod = 200;
     } catch (e) {
         resp.msg = e as string;

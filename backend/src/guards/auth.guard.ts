@@ -3,7 +3,7 @@ import { validateToken, decodeToken} from '../helpers/auth.helper';
 
 export const AuthGuard = (req: Request, res: Response, next: NextFunction) => {
     let token = req.headers['authorization'];
-    console.log(req.headers)
+    // console.log(req.headers)
     if (token) {
         token = token.replace('Bearer ', '').trim();
         if (validateToken(token)) {
@@ -24,7 +24,6 @@ export const AdminGuard = (req: Request, res: Response, next: NextFunction) => {
         token = token.replace('Bearer ', '').trim();
         if (validateToken(token)) {
             const user = decodeToken(token);
-            console.log('aquiii',user)
             if (user.role === 'admin')
                 next();
             else

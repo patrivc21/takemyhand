@@ -9,41 +9,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlanSeguridad = void 0;
+exports.ArchivosPlan = void 0;
 var typeorm_1 = require("typeorm");
 var Usuarios_1 = require("./Usuarios");
-var PlanSeguridad = /** @class */ (function () {
-    function PlanSeguridad() {
+var PlanSeguridad_1 = require("./PlanSeguridad");
+var ArchivosPlan = /** @class */ (function () {
+    function ArchivosPlan() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], PlanSeguridad.prototype, "id", void 0);
+    ], ArchivosPlan.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], PlanSeguridad.prototype, "lugares", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], PlanSeguridad.prototype, "personas", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], PlanSeguridad.prototype, "hobbies", void 0);
+    ], ArchivosPlan.prototype, "nombre_archivo", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", Number)
-    ], PlanSeguridad.prototype, "id_usuario", void 0);
+    ], ArchivosPlan.prototype, "id_usuario", void 0);
     __decorate([
         (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
         (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
         __metadata("design:type", Usuarios_1.Usuarios)
-    ], PlanSeguridad.prototype, "usuario", void 0);
-    PlanSeguridad = __decorate([
-        (0, typeorm_1.Entity)({ name: 'plan_seguridad' })
-    ], PlanSeguridad);
-    return PlanSeguridad;
+    ], ArchivosPlan.prototype, "usuario", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], ArchivosPlan.prototype, "id_plan", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return PlanSeguridad_1.PlanSeguridad; }, function (plan) { return plan.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_plan' }),
+        __metadata("design:type", PlanSeguridad_1.PlanSeguridad)
+    ], ArchivosPlan.prototype, "plan", void 0);
+    ArchivosPlan = __decorate([
+        (0, typeorm_1.Entity)({ name: 'archivos_plan' })
+    ], ArchivosPlan);
+    return ArchivosPlan;
 }());
-exports.PlanSeguridad = PlanSeguridad;
-//# sourceMappingURL=PlanSeguridad.js.map
+exports.ArchivosPlan = ArchivosPlan;
+//# sourceMappingURL=ArchivosPlan.js.map

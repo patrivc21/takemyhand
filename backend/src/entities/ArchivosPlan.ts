@@ -1,20 +1,15 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
 import { RolUsuarios } from './RolUsuarios';
 import { Usuarios } from './Usuarios';
+import { PlanSeguridad } from './PlanSeguridad';
 
-@Entity({ name: 'plan_seguridad' })
-export class PlanSeguridad {
+@Entity({ name: 'archivos_plan' })
+export class ArchivosPlan {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column()
-  lugares!: string;
-
-  @Column()
-  personas!: string;
-
-  @Column()
-  hobbies!: string;
+  nombre_archivo!: string;
 
   @Column()
   id_usuario!: number;
@@ -22,5 +17,12 @@ export class PlanSeguridad {
   @ManyToOne(() => Usuarios, usuario => usuario.id)
   @JoinColumn({ name: 'id_usuario' })
   usuario!: Usuarios;
+
+  @Column()
+  id_plan!: number;
+
+  @ManyToOne(() => PlanSeguridad, plan => plan.id)
+  @JoinColumn({ name: 'id_plan' })
+  plan!: PlanSeguridad;
 
 }

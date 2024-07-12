@@ -78,34 +78,3 @@ export const calcularResultadoRiesgoDespresion = (data: Cuestionario) => {
     return puntuacionTotal;
   }
   
-  export const addPlanSeguridad = async (plan: any): Promise<boolean> => {
-    let filesSaved;
-
-      for (const key in plan) {
-        if (plan.hasOwnProperty(key)) {
-          const file = plan[key];
-          let tipoArchivo = file ? path.basename(file.type) : '';
-          if (tipoArchivo === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-            // Cambiar el tipo a "xlsx"
-            tipoArchivo = 'xlsx';
-          }
-
-          let archivo_com = {
-            nombre_archivo: file ? path.basename(file.path) : '',
-          };
-
-          filesSaved = await DB.getRepository(PlanSeguridad).save(archivo_com);
-        }
-      }
-
-      return filesSaved != null;
-}
-
-export const getOnePlan = async (id: number): Promise<PlanSeguridad | null> => {
-  let res = await DB.getRepository(PlanSeguridad).findOne({
-      where: [
-          { id: id }]
-  });
-
-  return res;
-}

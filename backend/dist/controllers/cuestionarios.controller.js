@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.cuestionarioPlutchik = exports.cuestionarioProbabilidadEnDepresion = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var cuestionarios_service_1 = require("../services/cuestionarios.service");
+var pacientes_service_1 = require("../services/pacientes.service");
 var fs = require('fs');
 var cuestionarioProbabilidadEnDepresion = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var resp, cuestionario, result, e_1;
@@ -73,28 +74,32 @@ var cuestionarioProbabilidadEnDepresion = function (req, res) { return __awaiter
 }); };
 exports.cuestionarioProbabilidadEnDepresion = cuestionarioProbabilidadEnDepresion;
 var cuestionarioPlutchik = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, cuestionario, result, e_2;
+    var resp, cuestionario, id_usuario, result, savePacienteResult, e_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 resp = new RespGeneric_1.default();
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
+                _a.trys.push([1, 4, , 5]);
                 cuestionario = req.body.cuestionario;
+                id_usuario = req.body.id_usuario;
                 return [4 /*yield*/, (0, cuestionarios_service_1.calcularResultadoPlutchik)(cuestionario)];
             case 2:
                 result = _a.sent();
+                return [4 /*yield*/, (0, pacientes_service_1.updatePacientesResultService)(id_usuario, result)];
+            case 3:
+                savePacienteResult = _a.sent();
                 resp.msg = "Cuestionario finalizado";
                 resp.cod = result ? 200 : 400;
                 resp.data = { result: result, riesgo: result >= 6 };
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 e_2 = _a.sent();
                 resp.msg = e_2;
                 resp.cod = 500;
-                return [3 /*break*/, 4];
-            case 4:
+                return [3 /*break*/, 5];
+            case 5:
                 res.json(resp);
                 return [2 /*return*/];
         }

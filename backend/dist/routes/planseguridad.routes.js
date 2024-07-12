@@ -12,6 +12,6 @@ var upload = multer({ dest: "assets/" });
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: 'assets' });
 router.post('/addPlan', auth_guard_1.AuthGuard, multipartMiddleware, [planseguridad_controller_1.default.addPlanSeguridadC]);
-router.post('/getOnePlan', auth_guard_1.AuthGuard, [planseguridad_controller_1.default.getOpnePlanC]);
+router.post('/getOnePlan', [planseguridad_controller_1.default.getOpnePlanC]);
 exports.default = router;
 //# sourceMappingURL=planseguridad.routes.js.map

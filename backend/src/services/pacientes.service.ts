@@ -70,3 +70,16 @@ export const deletePacientesService = async(ids: number[]): Promise<boolean> => 
     }
 }
 
+export const updatePacientesResultService = async(id_usuario: any, resultado: any): Promise<boolean> => {
+    let pacToUpdate = await DB.getRepository(Pacientes).findOneBy({ id_usuario });
+    
+    if (pacToUpdate) {
+        pacToUpdate.resultado_formulario = resultado;
+        await DB.getRepository(Pacientes).save(pacToUpdate);
+        return true;
+    }
+
+    return false;
+}
+
+

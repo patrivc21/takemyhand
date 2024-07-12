@@ -43,6 +43,7 @@ exports.getOnePlan = exports.addArchivo = exports.addPlanSeguridad = void 0;
 var typeorm_1 = require("../config/typeorm");
 var PlanSeguridad_1 = require("../entities/PlanSeguridad");
 var path_1 = __importDefault(require("path"));
+var ArchivosPlan_1 = require("../entities/ArchivosPlan");
 var addPlanSeguridad = function (plan) { return __awaiter(void 0, void 0, void 0, function () {
     var datos, res;
     return __generator(this, function (_a) {
@@ -63,7 +64,7 @@ var addPlanSeguridad = function (plan) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.addPlanSeguridad = addPlanSeguridad;
-var addArchivo = function (plan, id) { return __awaiter(void 0, void 0, void 0, function () {
+var addArchivo = function (plan, id, id_usuario) { return __awaiter(void 0, void 0, void 0, function () {
     var filesSaved, _a, _b, _c, _i, key, file, tipoArchivo, archivo_com;
     return __generator(this, function (_d) {
         switch (_d.label) {
@@ -87,10 +88,11 @@ var addArchivo = function (plan, id) { return __awaiter(void 0, void 0, void 0, 
                     tipoArchivo = 'xlsx';
                 }
                 archivo_com = {
-                    id: id,
+                    id_plan: id,
                     nombre_archivo: file ? path_1.default.basename(file.path) : '',
+                    id_usuario: id_usuario
                 };
-                return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).save(archivo_com)];
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosPlan_1.ArchivosPlan).save(archivo_com)];
             case 2:
                 filesSaved = _d.sent();
                 _d.label = 3;
@@ -106,11 +108,13 @@ var getOnePlan = function (id_usuario) { return __awaiter(void 0, void 0, void 0
     var res;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).findOne({
-                    where: [
-                        { id_usuario: id_usuario }
-                    ]
-                })];
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad)
+                    .createQueryBuilder('p')
+                    .leftJoin('archivos_plan', 'a', 'a.id_plan = p.id')
+                    .where('a.id_usuario = :id_usuario', { id_usuario: id_usuario })
+                    .groupBy('p.id')
+                    .addSelect('GROUP_CONCAT(a.nombre_archivo)', 'archivos')
+                    .getRawOne()];
             case 1:
                 res = _a.sent();
                 return [2 /*return*/, res];

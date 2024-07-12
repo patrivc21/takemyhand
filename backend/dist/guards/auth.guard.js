@@ -4,7 +4,7 @@ exports.AdminGuard = exports.AuthGuard = void 0;
 var auth_helper_1 = require("../helpers/auth.helper");
 var AuthGuard = function (req, res, next) {
     var token = req.headers['authorization'];
-    console.log(req.headers);
+    // console.log(req.headers)
     if (token) {
         token = token.replace('Bearer ', '').trim();
         if ((0, auth_helper_1.validateToken)(token)) {
@@ -26,7 +26,6 @@ var AdminGuard = function (req, res, next) {
         token = token.replace('Bearer ', '').trim();
         if ((0, auth_helper_1.validateToken)(token)) {
             var user = (0, auth_helper_1.decodeToken)(token);
-            console.log('aquiii', user);
             if (user.role === 'admin')
                 next();
             else
