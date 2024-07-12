@@ -22,23 +22,26 @@ export class PlanService {
 
     const formData = new FormData();
     formData.append('id_usuario', id_usuario.toString());
-    formData.append('lugares', lugares ? lugares.join(',') : '');
-    formData.append('personas', personas ? personas.join(',') : '');
-    formData.append('hobbies', hobbies ? hobbies.join(',') : '');
+    formData.append('lugares', lugares ? lugares.join(';') : '');
+    formData.append('personas', personas ? personas.join(';') : '');
+    formData.append('hobbies', hobbies ? hobbies.join(';') : '');
 
     if (nombre_archivo) {
-        let i = 0;
-        const fileListArray: File[] = Array.from(nombre_archivo);
-
-        fileListArray.forEach(image => {
-            formData.append('image' + i, image, image.name);
-            i++;
-        })
-
-        console.log(formData)
-    }
-    else {
-        console.log('El valor proporcionado para la imagen no es un archivo válido.');
+      let i = 0;
+      const fileListArray: File[] = Array.from(nombre_archivo);
+  
+      // Añadir todos los nombres de archivos separados por ';'
+      const fileNames = fileListArray.map(image => image.name).join(';');
+      formData.append('nombre_archivos', fileNames);
+  
+      fileListArray.forEach(image => {
+        formData.append('image' + i, image, image.name);
+        i++;
+      });
+  
+      console.log(formData);
+    } else {
+      console.log('El valor proporcionado para la imagen no es un archivo válido.');
     }
 
     return this.http.post<GenericResponse>(`${BACKEND_API}/addPlan`, formData).pipe(shareReplay());

@@ -90,6 +90,17 @@ ol, ul {
   font-family: "Monserrat";
 }
 
+button.p-confirm-dialog-accept.p-button.p-component {
+  width: 15%;
+  padding: 15px;
+  background-color: #167496;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-family: "Monserrat";
+}
+
 a {
   color: #167496;
   font-family: "Monserrat";

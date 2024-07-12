@@ -48,6 +48,7 @@ export class CrearPlanComponent {
   }
 
   public cerrar(): void {
+    this.planState.getOnePlan(this.id_usuario)
     this.res.emit()
   }
 
@@ -56,21 +57,25 @@ export class CrearPlanComponent {
   }
 
   public onFileChange(event: any, index: number): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.nombre_archivo.at(index).setValue(file);
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      const fileArray = Array.from(files) as File[];
+      const control = this.nombre_archivo.at(index);
+      control.setValue(fileArray); // Asigna el array de archivos al form control específico
     }
   }
-
+  
   public crear() {
-    let result = this.form.value
-    const files: File[] = this.nombre_archivo.controls.map(control => control.value).filter(file => file);
-
-    this.planState.addPlan(files, this.id_usuario, result.lugares, result.personas, result.hobbies).pipe(take(1)).subscribe(dat => {
-      console.log(dat);
+    let result = this.form.value;
+    const files: File[] = [];
+    this.nombre_archivo.controls.forEach(control => {
+      if (control.value && Array.isArray(control.value)) {
+        files.push(...control.value);
+      }
     });
-
-    this.cerrar()
+  
+    this.planState.addPlan(files, this.id_usuario, result.lugares, result.personas, result.hobbies)
+    this.cerrar();
   }
 
   public readFile(variable: string, file: File){

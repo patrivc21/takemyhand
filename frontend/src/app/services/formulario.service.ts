@@ -14,8 +14,9 @@ const BACKEND_API = environment.BACKEND_API + "cuestionarios"
 export class FormularioService {
   constructor(private http: HttpClient) { }
 
-  public enviarRespuestas(cuestionario: string[]): Observable<GenericResponse> {
-    return this.http.post<GenericResponse>(`${BACKEND_API}/cuestionarioPlutchik`, { cuestionario }).pipe(shareReplay());
+  public enviarRespuestas(id_usuario: number, cuestionario: string[]): Observable<GenericResponse> {
+
+    return this.http.post<GenericResponse>(`${BACKEND_API}/cuestionarioPlutchik`, { id_usuario, cuestionario }).pipe(shareReplay());
   }
 
   public getOnePlan(id: number): Observable<GenericResponse> {

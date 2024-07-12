@@ -23,6 +23,7 @@ import { MenuModule } from 'primeng/menu';
 import { EditarPerfilComponent } from './Components/editar-perfil/editar-perfil.component';
 import { CrearPlanComponent } from './Components/crear-plan/crear-plan.component';
 import { VerPlanComponent } from './Components/ver-plan/ver-plan.component';
+import { CarouselModule } from 'primeng/carousel';
 
 const routes: Routes = [{ path: '', component: HomeComponent },
   {path: 'editar', component: EditarPerfilComponent},
@@ -59,7 +60,8 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     CascadeSelectModule,
     RouterModule.forChild(routes),
     PasswordModule,
-    MenubarModule
+    MenubarModule,
+    CarouselModule
   ]
 })
 export class HomeModule { }

@@ -12,9 +12,14 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./ver-plan.component.css']
 })
 export class VerPlanComponent {
-  public onePlan$: Observable<PlanSeguridad>
+  public onePlan$: Observable<any>
   public usuario: any
-  public plan: any
+  public plan: any = {
+    lugares: '',
+    personas: '',
+    hobbies: '',
+    nombre_archivo: ''
+  };
   public verPlan: boolean
   public id_usuario: number
   public BACKEND_FILES = environment.BACKEND_FILES
@@ -36,7 +41,19 @@ export class VerPlanComponent {
     this.planState.getOnePlan(this.usuario.id).pipe(take(1)).subscribe(dat => {
       console.log(dat)
       this.plan = dat.data.plan
+      this.plan.lugares = this.convertToArray(this.plan.p_lugares);
+      this.plan.personas = this.convertToArray(this.plan.p_personas);
+      this.plan.hobbies = this.convertToArray(this.plan.p_hobbies);
+      this.plan.nombre_archivo = this.convertToArrayImage(this.plan.archivos);
     })
+  }
+
+  public convertToArray(data: string): string[] {
+    return data ? data.split(';').map(item => item.trim()) : [];
+  }
+
+  public convertToArrayImage(data: string): string[] {
+    return data ? data.split(',').map(item => item.trim()) : [];
   }
 
   public volver(){

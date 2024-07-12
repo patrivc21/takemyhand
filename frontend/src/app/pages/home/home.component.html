@@ -1,56 +1,44 @@
 <div class="card">
     <div class="imagen-completa">
-        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="120" >
+        <img src="../../../assets/logos/LOGO-2.png" alt="Foto de perfil" height="120" >
 
         <div class="menu-item-right">
             <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" alt="Foto de perfil" class="profile-pic" (click)="verPerfil()">
-            <span style="color: white; font-family: 'Monserrat'">¡Hola de nuevo {{ usuario.nombre }}!</span>
+            <span style="color: #167496; font-family: 'Monserrat'">¡Hola de nuevo {{ usuario.nombre }}!</span>
             <div>
-                <a href="#" (click)="logOut()" style="color: white; font-family: 'Monserrat'">Cerrar sesión</a>
+                <a href="#" (click)="logOut()" style="color: #167496; font-family: 'Monserrat'">Cerrar sesión</a>
             </div>
         </div>
     </div>
     
     <div class="menu-container">
-        <div class="menu-item-left mb-4">
+        <div class="menu-item-right ml-4">
+            <a href="#" [routerLink]="'/home/verPlan'" style="color: white; font-family: 'Monserrat'">Plan de Seguridad</a>
+        </div>
+        <div class="menu-item-left mb-4 mr-4">
             <p-dropdown class="d-flex flex-align-center" [style]="{'width': '22rem'}" placeholder="Buscar perfiles..." 
                 [options]="users$ | async" [filter]="true" filterBy="nombre" appendTo="body" optionLabel="nombre" 
                 [(ngModel)]="selectedPerfil" (onChange)="buscar()">
                 <ng-template let-country pTemplate="item">
                     <div class="flex align-items-center gap-2">
-                    <img src="https://cdn.pixabay.com/photo/2021/02/12/07/03/icon-6007530_1280.png" style="width: 18px" />
-                    <div>{{ country.nombre }}</div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" style="width: 18px" />
+                    <div>{{ country.nombre }} {{country.apellidos}}</div>
                     </div>
                 </ng-template>
             </p-dropdown>
         </div>
     </div>   
 </div>
-
 <ng-container *ngIf="usuario.rol == 2">
-    <div class="homepage-container">
-        
+    <div class="homepage-container mt-4">
         <div class="homepage-item" [routerLink]="'/formulario'">
             <div class="homepage-background" style="background-image: url('https://i.blogs.es/5c3d68/forms/1366_2000.jpg')"></div>
             <div class="homepage-text">¡Comienza rellenado el formulario!</div>
         </div>
 
         <div class="homepage-item" [routerLink]="'/home/verPlan'">
-            <div class="homepage-background" style="background-image: url('https://live.staticflickr.com/2659/3823327893_68920103fb_b.jpg')"></div>
+            <div class="homepage-background" style="background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7B6QpTrl8GXxvW5MoxhS8Vrh4KEh8U_3kVw&s')"></div>
             <div class="homepage-text">Plan de Seguridad</div>
-        </div>
-
-        <div class="homepage-item" [routerLink]="'/recursos'">
-            <div class="homepage-background" style="background-image: url('/assets/recursos.jpg')"></div>
-            <div class="homepage-text">Recursos</div>
-        </div>
-        <div class="homepage-item" [routerLink]="'/chat'">
-            <div class="homepage-background" style="background-image: url('/assets/chat.jpg')"></div>
-            <div class="homepage-text">Chat</div>
-        </div>
-        <div class="homepage-item" [routerLink]="'/proximamente'">
-            <div class="homepage-background" style="background-image: url('/assets/proximamente.jpg')"></div>
-            <div class="homepage-text">Próximamente</div>
         </div>
     </div>
 </ng-container>
@@ -62,13 +50,6 @@
 <div *ngIf="viewPerfil">
     <app-editar-perfil (res)="cerrar()" [usuario]="usuario"></app-editar-perfil>
 </div>
-
-
-    <!-- <img src="{{BACKEND_FILES}}/{{datos}}" 
-     />
-     {{BACKEND_FILES}}/{{datos}} -->
-
-
 
 
 <p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '40%'}" [draggable]="false" [resizable]="false" (onHide)="cerrarBusqueda()">

@@ -1,7 +1,34 @@
+.fondo {
+    position: relative;               /* Necesario para el pseudo-elemento */
+    overflow: hidden;                 /* Evita desbordes */
+    height: 100vh;                    /* Ocupa toda la altura de la ventana */
+    width: 100%;                      /* Ocupa todo el ancho */
+}
+
+.fondo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url(https://images.pexels.com/photos/19670/pexels-photo.jpg);
+    background-size: cover;         
+    background-position: center;     
+    background-repeat: no-repeat;    
+    filter: blur(8px);               /* Aplica el efecto de desenfoque */
+    z-index: -1;                      /* Asegura que esté detrás del contenido */
+}
 
 .texto {
     font-family: "Monserrat";
     font-family: 14px;
+}
+
+.texto2 {
+    font-family: "Monserrat";
+    font-family: 14px;
+    width: 100%;
 }
 
 .imagen-completa{
@@ -10,7 +37,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2px;
     z-index: 1;
 }
 
@@ -18,5 +44,82 @@
     flex: 0 0 auto;
     margin-left: 3%;
 }
+
+
+.header {
+    width: 100%;
+    background-color: #167496;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    z-index: 1;
+}
+
+
+.logo {
+    height: 100px;
+}
+
+.intro-text {
+    text-align: center;
+    margin: 50px;
+    font-family: "Monserrat";
+    font-weight: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.questionnaire-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.question-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    width: 80%;
+    margin-bottom: 5%;
+}
+
+.response-select {
+    margin-left: 15px;
+}
+
+.form-container{
+    background-color: #ffffffee;
+    border: 1px solid #ccc;
+    box-shadow: 5px;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 2%;
+    margin-top: 2%;
+}
+
+
+.button-save-form .p-confirm-dialog-accept .p-button .p-component {
+    width: 100%;
+    padding: 15px;
+    background-color: #167496;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-family: "Monserrat";
+  }
   
+
  

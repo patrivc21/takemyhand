@@ -1,3 +1,15 @@
+.fondo {
+    background-image: url(https://images.pexels.com/photos/19670/pexels-photo.jpg);
+    background-size: cover;          /* Para cubrir todo el contenedor */
+    background-position: center;     /* Centra la imagen */
+    background-repeat: no-repeat;     /* Evita que la imagen se repita */
+    height: 100%;                   /* O ajusta la altura según necesites */
+    width: 100%;                     /* Ocupa el ancho completo */
+    position: relative;              /* Si necesitas posicionar elementos hijos */
+    padding-top: 13px;
+}
+
+
 .texto {
     font-family: "Monserrat";
     font-family: 14px;
@@ -9,7 +21,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2px;
     z-index: 1;
 }
 
@@ -18,3 +29,57 @@
     margin-left: 3%;
 }
   
+
+.content-container {
+    width: 60%;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 50%;
+}
+
+.section {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+h3 {
+    color: #167496;
+    margin-bottom: 10px;
+}
+
+.list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list li {
+    background-color: #fff;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.carousel-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+.carousel-image {
+    max-height: 200px;
+    max-width: 90%;
+    object-fit: contain;
+}

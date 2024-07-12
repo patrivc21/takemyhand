@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { FormularioService } from 'src/app/services/formulario.service';
+import { AuthState } from 'src/app/state/auth.state';
 
 @Component({
   selector: 'app-formulario',
@@ -8,6 +10,8 @@ import { FormularioService } from 'src/app/services/formulario.service';
   styleUrls: ['./formulario.component.css']
 })
 export class FormularioComponent {
+  private readonly authState = inject(AuthState);
+  private confirmationService = inject(ConfirmationService)
   public preguntas = [
     '¿Toma de forma habitual algún medicamento, como aspirinas o pastillas para dormir?', 
     '¿Tiene dificultades para conciliar el sueño?', 
@@ -27,13 +31,22 @@ export class FormularioComponent {
   ];
   public respuestas: string[] = Array(this.preguntas.length).fill('NO');
   public verForm: boolean = false
+  public pagina: number = 1
+  public usuario: any
 
   constructor(private cuestionarioService: FormularioService, private router: Router) {}
 
+  ngOnInit(): void {
+    this.usuario = this.authState.getUser()
+  }
+
+
   public enviarCuestionario() {
-    this.cuestionarioService.enviarRespuestas(this.respuestas)
+    console.log(this.usuario.id)
+    this.cuestionarioService.enviarRespuestas(this.usuario.id, this.respuestas)
       .subscribe(response => {
         console.log('Resultado:', response);
+        this.volver()
       });
   }
 
@@ -43,5 +56,21 @@ export class FormularioComponent {
 
   public ver(){
     this.verForm = true
+  }
+
+  public cambiarPagina(pagina: number) {
+    this.pagina = pagina;
+  }
+
+  public guardar(){
+    this.confirmationService.confirm({
+      message: 'Muchas gracias por realizar el cuestionario. Nos pondremos en contacto contigo',
+      header: 'Respuesta enviada',
+      icon: 'pi pi-heart-fill',
+      acceptLabel: 'Cerrar',
+      rejectVisible: false,
+      // acceptButtonStyleClass: 'button-save',
+      accept: () => this.enviarCuestionario()
+    })
   }
 }

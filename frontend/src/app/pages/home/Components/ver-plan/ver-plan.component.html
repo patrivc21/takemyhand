@@ -7,49 +7,62 @@
       </div>
 </ng-container>
 
-<div class="d-flex flex-column justify-content-center align-items-center texto mt-4">
-    <h2 style="font-weight: 900;"><i>¡Bienvenido a tu espacio seguro!</i></h2>
-    <!-- <h5>Rellena la información con momentos bonitos para poder revisarlos cuando quieras</h5> -->
+<div class="fondo">
+  <div class="d-flex flex-column justify-content-center align-items-center texto mt-4 mb-4">
+      <h2 style="font-weight: 900;"><i><strong>¡Bienvenido a tu espacio seguro!</strong></i></h2>
+      <!-- <h5>Rellena la información con momentos bonitos para poder revisarlos cuando quieras</h5> -->
+  </div>
+
+  <ng-container *ngIf="!plan" class="mt-6">
+    <div class="texto d-flex flex-column justify-content-center align-items-center">
+      <h2 style="font-weight: 700;" class="mb-4">
+        Parece que aún no tienes un plan personalizado, ¡Creálo ahora!
+      </h2>
+      <p-button class="button-save-form" (onClick)="crearPlan(usuario.id)">Crear plan</p-button>
+    </div>
+  </ng-container>
+
+  <div *ngIf="verPlan">
+    <app-crear-plan [id_usuario]="id_usuario" (res)="cerrar()"></app-crear-plan>
+  </div>
+
+
+  <ng-container *ngIf="plan" class="mt-6">
+    <div class="content-container">
+      <div class="section" *ngIf="plan.lugares.length">
+        <h3>¡Estos lugares te encantan!</h3>
+        <ul class="list">
+          <li *ngFor="let lugar of plan.lugares">{{ lugar }}</li>
+        </ul>
+      </div>
+
+      <div class="section" *ngIf="plan.personas.length">
+        <h3>Sabes que siempre puedes hablar con estas personas cuando estés mal </h3>
+        <ul class="list">
+          <li *ngFor="let persona of plan.personas">{{ persona }}</li>
+        </ul>
+      </div>
+
+      <div class="section" *ngIf="plan.hobbies.length">
+        <h3>¿Y si hacemos alguna de estas actividades y disfrutamos?</h3>
+        <ul class="list">
+          <li *ngFor="let hobbie of plan.hobbies">{{ hobbie }}</li>
+        </ul>
+      </div>
+
+      <div class="section" *ngIf="plan.nombre_archivo && plan.nombre_archivo.length">
+        <h3 class="d-flex justify-content-center">¿Te acuerdas de este momento?</h3>
+        <p-carousel [value]="plan.nombre_archivo" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
+          <ng-template pTemplate="item" let-file>
+            <div class="carousel-item">
+              <img [src]="BACKEND_FILES + '/' + file" alt="Momento" class="carousel-image" />
+            </div>
+          </ng-template>
+        </p-carousel>
+      </div>
+    </div>
+  </ng-container>
+
 </div>
 
-<ng-container *ngIf="plan === null" class="mt-6">
-  <div class="texto d-flex flex-column justify-content-center align-items-center">
-    <h2 style="font-weight: 700;" class="mb-4">
-      Parece que aún no tienes un plan personalizado, ¡Creálo ahora!
-    </h2>
-    <p-button class="button-save-form" (onClick)="crearPlan(usuario.id)">Crear plan</p-button>
-  </div>
-</ng-container>
-
-<div *ngIf="verPlan">
-  <app-crear-plan [id_usuario]="id_usuario" (res)="cerrar()"></app-crear-plan>
-</div>
-
-
-<ng-container *ngIf="plan != null" class="mt-6">
-
-  <div class="texto d-flex flex-column justify-content-center align-items-center">
-    <div *ngIf="plan.lugares">
-      <h2>Estos luagres te encantan!</h2>
-      <p>{{plan.lugares}}</p>
-    </div>
-
-    <div *ngIf="plan.personas">
-      <h2>Estos luagres te encantan!</h2>
-      <p>{{plan.lugares}}</p>
-    </div>
-
-    <div *ngIf="plan.hobbies">
-      <h2>Estos luagres te encantan!</h2>
-      <p>{{plan.lugares}}</p>
-    </div>
-
-    <div>
-      <h2>Mira que bien los pasaste aqui</h2>
-      <img src="{{BACKEND_FILES}}/{{plan.nombre_archivo}}" height="70"
-      />
-    </div>
-    
-  </div>
-</ng-container>
 

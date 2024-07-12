@@ -50,12 +50,11 @@
     </div>
     
     <div formArrayName="nombre_archivo">
-      <div *ngFor="let place of nombre_archivo.controls; let i = index">
-        <input type="file" [formControlName]="i" (change)="onFileChange($event, i)" class="file-input" />
+      <div *ngFor="let control of nombre_archivo.controls; let i = index">
+        <input type="file" [formControlName]="i" (change)="onFileChange($event, i)" class="file-input" multiple />
       </div>
     </div>
     
-  
     <div class="d-flex justify-content-center align-items-center mt-4">
       <p-button [loading]="loading" [disabled]="!form.valid"
         class="button-save-form" label="Guardar" type="submit"></p-button>

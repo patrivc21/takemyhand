@@ -1,40 +1,61 @@
+<p-confirmDialog [style]="{widht: '50vw'}"></p-confirmDialog>
 <div *ngIf="!verForm">
-    <div class="imagen-completa">
+  <div class="header">
       <div class="menu-item-left">
-        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+          <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
       </div>
-        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="100">
-    </div>
-
-    <h2>Vamos a realizar un breve cuestionario para evaluar tu situacion</h2>
-    <h2>Te ayudaremos en todo!</h2>
-
-    <div class="d-flex justify-content-center mt-4 mb-2">
-      <p-button type="submit" class="button-save-form" (onClick)="ver()">Continuar</p-button>
+      <img src="../../../assets/logos/LOGO-3.png" alt="Logo" class="logo">
   </div>
+    <div class="fondo">
+        <div class="intro-text">
+            <h2 class="mt-8">Realizaremos un breve cuestionario para entender mejor tu situación</h2>
+            <h2 class="mt-4" style="font-weight: 700;"><i>¡Estamos aquí para ayudarte!</i></h2>
+        </div>
+
+        <div class="button-container">
+            <p-button type="submit" class="button-save-form" (onClick)="ver()">Continuar</p-button>
+        </div>
+    </div>
 </div>
 
 
 <div *ngIf="verForm">
-    <div class="imagen-completa">
+  <div class="header">
       <div class="menu-item-left">
-        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+          <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
       </div>
-        <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="100">
-    </div>
+      <img src="../../../assets/logos/LOGO-3.png" alt="Logo" class="logo">
+  </div>
+  <div class="fondo">
+  <div class="form-container">
+    <form (ngSubmit)="guardar()" class="questionnaire-form">
+      <div *ngIf="pagina === 1">
+          <div *ngFor="let pregunta of preguntas.slice(0, 8); let i = index" class="question-container">
+              <label class="texto2" [for]="'respuesta' + i">{{ pregunta }}</label>
+              <select [(ngModel)]="respuestas[i]" name="respuesta{{ i }}" [id]="'respuesta' + i" class="response-select">
+                  <option [value]="'SI'">Sí</option>
+                  <option [value]="'NO'">No</option>
+              </select>
+          </div>
+          <div class="button-container">
+              <p-button type="button" class="button-save-form" (onClick)="cambiarPagina(2)">Siguiente</p-button>
+          </div>
+      </div>
 
-    <form (ngSubmit)="enviarCuestionario()">
-        <div *ngFor="let pregunta of preguntas; let i = index" class="d-flex justify-content-center mt-2">
-          <label class="texto">{{ pregunta }}</label>
-          <select [(ngModel)]="respuestas[i]" name="respuesta{{ i }}" class="ml-3">
-            <option [value]="'SI'">Sí</option>
-            <option [value]="'NO'">No</option>
-          </select>
-        </div>
-        <div class="d-flex justify-content-center mt-4 mb-2">
-            <p-button type="submit" class="button-save-form">Enviar</p-button>
-        </div>
-    </form>
-      
+      <div *ngIf="pagina === 2">
+          <div *ngFor="let pregunta of preguntas.slice(8, 15); let i = index" class="question-container">
+              <label class="texto" [for]="'respuesta' + (i + 8)">{{ pregunta }}</label>
+              <select [(ngModel)]="respuestas[i + 8]" name="respuesta{{ i + 8 }}" [id]="'respuesta' + (i + 8)" class="response-select">
+                  <option [value]="'SI'">Sí</option>
+                  <option [value]="'NO'">No</option>
+              </select>
+          </div>
+          <div class="button-container">
+              <p-button type="button" class="button-save-form mr-2" (onClick)="cambiarPagina(1)">Anterior</p-button>
+              <p-button type="submit" class="button-save-form">Enviar</p-button>
+          </div>
+      </div>
+  </form>
+  </div>
+</div> 
 </div>
-

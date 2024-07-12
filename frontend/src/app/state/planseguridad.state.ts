@@ -6,7 +6,7 @@ import { PlanService } from '../services/planseguridad.service';
 import { PlanSeguridad } from '../interfaces/PlanSeguridad';
 
 interface IPlanState {
-    onePlan?: PlanSeguridad;
+    onePlan?: any;
 }
 
 @Injectable({
@@ -40,12 +40,11 @@ export class PlanState {
 
 		data.pipe(take(1)).subscribe((response) => {
 			if (response.cod == 200) {
-				// console.log(response);
-				// this.closeDialog();
-				// this.getAllComunicaciones()
+				this.getOnePlan(id_usuario)
 			}
 			else console.log(response);
 		});
+        this.getOnePlan(id_usuario)
 		return data;
 	}
 
@@ -53,7 +52,7 @@ export class PlanState {
     public getOnePlan(id_usuario:number): Observable<GenericResponse> {
         const data = this.service.getOnePlan(id_usuario)
         data.pipe(take(1)).subscribe((response) => {
-          // console.log(response)
+          console.log(response)
           if (response.cod == 200) {
             this._state.next({
               ...this.state,
