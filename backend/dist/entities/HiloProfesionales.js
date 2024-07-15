@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HiloProfesionales = void 0;
 var typeorm_1 = require("typeorm");
+var Profesional_1 = require("./Profesional");
 var HiloProfesionales = /** @class */ (function () {
     function HiloProfesionales() {
     }
@@ -34,6 +35,15 @@ var HiloProfesionales = /** @class */ (function () {
         (0, typeorm_1.Column)(),
         __metadata("design:type", Date)
     ], HiloProfesionales.prototype, "fecha_hora", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], HiloProfesionales.prototype, "id_profesional", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Profesional_1.Profesionales; }, function (profesional) { return profesional.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_profesional' }),
+        __metadata("design:type", Profesional_1.Profesionales)
+    ], HiloProfesionales.prototype, "profesional", void 0);
     HiloProfesionales = __decorate([
         (0, typeorm_1.Entity)({ name: 'hilo_profesionales' })
     ], HiloProfesionales);

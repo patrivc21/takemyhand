@@ -8,7 +8,7 @@ const router = express.Router();
 router.post('/addUser', [usuariosController.addNewUser]);
 router.get('/getOneUser', AuthGuard,  [usuariosController.getOneUserController]);
 router.get('/getAllUsers', AuthGuard, [usuariosController.getAllUsersControllers]);
-router.get('/getAllRoles', AuthGuard,  [usuariosController.getAllRolesC]);
+router.get('/getAllRoles', [usuariosController.getAllRolesC]);
 router.put('/updateUsuario', AuthGuard,  [usuariosController.updateUsuarios]);
 router.post('/login', [UserLoginValidator, usuariosController.login]);
 router.post('/register', [ UserValidator, usuariosController.register]); //AuthGuard,

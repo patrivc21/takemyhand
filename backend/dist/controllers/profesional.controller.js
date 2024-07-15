@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProfesionalesController = exports.updateProfesional = exports.getAllProfesionalesControllers = exports.getOneProfesionalController = exports.addNewProfesional = void 0;
+exports.addPublicacionC = exports.deleteProfesionalesController = exports.updateProfesional = exports.getAllProfesionalesControllers = exports.getOneProfesionalController = exports.addNewProfesional = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var profesional_service_1 = require("../services/profesional.service");
 var addNewProfesional = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -83,6 +83,8 @@ var getOneProfesionalController = function (req, res) { return __awaiter(void 0,
                 return [4 /*yield*/, (0, profesional_service_1.getOneProfesional)(body.id)];
             case 2:
                 result = _a.sent();
+                if (result)
+                    result.password = '';
                 resp.data = { result: result };
                 resp.cod = 200;
                 return [3 /*break*/, 4];
@@ -110,6 +112,11 @@ var getAllProfesionalesControllers = function (_req, res) { return __awaiter(voi
                 return [4 /*yield*/, (0, profesional_service_1.getAllProfesionales)()];
             case 2:
                 result = _a.sent();
+                if (result) {
+                    result.forEach(function (profesional) {
+                        profesional.password = '';
+                    });
+                }
                 resp.data = { result: result };
                 resp.cod = 200;
                 return [3 /*break*/, 4];
@@ -184,5 +191,42 @@ var deleteProfesionalesController = function (req, res) { return __awaiter(void 
     });
 }); };
 exports.deleteProfesionalesController = deleteProfesionalesController;
-exports.default = { addNewProfesional: exports.addNewProfesional, getOneProfesionalController: exports.getOneProfesionalController, getAllProfesionalesControllers: exports.getAllProfesionalesControllers, updateProfesional: exports.updateProfesional, deleteProfesionalesController: exports.deleteProfesionalesController };
+var addPublicacionC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, infor, nombre_archivo, datos, publi, saveFiles, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                infor = req.body;
+                nombre_archivo = req.files;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 5, , 6]);
+                datos = { infor: infor, nombre_archivo: nombre_archivo };
+                console.log(datos);
+                return [4 /*yield*/, (0, profesional_service_1.addPublicacion)(infor, nombre_archivo)];
+            case 2:
+                publi = _a.sent();
+                saveFiles = true;
+                if (!nombre_archivo) return [3 /*break*/, 4];
+                return [4 /*yield*/, (0, profesional_service_1.addArchivoPublicacion)(nombre_archivo, publi.id)];
+            case 3:
+                saveFiles = _a.sent();
+                _a.label = 4;
+            case 4:
+                resp.data = { saveFiles: saveFiles };
+                resp.cod = 200;
+                return [3 /*break*/, 6];
+            case 5:
+                error_1 = _a.sent();
+                console.log(error_1);
+                resp.msg = error_1;
+                resp.cod = 500;
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/, res.json(resp)];
+        }
+    });
+}); };
+exports.addPublicacionC = addPublicacionC;
+exports.default = { addNewProfesional: exports.addNewProfesional, getOneProfesionalController: exports.getOneProfesionalController, getAllProfesionalesControllers: exports.getAllProfesionalesControllers, updateProfesional: exports.updateProfesional, deleteProfesionalesController: exports.deleteProfesionalesController, addPublicacionC: exports.addPublicacionC };
 //# sourceMappingURL=profesional.controller.js.map

@@ -35,10 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
+var path_1 = __importDefault(require("path"));
+var HiloProfesionales_1 = require("../entities/HiloProfesionales");
 var addProfesional = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -135,4 +140,57 @@ var deleteProfesionalesService = function (ids) { return __awaiter(void 0, void 
     });
 }); };
 exports.deleteProfesionalesService = deleteProfesionalesService;
+var addPublicacion = function (publicacion, archivo) { return __awaiter(void 0, void 0, void 0, function () {
+    var datos, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                datos = {
+                    fecha_hora: new Date(),
+                    titulo: publicacion.titulo,
+                    mensaje: publicacion.mensaje,
+                    nombre_archivo: ''
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).save(datos)];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.addPublicacion = addPublicacion;
+var addArchivoPublicacion = function (plan, id) { return __awaiter(void 0, void 0, void 0, function () {
+    var filesSaved, _a, _b, _c, _i, key, file, archivo_com;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _a = plan;
+                _b = [];
+                for (_c in _a)
+                    _b.push(_c);
+                _i = 0;
+                _d.label = 1;
+            case 1:
+                if (!(_i < _b.length)) return [3 /*break*/, 4];
+                _c = _b[_i];
+                if (!(_c in _a)) return [3 /*break*/, 3];
+                key = _c;
+                if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
+                file = plan[key];
+                archivo_com = {
+                    id: id,
+                    nombre_archivo: file ? path_1.default.basename(file.path) : ''
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).save(archivo_com)];
+            case 2:
+                filesSaved = _d.sent();
+                _d.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/, filesSaved != null];
+        }
+    });
+}); };
+exports.addArchivoPublicacion = addArchivoPublicacion;
 //# sourceMappingURL=profesional.service.js.map

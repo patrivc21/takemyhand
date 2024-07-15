@@ -65,7 +65,7 @@ var addPlanSeguridad = function (plan) { return __awaiter(void 0, void 0, void 0
 }); };
 exports.addPlanSeguridad = addPlanSeguridad;
 var addArchivo = function (plan, id, id_usuario) { return __awaiter(void 0, void 0, void 0, function () {
-    var filesSaved, _a, _b, _c, _i, key, file, tipoArchivo, archivo_com;
+    var filesSaved, _a, _b, _c, _i, key, file, archivo_com;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
@@ -82,11 +82,6 @@ var addArchivo = function (plan, id, id_usuario) { return __awaiter(void 0, void
                 key = _c;
                 if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
                 file = plan[key];
-                tipoArchivo = file ? path_1.default.basename(file.type) : '';
-                if (tipoArchivo === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-                    // Cambiar el tipo a "xlsx"
-                    tipoArchivo = 'xlsx';
-                }
                 archivo_com = {
                     id_plan: id,
                     nombre_archivo: file ? path_1.default.basename(file.path) : '',

@@ -25,12 +25,6 @@ let filesSaved;
   for (const key in plan) {
       if (plan.hasOwnProperty(key)) {
           const file = plan[key];
-          let tipoArchivo = file ? path.basename(file.type) : '';
-          if (tipoArchivo === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-          // Cambiar el tipo a "xlsx"
-          tipoArchivo = 'xlsx';
-          }
-
           let archivo_com = {
               id_plan: id,
               nombre_archivo: file ? path.basename(file.path) : '',

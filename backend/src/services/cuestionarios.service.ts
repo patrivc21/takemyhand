@@ -78,3 +78,4 @@ export const calcularResultadoRiesgoDespresion = (data: Cuestionario) => {
     return puntuacionTotal;
   }
   
+  

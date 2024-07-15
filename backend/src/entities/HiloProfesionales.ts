@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
+import { Profesionales } from './Profesional';
 
 @Entity({ name: 'hilo_profesionales' })
 export class HiloProfesionales {
@@ -16,4 +17,11 @@ export class HiloProfesionales {
 
   @Column()
   fecha_hora!: Date;
+
+  @Column()
+  id_profesional!: number;
+
+  @ManyToOne(() => Profesionales, profesional => profesional.id)
+  @JoinColumn({ name: 'id_profesional' })
+  profesional!: Profesionales;
 }
