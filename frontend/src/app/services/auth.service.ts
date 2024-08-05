@@ -51,4 +51,53 @@ export class AuthService {
   }
 
 
+
+  public addPublicacion(archivo_adjunto: File, id_usuario: number, titulo: string, mensaje: string): Observable<GenericResponse> {
+
+    const formData = new FormData();
+    formData.append('id_usuario', id_usuario.toString());
+    formData.append('titulo', titulo ? titulo : '');
+    formData.append('mensaje', mensaje ? mensaje : '');
+    if (archivo_adjunto != null) formData.append('archivo_adjunto', archivo_adjunto, archivo_adjunto.name);
+    console.log(formData);
+
+    return this.http.post<GenericResponse>(`${BACKEND_API}/addPublicacion`, formData).pipe(shareReplay());
+  }
+
+  public getAllComentarios(): Observable<GenericResponse> {
+    return this.http.get<GenericResponse>(`${BACKEND_API}/getAllPublis`, {}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener los comentarios'))
+      })
+    )
+  }
+
+  public getOneComent(id:number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getOnePubli`, {id}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener el comentario'))
+      })
+    )
+  }
+
+  public buscar(fechaInicio, fechaFin): Observable<GenericResponse> {
+    const datos = {
+      fechaInicio, fechaFin
+    }
+    return this.http.post<GenericResponse>(`${BACKEND_API}/buscar`, datos).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener el comentario'))
+      })
+    )
+  }
+
 }

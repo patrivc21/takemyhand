@@ -17,6 +17,8 @@ interface IAuthState {
     loadingButton: boolean
     allRoles?: IRoles[]
     verDialog: boolean
+    allPublis?: any[]
+    onePubli?: any;
 }
 
 @Injectable({
@@ -24,10 +26,10 @@ interface IAuthState {
 })
 export class AuthState {
   private readonly initialState: IAuthState = { user: {} as User,
-  token: '',
-  users: [], 
-  loadingButton: false, 
-  verDialog: true
+    token: '',
+    users: [], 
+    loadingButton: false, 
+    verDialog: true
   }
 
   private readonly _state: BehaviorSubject<IAuthState> = new BehaviorSubject(
@@ -56,6 +58,14 @@ export class AuthState {
   public readonly verDialog$: Observable<boolean> = this._state
     .asObservable()
     .pipe(map((state) => state && state.verDialog))
+
+  public readonly allPublis$: Observable<any[]> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.allPublis));
+
+  public readonly onePubli$: Observable<any> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.onePubli));
 
   private get state() {
     return this._state.getValue()
@@ -251,6 +261,61 @@ export class AuthState {
       }
   });
     return data
+  }
+
+
+
+  public addPublicacion(archivo_adjunto: any, id_usuario: any, titulo: string, mensaje: string) {
+    const data = this.authService.addPublicacion(archivo_adjunto, id_usuario, titulo, mensaje);
+    data.pipe(take(1)).subscribe((response) => {
+        if (response.cod == 200) {
+          this.getAllComentarios()
+        }
+    });
+    return data;
+  }
+
+  public getAllComentarios(): Observable<GenericResponse> {
+    const data = this.authService.getAllComentarios()
+    data.pipe(take(1)).subscribe((response) => {
+      console.log('aqui1', response)
+      if (response.cod == 200) {
+        this._state.next({
+          ...this.state,
+          allPublis: response.data.result
+        })
+      }
+    })
+    return data
+  }
+
+  public getOnePubli(id:number): Observable<GenericResponse> {
+    const data = this.authService.getOneComent(id)
+    data.pipe(take(1)).subscribe((response) => {
+      console.log(response)
+      if (response.cod == 200) {
+        this._state.next({
+          ...this.state,
+          onePubli: response.data.result
+        })
+      }
+    })
+    return data
+  }
+
+  public search(fecha: any, fecha2: any){
+    const data = this.authService.buscar(fecha, fecha2);
+    data.pipe(take(1)).subscribe((response) => {
+      if(response.cod !== 200){
+          return;
+      }
+
+      this._state.next({
+          ...this.state,
+          allPublis: response.data.result
+      })
+    })
+    return data;
   }
 
 }

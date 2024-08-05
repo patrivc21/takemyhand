@@ -1,0 +1,65 @@
+<div *ngIf="crearPubli">
+  <app-crear-publicacion (res)="cerrar()"></app-crear-publicacion>
+</div>
+
+<div>
+  <h1 class="tituloG">Comunicación</h1>
+</div>
+
+<div class="menu-container">
+  <div class="menu-item-left">
+      <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+  </div>
+  <div class="menu-item-center">
+      <h4>Foro Usuarios</h4>
+  </div>
+</div>
+
+<div class="barra">
+  <h3 class="tituloG2">Filtre su búsqueda</h3>
+  <div class="organizacion">
+      <p-calendar dateFormat="dd-mm-yy" class="calendario-rango" [(ngModel)]="rangeDates" selectionMode="range" placeholder="Filtrar por fecha" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+      <p-button class="leer-mas" (click)="search()">Filtrar búsqueda</p-button>
+      <p-button class="leer-mas" (click)="limpiar()">Limpiar búsqueda</p-button>
+  </div>
+</div>
+
+<div class="timeline-container">
+
+  <div class="crear-publicacion-btn mt-4 ml-4">
+    <p-button class="leer-mas2" icon="pi pi-plus" iconPos="right" (onClick)="crearPubli = true" label="Crear publicación"/>
+  </div>
+
+  <ul class="timeline">
+      <li *ngFor="let comment of allPublis$ | async">
+          <p-card class="card">
+              <div>
+                  <h4>{{ comment.usuario.nombre }} {{ comment.usuario.apellidos }} ha comentado:</h4>
+                  <p>{{ comment.titulo }}</p>
+                  <p [innerHTML]="comment.mensaje"></p>
+                  <div *ngFor="let archivo of comment.archivos" class="d-flex justify-content-center">
+                      <img [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
+                  </div>
+                  <div>
+                      <small>{{ comment.fecha_hora | date }}</small>
+                  </div>
+              </div>
+              <p-button label="Leer más" (click)="readMore(comment.id)" class="leer-mas"></p-button>
+          </p-card>
+      </li>
+  </ul>
+</div>
+
+<p-dialog header="Detalles del comentario" [(visible)]="show" [style]="{ width: '500px' }">
+  <div *ngIf="selectedComment">
+      <h4>Comentario de {{ selectedComment.autor }}</h4>
+      <p [innerHTML]="selectedComment.mensaje"></p>
+      <div *ngIf="selectedComment.imagen" class="d-flex justify-content-center">
+          <img [src]="BACKEND_FILES + '/' + selectedComment.imagen" width="100" height="80">
+      </div>
+      <p>Fecha: {{ selectedComment.fecha_hora | date }}</p>
+  </div>
+  <div *ngIf="!selectedComment">
+      <p>No se encontró ningún comentario.</p>
+  </div>
+</p-dialog>

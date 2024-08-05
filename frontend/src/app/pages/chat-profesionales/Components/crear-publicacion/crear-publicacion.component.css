@@ -1,0 +1,133 @@
+.fondo-form{
+    background-color: #4468530D;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-form{
+    font-family: 'Monserrat';
+    color: black;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+
+.titulo-form-shadow{
+    font-family: 'Monserrat';
+    color: black;
+    font-weight: 500;
+    font-size: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.placeholder-form{
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 16px;
+    border: none;
+    padding: 15px;
+}
+
+.contador{
+    color: #167496;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.texto-icono{
+    color: #6A6A6A;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.titulo-prev{
+    color: black;
+    font-family: 'Monserrat';
+    font-weight: 700;
+    font-size: 18px;
+}
+
+
+.subtitulo-prev{
+    color: #6A6A6A;
+    font-family: 'Monserrat';
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.mensaje-prev{
+    color: black;
+    font-weight: 400;
+    font-size: 16px;
+    border: none;
+    padding: 15px;
+    background-color: rgb(245 247 246);;
+}
+
+.coment-prev{
+    color: #00000080;
+    font-weight: 400;
+    font-size: 16px;
+    border: none;
+    padding: 15px;
+}
+
+.barra-horizontal {
+    height: 1px;
+    background-color: black;
+    margin: 5px 0;
+    padding: 1px;
+    width: 70%;
+  }
+
+
+  .imagen-escuela {
+    border-radius: 5%;
+    width: 4rem;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  
+  .quitar-imagen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f04848;
+    border: none;
+    outline: none;
+  }
+  
+  .quitar-imagen:before {
+    content: "x";
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .text-left {
+    text-align: left;
+  }
+
+  .titulo-tabla{
+    font-size: 24px;
+  }
+  
+  .max-divs{
+    width: 17%;
+    max-width: 17%;
+  }
+
+  
+.texto-select{
+  color: #b5b7c0;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 600;
+}

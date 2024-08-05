@@ -39,7 +39,7 @@ export class ProfesionalesComponent {
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dat);
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-      XLSX.writeFile(wb, 'pacientes.xlsx');
+      XLSX.writeFile(wb, 'profesionales.xlsx');
     })
   }
 

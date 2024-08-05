@@ -69,7 +69,6 @@ export class FormularioComponent {
       icon: 'pi pi-heart-fill',
       acceptLabel: 'Cerrar',
       rejectVisible: false,
-      // acceptButtonStyleClass: 'button-save',
       accept: () => this.enviarCuestionario()
     })
   }

@@ -48,6 +48,18 @@ const routes: Routes = [
     // canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/formulario/formulario.module').then(m => m.FormularioModule) 
   },
+  { 
+    path: 'foroprofesionales', 
+    title: 'TMH • Foro Profesionales',
+    canActivate: [AuthGuard], 
+    loadChildren: () => import('./pages/chat-profesionales/chat-profesionales.module').then(m => m.ChatProfesionalesModule) 
+  },
+  { 
+    path: 'forousuarios', 
+    title: 'TMH • Foro Usuarios',
+    canActivate: [AuthGuard], 
+    loadChildren: () => import('./pages/chat-usuarios/chat-usuarios.module').then(m => m.ChatUsuariosModule) 
+  },
 ];
 
 @NgModule({

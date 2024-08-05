@@ -21,7 +21,7 @@ ol, ul {
 
 .field .p-inputtext{
   border-color: #F7CAC9 1px;
-  background-color: #F4F4F1;
+  background-color: #ffffff;
   width: 100%;
   font-family: "Monserrat";
 }
@@ -54,7 +54,17 @@ ol, ul {
   font-family: "Monserrat";
 }
 
+.leer-mas .p-button {
+  padding: 10px;
+  background-color: #167496;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: "Monserrat";
+}
+
 .boton-tabla .p-button{
+  background-color: white;
   color: #167496;
   border: none;
   font-family: "Monserrat";
@@ -104,5 +114,64 @@ button.p-confirm-dialog-accept.p-button.p-component {
 a {
   color: #167496;
   font-family: "Monserrat";
+}
+
+.p-fileupload .p-fileupload-buttonbar {
+  background: none;
+  padding: 0;
+  border: 0 none;
+  color: #343a40;
+  border-bottom: 0 none;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+  margin-top: 1rem;
+}
+
+.p-fileupload .p-fileupload-content {
+  background: none;
+  padding: 0;
+  border: 0 none;
+  color: #495057;
+  border-bottom-right-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.p-fileupload .p-fileupload-row > div {
+  padding: 0.5rem 0.5rem;
+}
+
+.p-fileupload-row > div {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+.p-fileupload-row {
+  display: none;
+}
+
+.calendario-rango .p-calendar .p-inputtext {
+  flex: 1 1 auto;
+  width: 30rem;
+}
+
+.calendario-rango .p-icon-wrapper {
+  color: #446853;
+}
+
+.calendario-rango .p-button {
+  background-color: #f6f7fb !important;
+  border: none;
+  border-radius: 8px;
+}
+
+.leer-mas2 .p-button {
+  padding: 12px;
+  background-color: #167496;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: "Monserrat";
+  border-radius: 10px;
+  width: 100%;
 }
 

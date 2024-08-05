@@ -12,9 +12,11 @@
     </div>
     
     <div class="menu-container">
-        <div class="menu-item-right ml-4">
-            <a href="#" [routerLink]="'/home/verPlan'" style="color: white; font-family: 'Monserrat'">Plan de Seguridad</a>
+        <div class="menu-item-right-1 ml-2">
+            <a href="#" [routerLink]="'/foroprofesionales'" style="color: white; font-family: 'Monserrat'">Foro Profesionales</a>
+            <a href="#" [routerLink]="'/forousuarios'" class="ml-3" style="color: white; font-family: 'Monserrat'">Foro Usuarios</a>
         </div>
+
         <div class="menu-item-left mb-4 mr-4">
             <p-dropdown class="d-flex flex-align-center" [style]="{'width': '22rem'}" placeholder="Buscar perfiles..." 
                 [options]="users$ | async" [filter]="true" filterBy="nombre" appendTo="body" optionLabel="nombre" 
