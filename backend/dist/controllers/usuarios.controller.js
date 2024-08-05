@@ -50,7 +50,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsersExceptMeC = exports.getUserByEmailC = exports.updateUsuarios = exports.getAllRolesC = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
+exports.buscarC = exports.deletePublicacionesController = exports.getAllPublicacionesControllers = exports.getOnePublicacionController = exports.addPublicacionC = exports.getAllUsersExceptMeC = exports.getUserByEmailC = exports.updateUsuarios = exports.getAllRolesC = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var usuarios_service_1 = require("../services/usuarios.service");
 var auth_helper_1 = __importDefault(require("../helpers/auth.helper"));
@@ -384,5 +384,157 @@ var getAllUsersExceptMeC = function (req, res) { return __awaiter(void 0, void 0
     });
 }); };
 exports.getAllUsersExceptMeC = getAllUsersExceptMeC;
-exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, login: login, register: register, getAllRolesC: exports.getAllRolesC, updateUsuarios: exports.updateUsuarios, getUserByEmailC: exports.getUserByEmailC, getAllUsersExceptMeC: exports.getAllUsersExceptMeC };
+var addPublicacionC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, infor, archivos_adjuntos, datos, publi, saveFiles, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                infor = req.body;
+                archivos_adjuntos = req.files;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 5, , 6]);
+                datos = { infor: infor, archivos_adjuntos: archivos_adjuntos };
+                console.log(datos);
+                return [4 /*yield*/, (0, usuarios_service_1.addPublicacion)(infor)];
+            case 2:
+                publi = _a.sent();
+                saveFiles = true;
+                if (!archivos_adjuntos) return [3 /*break*/, 4];
+                return [4 /*yield*/, (0, usuarios_service_1.addArchivoPublicacion)(archivos_adjuntos, publi.id)];
+            case 3:
+                saveFiles = _a.sent();
+                _a.label = 4;
+            case 4:
+                resp.data = { saveFiles: saveFiles };
+                resp.cod = 200;
+                return [3 /*break*/, 6];
+            case 5:
+                error_1 = _a.sent();
+                console.log(error_1);
+                resp.msg = error_1;
+                resp.cod = 500;
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/, res.json(resp)];
+        }
+    });
+}); };
+exports.addPublicacionC = addPublicacionC;
+var getOnePublicacionController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_10;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, usuarios_service_1.getOnePublicacion)(body.id)];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_10 = _a.sent();
+                resp.msg = e_10;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getOnePublicacionController = getOnePublicacionController;
+var getAllPublicacionesControllers = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, result, e_11;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (0, usuarios_service_1.getAllPublicaciones)()];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_11 = _a.sent();
+                resp.msg = e_11;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllPublicacionesControllers = getAllPublicacionesControllers;
+var deletePublicacionesController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, ids, result, e_12;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ids = req.body.ids;
+                if (!ids || !Array.isArray(ids)) {
+                    return [2 /*return*/, res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' })];
+                }
+                return [4 /*yield*/, (0, usuarios_service_1.deletePublicacion)(ids)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                resp.data = { result: result };
+                resp.msg = "Publicaciones de profesionales eliminados con exito.";
+                return [3 /*break*/, 4];
+            case 3:
+                e_12 = _a.sent();
+                resp.msg = e_12;
+                resp.cod = 500;
+                resp.msg = "Error al eliminar publicaciones de profesionales ";
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deletePublicacionesController = deletePublicacionesController;
+var buscarC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_13;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, usuarios_service_1.buscarPublis)(body.fechaInicio, body.fechaFin)];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_13 = _a.sent();
+                resp.msg = e_13;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.buscarC = buscarC;
+exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, login: login, register: register, getAllRolesC: exports.getAllRolesC, updateUsuarios: exports.updateUsuarios, getUserByEmailC: exports.getUserByEmailC, getAllUsersExceptMeC: exports.getAllUsersExceptMeC, addPublicacionC: exports.addPublicacionC, getOnePublicacionController: exports.getOnePublicacionController, getAllPublicacionesControllers: exports.getAllPublicacionesControllers, deletePublicacionesController: exports.deletePublicacionesController, buscarC: exports.buscarC
+};
 //# sourceMappingURL=usuarios.controller.js.map

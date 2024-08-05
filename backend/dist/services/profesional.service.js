@@ -39,11 +39,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
 var path_1 = __importDefault(require("path"));
 var HiloProfesionales_1 = require("../entities/HiloProfesionales");
+var ArchivosHiloProf_1 = require("../entities/ArchivosHiloProf");
 var addProfesional = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -140,7 +141,7 @@ var deleteProfesionalesService = function (ids) { return __awaiter(void 0, void 
     });
 }); };
 exports.deleteProfesionalesService = deleteProfesionalesService;
-var addPublicacion = function (publicacion, archivo) { return __awaiter(void 0, void 0, void 0, function () {
+var addPublicacion = function (publicacion) { return __awaiter(void 0, void 0, void 0, function () {
     var datos, res;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -149,7 +150,8 @@ var addPublicacion = function (publicacion, archivo) { return __awaiter(void 0, 
                     fecha_hora: new Date(),
                     titulo: publicacion.titulo,
                     mensaje: publicacion.mensaje,
-                    nombre_archivo: ''
+                    id_profesional: publicacion.id_profesional,
+                    archivo_adjunto: ''
                 };
                 return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).save(datos)];
             case 1:
@@ -178,10 +180,10 @@ var addArchivoPublicacion = function (plan, id) { return __awaiter(void 0, void 
                 if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
                 file = plan[key];
                 archivo_com = {
-                    id: id,
-                    nombre_archivo: file ? path_1.default.basename(file.path) : ''
+                    id_hilo: id,
+                    archivo_adjunto: file ? path_1.default.basename(file.path) : '',
                 };
-                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).save(archivo_com)];
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosHiloProf_1.ArchivosHiloProf).save(archivo_com)];
             case 2:
                 filesSaved = _d.sent();
                 _d.label = 3;
@@ -193,4 +195,84 @@ var addArchivoPublicacion = function (plan, id) { return __awaiter(void 0, void 
     });
 }); };
 exports.addArchivoPublicacion = addArchivoPublicacion;
+var deletePublicacion = function (ids) { return __awaiter(void 0, void 0, void 0, function () {
+    var deleteResult, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).delete(ids)];
+            case 1:
+                deleteResult = _a.sent();
+                return [2 /*return*/, deleteResult.affected != null];
+            case 2:
+                error_2 = _a.sent();
+                console.error('Error al borrar las publicaciones:', error_2);
+                return [2 /*return*/, false];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deletePublicacion = deletePublicacion;
+var getAllPublicaciones = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.profesional', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')
+                    .orderBy('h.fecha_hora', 'DESC')
+                    .getMany()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getAllPublicaciones = getAllPublicaciones;
+var getOnePublicacion = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.profesional', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')
+                    .where('h.id = :id', { id: id })
+                    .getMany()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getOnePublicacion = getOnePublicacion;
+var buscarPublis = function (fechaInicio, fechaFin) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, adjustedFechaFin, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.profesional', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')];
+            case 1:
+                query = _a.sent();
+                if (fechaInicio) {
+                    query.andWhere('h.fecha_hora >= :fechaInicio', { fechaInicio: fechaInicio });
+                }
+                if (fechaFin) {
+                    adjustedFechaFin = new Date(fechaFin);
+                    adjustedFechaFin.setHours(23, 59, 59, 999);
+                    query.andWhere('h.fecha_hora <= :fechaFin', { fechaFin: adjustedFechaFin.toISOString() });
+                }
+                query.orderBy('h.fecha_hora', 'DESC');
+                return [4 /*yield*/, query.getMany()];
+            case 2:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.buscarPublis = buscarPublis;
 //# sourceMappingURL=profesional.service.js.map

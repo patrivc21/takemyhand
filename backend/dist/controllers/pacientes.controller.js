@@ -212,5 +212,6 @@ var deletePacientesController = function (req, res) { return __awaiter(void 0, v
     });
 }); };
 exports.deletePacientesController = deletePacientesController;
-exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC, updatePaciente: exports.updatePaciente, deletePacientesController: exports.deletePacientesController };
+exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC, updatePaciente: exports.updatePaciente, deletePacientesController: exports.deletePacientesController
+};
 //# sourceMappingURL=pacientes.controller.js.map

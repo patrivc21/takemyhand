@@ -35,12 +35,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
+exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
 var Usuarios_1 = require("../entities/Usuarios");
 var typeorm_1 = require("../config/typeorm");
 var typeorm_2 = require("typeorm");
 var RolUsuarios_1 = require("../entities/RolUsuarios");
+var HiloUsuarios_1 = require("../entities/HiloUsuarios");
+var ArchivosHiloUsuarios_1 = require("../entities/ArchivosHiloUsuarios");
+var path_1 = __importDefault(require("path"));
 var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -144,4 +150,139 @@ var getAllUsersExceptMe = function (id) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getAllUsersExceptMe = getAllUsersExceptMe;
+var addPublicacion = function (publicacion) { return __awaiter(void 0, void 0, void 0, function () {
+    var datos, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                datos = {
+                    fecha_hora: new Date(),
+                    titulo: publicacion.titulo,
+                    mensaje: publicacion.mensaje,
+                    id_usuario: publicacion.id_usuario,
+                    archivo_adjunto: ''
+                };
+                console.log('datos1', datos);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).save(datos)];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.addPublicacion = addPublicacion;
+var addArchivoPublicacion = function (plan, id) { return __awaiter(void 0, void 0, void 0, function () {
+    var filesSaved, _a, _b, _c, _i, key, file, archivo_com;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _a = plan;
+                _b = [];
+                for (_c in _a)
+                    _b.push(_c);
+                _i = 0;
+                _d.label = 1;
+            case 1:
+                if (!(_i < _b.length)) return [3 /*break*/, 4];
+                _c = _b[_i];
+                if (!(_c in _a)) return [3 /*break*/, 3];
+                key = _c;
+                if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
+                file = plan[key];
+                archivo_com = {
+                    id_hilo: id,
+                    archivo_adjunto: file ? path_1.default.basename(file.path) : '',
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosHiloUsuarios_1.ArchivosHiloUsuario).save(archivo_com)];
+            case 2:
+                filesSaved = _d.sent();
+                _d.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/, filesSaved != null];
+        }
+    });
+}); };
+exports.addArchivoPublicacion = addArchivoPublicacion;
+var deletePublicacion = function (ids) { return __awaiter(void 0, void 0, void 0, function () {
+    var deleteResult, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).delete(ids)];
+            case 1:
+                deleteResult = _a.sent();
+                return [2 /*return*/, deleteResult.affected != null];
+            case 2:
+                error_1 = _a.sent();
+                console.error('Error al borrar las publicaciones:', error_1);
+                return [2 /*return*/, false];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deletePublicacion = deletePublicacion;
+var getAllPublicaciones = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.usuario', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')
+                    .orderBy('h.fecha_hora', 'DESC')
+                    .getMany()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getAllPublicaciones = getAllPublicaciones;
+var getOnePublicacion = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.usuario', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')
+                    .where('h.id = :id', { id: id })
+                    .getMany()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getOnePublicacion = getOnePublicacion;
+var buscarPublis = function (fechaInicio, fechaFin) { return __awaiter(void 0, void 0, void 0, function () {
+    var query, adjustedFechaFin, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.usuario', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')];
+            case 1:
+                query = _a.sent();
+                if (fechaInicio) {
+                    query.andWhere('h.fecha_hora >= :fechaInicio', { fechaInicio: fechaInicio });
+                }
+                if (fechaFin) {
+                    adjustedFechaFin = new Date(fechaFin);
+                    adjustedFechaFin.setHours(23, 59, 59, 999);
+                    query.andWhere('h.fecha_hora <= :fechaFin', { fechaFin: adjustedFechaFin.toISOString() });
+                }
+                query.orderBy('h.fecha_hora', 'DESC');
+                return [4 /*yield*/, query.getMany()];
+            case 2:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.buscarPublis = buscarPublis;
 //# sourceMappingURL=usuarios.service.js.map

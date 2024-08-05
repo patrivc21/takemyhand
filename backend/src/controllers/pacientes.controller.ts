@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Pacientes } from '../entities/Pacientes';
-import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles, updatePacientesService, deletePacientesService, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion} from '../services/pacientes.service';
+import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles, updatePacientesService, deletePacientesService} from '../services/pacientes.service';
 
 export const addNewPaciente = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -100,83 +100,6 @@ export const deletePacientesController = async (req: Request, res: Response) => 
 };
 
 
-export const addPublicacionC = async (req: Request, res: Response) => {
-    let resp = new RespGeneric();
-    let infor = req.body
-    const nombre_archivo = (req as any).files;
-    try {
-        let datos = {infor, nombre_archivo}
-        console.log(datos)
-        
-        let publi = await addPublicacion(infor);
-        let saveFiles = true;
-        
-        if (nombre_archivo) {
-            saveFiles = await addArchivoPublicacion(nombre_archivo, publi.id);
-        }
-        resp.data = { saveFiles: saveFiles };
-        resp.cod = 200;
-    } catch (error) {
-        console.log(error as string);
-        resp.msg = error as string;
-        resp.cod = 500;
-    }
-    return res.json(resp);
-}
 
-
-export const getOnePublicacionController = async (req:Request, res:Response) => {
-    let resp = new RespGeneric();
-    try {
-        let body = req.body;
-        let result = await getOnePublicacion(body.id);
-        resp.data = {result: result};
-        resp.cod = 200;
-    } catch (e) {
-        resp.msg = e as string;
-        resp.cod = 500;
-    }
-    res.json(resp);
-}
-
-
-export const getAllPublicacionesControllers = async (_req:Request, res:Response) => {
-    let resp = new RespGeneric();
-    try {
-        let result = await getAllPublicaciones();
-        resp.data = {result: result};
-        resp.cod = 200;
-    } catch (e) {
-        resp.msg = e as string;
-        resp.cod = 500;
-    }
-    res.json(resp); 
-}
-
-
-
-export const deletePublicacionesController = async (req: Request, res: Response) => {
-    let resp = new RespGeneric();
-    try {
-        const ids: number[] = req.body.ids;
-
-        if (!ids || !Array.isArray(ids)) {
-            return res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' });
-        }
-
-        let result = await deletePublicacion(ids);
-        resp.cod = result ? 200 : 400;
-        resp.data = {result};
-        resp.msg = "Publicaciones de profesionales eliminados con exito."
-
-    } catch (e) {
-        resp.msg = e as string;
-        resp.cod = 500;
-        resp.msg = "Error al eliminar publicaciones de profesionales "
-    }
-};
-
-
-export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC, updatePaciente, deletePacientesController,
-    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController
+export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC, updatePaciente, deletePacientesController
 };

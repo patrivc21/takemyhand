@@ -16,9 +16,4 @@ router.get('/getAllRoles', AuthGuard, [pacientesController.getAllRolesC]);
 router.put('/updatePaciente', AuthGuard, [pacientesController.updatePaciente]);
 router.post('/deletePacientes', AuthGuard, [pacientesController.deletePacientesController]);
 
-router.post('/addPublicacion', AuthGuard, multipartMiddleware, [pacientesController.addPublicacionC]);
-router.get('/getOnePubli', AuthGuard, [pacientesController.getOnePublicacionController]);
-router.get('/getAllPublis', AuthGuard, [pacientesController.getAllPublicacionesControllers]);
-router.post('/deletePubli', AuthGuard, [pacientesController.deletePublicacionesController]);
-
 export default router;

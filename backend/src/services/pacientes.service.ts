@@ -5,6 +5,7 @@ import { RolPaciente } from "../entities/RolPacientes";
 import { Usuarios } from "../entities/Usuarios";
 import { HiloUsuarios } from "../entities/HiloUsuarios";
 import path from "path";
+import { ArchivosHiloUsuario } from "../entities/ArchivosHiloUsuarios";
 
 
 export const addUsuarios = async (usuarios: Usuarios): Promise<boolean> => {
@@ -85,64 +86,5 @@ export const updatePacientesResultService = async(id_usuario: any, resultado: an
 }
 
 
-export const addPublicacion = async (publicacion: any): Promise<any> => {
-    let datos = {
-      fecha_hora: new Date(),
-      titulo: publicacion.titulo,
-      mensaje: publicacion.mensaje,
-      nombre_archivo: '',
-      id_usuario: publicacion.id_usuario
-    };
-
-    let res = await DB.getRepository(HiloUsuarios).save(datos);
-    return res;
-}
-
-export const addArchivoPublicacion = async (plan: any, id: number): Promise<boolean> => {
-    let filesSaved;
-    
-      for (const key in plan) {
-          if (plan.hasOwnProperty(key)) {
-              const file = plan[key];
-              let archivo_com = {
-                  id: id,
-                  nombre_archivo: file ? path.basename(file.path) : ''
-              };
-    
-              filesSaved = await DB.getRepository(HiloUsuarios).save(archivo_com);
-          }
-      }
-    
-      return filesSaved != null;
-}
-
-export const deletePublicacion = async(ids: number[]): Promise<boolean> => {
-    try {
-        const deleteResult = await DB.getRepository(HiloUsuarios).delete(ids);
-        return deleteResult.affected != null;
-    } catch (error) {
-        console.error('Error al borrar las publicaciones:', error);
-        return false;
-    }
-}
-
-export const getAllPublicaciones = async ():Promise<HiloUsuarios[]> => {
-    let res = await DB.getRepository(HiloUsuarios)
-    .createQueryBuilder('h')
-    .leftJoinAndSelect('h.usuario', 'p')
-    .getMany();
-
-    return res;
-}
-
-export const getOnePublicacion= async (id: number): Promise<HiloUsuarios[]> => {
-    let res = await DB.getRepository(HiloUsuarios)
-        .createQueryBuilder('h')
-        .leftJoinAndSelect('h.usuario', 'p')
-        .where('h.id = :id', { id })
-        .getMany();
-        
-    return res;
-}
     
 

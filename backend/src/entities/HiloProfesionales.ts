@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Profesionales } from './Profesional';
+import { ArchivosHiloProf } from './ArchivosHiloProf';
 
 @Entity({ name: 'hilo_profesionales' })
 export class HiloProfesionales {
@@ -11,10 +12,6 @@ export class HiloProfesionales {
 
   @Column()
   mensaje!: string;
-
-  @Column()
-  archivo_adjunto!: string;
-
   @Column()
   fecha_hora!: Date;
 
@@ -24,4 +21,7 @@ export class HiloProfesionales {
   @ManyToOne(() => Profesionales, profesional => profesional.id)
   @JoinColumn({ name: 'id_profesional' })
   profesional!: Profesionales;
+
+  @OneToMany(() => ArchivosHiloProf, archivo => archivo.hilo) // Alias 'archivos'
+    archivos!: ArchivosHiloProf[];
 }

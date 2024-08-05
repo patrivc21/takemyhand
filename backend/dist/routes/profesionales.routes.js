@@ -16,6 +16,10 @@ router.get('/getOneProfesional', auth_guard_1.AuthGuard, [profesional_controller
 router.get('/getAllProfesionales', auth_guard_1.AuthGuard, [profesional_controller_1.default.getAllProfesionalesControllers]);
 router.put('/updateProfesional', auth_guard_1.AuthGuard, [profesional_controller_1.default.updateProfesional]);
 router.post('/deleteProfesionales', auth_guard_1.AuthGuard, [profesional_controller_1.default.deleteProfesionalesController]);
-router.post('/addPublicacion', multipartMiddleware, [profesional_controller_1.default.addPublicacionC]);
+router.post('/addPublicacion', auth_guard_1.AuthGuard, multipartMiddleware, [profesional_controller_1.default.addPublicacionC]);
+router.post('/getOnePubli', auth_guard_1.AuthGuard, [profesional_controller_1.default.getOnePublicacionController]);
+router.get('/getAllPublis', auth_guard_1.AuthGuard, [profesional_controller_1.default.getAllPublicacionesControllers]);
+router.post('/deletePubli', auth_guard_1.AuthGuard, [profesional_controller_1.default.deletePublicacionesController]);
+router.post('/buscar', auth_guard_1.AuthGuard, [profesional_controller_1.default.buscarC]);
 exports.default = router;
 //# sourceMappingURL=profesionales.routes.js.map

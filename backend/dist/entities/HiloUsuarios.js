@@ -11,6 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HiloUsuarios = void 0;
 var typeorm_1 = require("typeorm");
+var Usuarios_1 = require("./Usuarios");
+var ArchivosHiloUsuarios_1 = require("./ArchivosHiloUsuarios");
 var HiloUsuarios = /** @class */ (function () {
     function HiloUsuarios() {
     }
@@ -28,12 +30,22 @@ var HiloUsuarios = /** @class */ (function () {
     ], HiloUsuarios.prototype, "mensaje", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], HiloUsuarios.prototype, "archivo_adjunto", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
         __metadata("design:type", Date)
     ], HiloUsuarios.prototype, "fecha_hora", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], HiloUsuarios.prototype, "id_usuario", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
+        __metadata("design:type", Usuarios_1.Usuarios)
+    ], HiloUsuarios.prototype, "usuario", void 0);
+    __decorate([
+        (0, typeorm_1.OneToMany)(function () { return ArchivosHiloUsuarios_1.ArchivosHiloUsuario; }, function (archivo) { return archivo.hilo; }) // Alias 'archivos'
+        ,
+        __metadata("design:type", Array)
+    ], HiloUsuarios.prototype, "archivos", void 0);
     HiloUsuarios = __decorate([
         (0, typeorm_1.Entity)({ name: 'hilo_usuarios' })
     ], HiloUsuarios);

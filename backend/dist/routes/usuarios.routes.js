@@ -8,6 +8,10 @@ var usuarios_controller_1 = __importDefault(require("../controllers/usuarios.con
 var auth_guard_1 = require("../guards/auth.guard");
 var users_validators_1 = require("../validators/users.validators");
 var router = express_1.default.Router();
+var multer = require('multer');
+var upload = multer({ dest: "assets/" });
+var multipart = require('connect-multiparty');
+var multipartMiddleware = multipart({ uploadDir: 'assets' });
 router.post('/addUser', [usuarios_controller_1.default.addNewUser]);
 router.get('/getOneUser', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getOneUserController]);
 router.get('/getAllUsers', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getAllUsersControllers]);
@@ -17,5 +21,10 @@ router.post('/login', [users_validators_1.UserLoginValidator, usuarios_controlle
 router.post('/register', [users_validators_1.UserValidator, usuarios_controller_1.default.register]); //AuthGuard,
 router.post('/getUserByEmail', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getUserByEmailC]);
 router.post('/getAllUsersExceptMe', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getAllUsersExceptMeC]);
+router.post('/addPublicacion', auth_guard_1.AuthGuard, multipartMiddleware, [usuarios_controller_1.default.addPublicacionC]);
+router.post('/getOnePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getOnePublicacionController]);
+router.get('/getAllPublis', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getAllPublicacionesControllers]);
+router.post('/deletePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.deletePublicacionesController]);
+router.post('/buscar', auth_guard_1.AuthGuard, [usuarios_controller_1.default.buscarC]);
 exports.default = router;
 //# sourceMappingURL=usuarios.routes.js.map

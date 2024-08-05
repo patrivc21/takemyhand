@@ -15,9 +15,10 @@ router.get('/getAllProfesionales', AuthGuard, [profesionalController.getAllProfe
 router.put('/updateProfesional', AuthGuard, [ profesionalController.updateProfesional]);
 router.post('/deleteProfesionales', AuthGuard, [profesionalController.deleteProfesionalesController]);
 
-router.post('/addPublicacion', AuthGuard, multipartMiddleware, [profesionalController.addPublicacionC]);
-router.get('/getOnePubli', AuthGuard, [profesionalController.getOnePublicacionController]);
-router.get('/getAllPublis', AuthGuard, [profesionalController.getAllPublicacionesControllers]);
+router.post('/addPublicacion',  AuthGuard, multipartMiddleware, [profesionalController.addPublicacionC]);
+router.post('/getOnePubli',  AuthGuard, [profesionalController.getOnePublicacionController]);
+router.get('/getAllPublis',  AuthGuard, [profesionalController.getAllPublicacionesControllers]);
 router.post('/deletePubli', AuthGuard, [profesionalController.deletePublicacionesController]);
+router.post('/buscar', AuthGuard, [profesionalController.buscarC]);
 
 export default router;

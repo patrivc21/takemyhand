@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HiloProfesionales = void 0;
 var typeorm_1 = require("typeorm");
 var Profesional_1 = require("./Profesional");
+var ArchivosHiloProf_1 = require("./ArchivosHiloProf");
 var HiloProfesionales = /** @class */ (function () {
     function HiloProfesionales() {
     }
@@ -29,10 +30,6 @@ var HiloProfesionales = /** @class */ (function () {
     ], HiloProfesionales.prototype, "mensaje", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], HiloProfesionales.prototype, "archivo_adjunto", void 0);
-    __decorate([
-        (0, typeorm_1.Column)(),
         __metadata("design:type", Date)
     ], HiloProfesionales.prototype, "fecha_hora", void 0);
     __decorate([
@@ -44,6 +41,11 @@ var HiloProfesionales = /** @class */ (function () {
         (0, typeorm_1.JoinColumn)({ name: 'id_profesional' }),
         __metadata("design:type", Profesional_1.Profesionales)
     ], HiloProfesionales.prototype, "profesional", void 0);
+    __decorate([
+        (0, typeorm_1.OneToMany)(function () { return ArchivosHiloProf_1.ArchivosHiloProf; }, function (archivo) { return archivo.hilo; }) // Alias 'archivos'
+        ,
+        __metadata("design:type", Array)
+    ], HiloProfesionales.prototype, "archivos", void 0);
     HiloProfesionales = __decorate([
         (0, typeorm_1.Entity)({ name: 'hilo_profesionales' })
     ], HiloProfesionales);

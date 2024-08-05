@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addPublicacionC = exports.deleteProfesionalesController = exports.updateProfesional = exports.getAllProfesionalesControllers = exports.getOneProfesionalController = exports.addNewProfesional = void 0;
+exports.buscarC = exports.deletePublicacionesController = exports.getAllPublicacionesControllers = exports.getOnePublicacionController = exports.addPublicacionC = exports.deleteProfesionalesController = exports.updateProfesional = exports.getAllProfesionalesControllers = exports.getOneProfesionalController = exports.addNewProfesional = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var profesional_service_1 = require("../services/profesional.service");
 var addNewProfesional = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -192,24 +192,24 @@ var deleteProfesionalesController = function (req, res) { return __awaiter(void 
 }); };
 exports.deleteProfesionalesController = deleteProfesionalesController;
 var addPublicacionC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, infor, nombre_archivo, datos, publi, saveFiles, error_1;
+    var resp, infor, archivos_adjuntos, datos, publi, saveFiles, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 resp = new RespGeneric_1.default();
                 infor = req.body;
-                nombre_archivo = req.files;
+                archivos_adjuntos = req.files;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 5, , 6]);
-                datos = { infor: infor, nombre_archivo: nombre_archivo };
+                datos = { infor: infor, archivos_adjuntos: archivos_adjuntos };
                 console.log(datos);
-                return [4 /*yield*/, (0, profesional_service_1.addPublicacion)(infor, nombre_archivo)];
+                return [4 /*yield*/, (0, profesional_service_1.addPublicacion)(infor)];
             case 2:
                 publi = _a.sent();
                 saveFiles = true;
-                if (!nombre_archivo) return [3 /*break*/, 4];
-                return [4 /*yield*/, (0, profesional_service_1.addArchivoPublicacion)(nombre_archivo, publi.id)];
+                if (!archivos_adjuntos) return [3 /*break*/, 4];
+                return [4 /*yield*/, (0, profesional_service_1.addArchivoPublicacion)(archivos_adjuntos, publi.id)];
             case 3:
                 saveFiles = _a.sent();
                 _a.label = 4;
@@ -228,5 +228,119 @@ var addPublicacionC = function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); };
 exports.addPublicacionC = addPublicacionC;
-exports.default = { addNewProfesional: exports.addNewProfesional, getOneProfesionalController: exports.getOneProfesionalController, getAllProfesionalesControllers: exports.getAllProfesionalesControllers, updateProfesional: exports.updateProfesional, deleteProfesionalesController: exports.deleteProfesionalesController, addPublicacionC: exports.addPublicacionC };
+var getOnePublicacionController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, profesional_service_1.getOnePublicacion)(body.id)];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_6 = _a.sent();
+                resp.msg = e_6;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getOnePublicacionController = getOnePublicacionController;
+var getAllPublicacionesControllers = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, result, e_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (0, profesional_service_1.getAllPublicaciones)()];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_7 = _a.sent();
+                resp.msg = e_7;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllPublicacionesControllers = getAllPublicacionesControllers;
+var deletePublicacionesController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, ids, result, e_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ids = req.body.ids;
+                if (!ids || !Array.isArray(ids)) {
+                    return [2 /*return*/, res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' })];
+                }
+                return [4 /*yield*/, (0, profesional_service_1.deletePublicacion)(ids)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                resp.data = { result: result };
+                resp.msg = "Publicaciones de profesionales eliminados con exito.";
+                return [3 /*break*/, 4];
+            case 3:
+                e_8 = _a.sent();
+                resp.msg = e_8;
+                resp.cod = 500;
+                resp.msg = "Error al eliminar publicaciones de profesionales ";
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deletePublicacionesController = deletePublicacionesController;
+var buscarC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_9;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, profesional_service_1.buscarPublis)(body.fechaInicio, body.fechaFin)];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_9 = _a.sent();
+                resp.msg = e_9;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.buscarC = buscarC;
+exports.default = { addNewProfesional: exports.addNewProfesional, getOneProfesionalController: exports.getOneProfesionalController, getAllProfesionalesControllers: exports.getAllProfesionalesControllers, updateProfesional: exports.updateProfesional, deleteProfesionalesController: exports.deleteProfesionalesController, addPublicacionC: exports.addPublicacionC, getOnePublicacionController: exports.getOnePublicacionController, getAllPublicacionesControllers: exports.getAllPublicacionesControllers, deletePublicacionesController: exports.deletePublicacionesController, buscarC: exports.buscarC };
 //# sourceMappingURL=profesional.controller.js.map
