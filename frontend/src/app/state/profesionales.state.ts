@@ -134,4 +134,14 @@ export class ProfesionalesState {
       return data;
     }
 
+    public addRecurso(archivo_adjunto: any, titulo: string, contenido: string, tipo: string) {
+      const data = this.service.addRecursos(archivo_adjunto, titulo, contenido, tipo);
+      data.pipe(take(1)).subscribe((response) => {
+        if (response.cod == 200) {
+          // this.getAllComentarios()
+        }
+      });
+      return data;
+    }
+
 }

@@ -24,11 +24,15 @@ import { EditarPerfilComponent } from './Components/editar-perfil/editar-perfil.
 import { CrearPlanComponent } from './Components/crear-plan/crear-plan.component';
 import { VerPlanComponent } from './Components/ver-plan/ver-plan.component';
 import { CarouselModule } from 'primeng/carousel';
+import { RecursosComponent } from './Components/recursos/recursos.component';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { FileUploadModule } from 'primeng/fileupload';
 
 const routes: Routes = [{ path: '', component: HomeComponent },
   {path: 'editar', component: EditarPerfilComponent},
   // {path: 'crearPlan/:id', component: CrearPlanComponent},
-  {path: 'verPlan', component: VerPlanComponent}
+  {path: 'verPlan', component: VerPlanComponent},
+  {path: 'recurso', component: RecursosComponent}
 ];
 
 
@@ -38,7 +42,8 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     HomeComponent,
     EditarPerfilComponent,
     CrearPlanComponent,
-    VerPlanComponent
+    VerPlanComponent,
+    RecursosComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +66,9 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     RouterModule.forChild(routes),
     PasswordModule,
     MenubarModule,
-    CarouselModule
+    CarouselModule,
+    CKEditorModule,
+    FileUploadModule
   ]
 })
 export class HomeModule { }
