@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Profesionales } from '../entities/Profesional';
-import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService, addPublicacion, addArchivoPublicacion, getOnePublicacion, getAllPublicaciones, deletePublicacion, buscarPublis} from '../services/profesional.service'
+import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService, addPublicacion, addArchivoPublicacion, getOnePublicacion, getAllPublicaciones, deletePublicacion, buscarPublis, addRecursos, addArchivosRecursos} from '../services/profesional.service'
 
 export const addNewProfesional = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -182,5 +182,30 @@ export const buscarC = async (req:Request, res:Response) => {
 }
 
 
+export const addRecursosC = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    let infor = req.body
+    const nombre_archivo = (req as any).files;
+    try {
+        let datos = {infor, nombre_archivo}
+        console.log(datos)
+        
+        let recursoGuardado = await addRecursos(infor);
+        let saveFiles = true;
+        
+        if (nombre_archivo && recursoGuardado) {
+            saveFiles = await addArchivosRecursos(nombre_archivo, recursoGuardado.id);
+        }
+        resp.data = { saveFiles: saveFiles };
+        resp.cod = 200;
+    } catch (error) {
+        console.log(error as string);
+        resp.msg = error as string;
+        resp.cod = 500;
+    }
+    return res.json(resp);
+}
+
+
 export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers, updateProfesional, deleteProfesionalesController, 
-    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC};
+    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC, addRecursosC};

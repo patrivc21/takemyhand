@@ -4,6 +4,8 @@ import { SelectQueryBuilder } from "typeorm";
 import path from "path";
 import { HiloProfesionales } from "../entities/HiloProfesionales";
 import { ArchivosHiloProf } from "../entities/ArchivosHiloProf";
+import { Recursos } from "../entities/Recursos";
+import { ArchivosRecursos } from "../entities/ArchivosRecursos";
 
 export const addProfesional = async (admin: Profesionales): Promise<boolean> => {
     let res = await DB.getRepository(Profesionales).save(admin);
@@ -138,5 +140,42 @@ export const buscarPublis = async (fechaInicio?: string, fechaFin?: string): Pro
     let res = await query.getMany();
     return res;
   };
-    
+
+  
+
+export const addRecursos = async (recursos: any): Promise<any> => {
+    let datos = {
+        titulo: recursos.titulo,
+        contenido: recursos.contenido,
+        archivo_adjunto: '',
+        tipo: ''
+      };
+
+    let res = await DB.getRepository(Recursos).save(datos);
+    return res;
+}
+
+export const addArchivosRecursos = async (files: any, id:number): Promise<boolean> => {
+    let filesSaved;
+
+	for (const key in files) {
+		if (files.hasOwnProperty(key)) {
+			const file = files[key];
+			let tipoArchivo = file ? path.basename(file.type) : '';
+			if (tipoArchivo === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+				tipoArchivo = 'xlsx';
+			}
+
+			let datos = {
+                id_recurso: id,
+				nombre_archivo: file ? path.basename(file.path) : '',
+				tipo: tipoArchivo,
+			};
+
+			filesSaved = await DB.getRepository(ArchivosRecursos).save(datos);
+		}
+	}
+
+    return filesSaved != null;
+}
   

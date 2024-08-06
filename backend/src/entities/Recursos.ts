@@ -6,14 +6,8 @@ export class Recursos {
   id!: number;
 
   @Column()
-  tipo!: string;
-
-  @Column()
   contenido!: string;
 
   @Column()
   titulo!: string;
-
-  @Column()
-  archivo_adjunti!: string;
 }

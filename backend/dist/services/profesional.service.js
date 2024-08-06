@@ -39,12 +39,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.addArchivosRecursos = exports.addRecursos = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
 var path_1 = __importDefault(require("path"));
 var HiloProfesionales_1 = require("../entities/HiloProfesionales");
 var ArchivosHiloProf_1 = require("../entities/ArchivosHiloProf");
+var Recursos_1 = require("../entities/Recursos");
+var ArchivosRecursos_1 = require("../entities/ArchivosRecursos");
 var addProfesional = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -275,4 +277,62 @@ var buscarPublis = function (fechaInicio, fechaFin) { return __awaiter(void 0, v
     });
 }); };
 exports.buscarPublis = buscarPublis;
+var addRecursos = function (recursos) { return __awaiter(void 0, void 0, void 0, function () {
+    var datos, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                datos = {
+                    titulo: recursos.titulo,
+                    contenido: recursos.contenido,
+                    archivo_adjunto: '',
+                    tipo: ''
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Recursos_1.Recursos).save(datos)];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.addRecursos = addRecursos;
+var addArchivosRecursos = function (files, id) { return __awaiter(void 0, void 0, void 0, function () {
+    var filesSaved, _a, _b, _c, _i, key, file, tipoArchivo, datos;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _a = files;
+                _b = [];
+                for (_c in _a)
+                    _b.push(_c);
+                _i = 0;
+                _d.label = 1;
+            case 1:
+                if (!(_i < _b.length)) return [3 /*break*/, 4];
+                _c = _b[_i];
+                if (!(_c in _a)) return [3 /*break*/, 3];
+                key = _c;
+                if (!files.hasOwnProperty(key)) return [3 /*break*/, 3];
+                file = files[key];
+                tipoArchivo = file ? path_1.default.basename(file.type) : '';
+                if (tipoArchivo === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+                    tipoArchivo = 'xlsx';
+                }
+                datos = {
+                    id_recurso: id,
+                    nombre_archivo: file ? path_1.default.basename(file.path) : '',
+                    tipo: tipoArchivo,
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosRecursos_1.ArchivosRecursos).save(datos)];
+            case 2:
+                filesSaved = _d.sent();
+                _d.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/, filesSaved != null];
+        }
+    });
+}); };
+exports.addArchivosRecursos = addArchivosRecursos;
 //# sourceMappingURL=profesional.service.js.map

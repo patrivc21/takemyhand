@@ -9,27 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Recursos = void 0;
+exports.ArchivosRecursos = void 0;
 var typeorm_1 = require("typeorm");
-var Recursos = /** @class */ (function () {
-    function Recursos() {
+var Recursos_1 = require("./Recursos");
+var ArchivosRecursos = /** @class */ (function () {
+    function ArchivosRecursos() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Recursos.prototype, "id", void 0);
+    ], ArchivosRecursos.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Recursos.prototype, "contenido", void 0);
+    ], ArchivosRecursos.prototype, "nombre_archivo", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Recursos.prototype, "titulo", void 0);
-    Recursos = __decorate([
-        (0, typeorm_1.Entity)({ name: 'recursos' })
-    ], Recursos);
-    return Recursos;
+    ], ArchivosRecursos.prototype, "tipo", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], ArchivosRecursos.prototype, "id_recurso", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Recursos_1.Recursos; }, function (recurso) { return recurso.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_recurso' }),
+        __metadata("design:type", Recursos_1.Recursos)
+    ], ArchivosRecursos.prototype, "recurso", void 0);
+    ArchivosRecursos = __decorate([
+        (0, typeorm_1.Entity)({ name: 'archivos_recursos' })
+    ], ArchivosRecursos);
+    return ArchivosRecursos;
 }());
-exports.Recursos = Recursos;
-//# sourceMappingURL=Recursos.js.map
+exports.ArchivosRecursos = ArchivosRecursos;
+//# sourceMappingURL=ArchivosRecursos.js.map

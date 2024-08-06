@@ -21,4 +21,6 @@ router.get('/getAllPublis',  AuthGuard, [profesionalController.getAllPublicacion
 router.post('/deletePubli', AuthGuard, [profesionalController.deletePublicacionesController]);
 router.post('/buscar', AuthGuard, [profesionalController.buscarC]);
 
+router.post('/addRecursos',  AuthGuard, multipartMiddleware, [profesionalController.addRecursosC]);
+
 export default router;
