@@ -19,6 +19,7 @@ interface IAuthState {
     verDialog: boolean
     allPublis?: any[]
     onePubli?: any;
+    showEstado: boolean
 }
 
 @Injectable({
@@ -29,7 +30,8 @@ export class AuthState {
     token: '',
     users: [], 
     loadingButton: false, 
-    verDialog: true
+    verDialog: true,
+    showEstado: false
   }
 
   private readonly _state: BehaviorSubject<IAuthState> = new BehaviorSubject(
@@ -67,6 +69,10 @@ export class AuthState {
     .asObservable()
     .pipe(map((state) => state && state.onePubli));
 
+  public readonly showEstado$: Observable<boolean> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.showEstado))
+
   private get state() {
     return this._state.getValue()
   }
@@ -101,9 +107,16 @@ export class AuthState {
     this._state.next({...this.state, verDialog: false})
   }
 
+  public verEstado(){
+    this._state.next({...this.state, showEstado: true})
+  }
+
+  public closeEstado(){
+    this._state.next({...this.state, showEstado: false})
+  }
 
   public async login(data: UserLogin): Promise<void> {
-    this._state.next({ ...this.state, loadingButton: true })
+    this._state.next({ ...this.state, loadingButton: true})
     this.authService.login(data).subscribe(res => {
       console.log('login', res)
       if (res.cod == 200) {
@@ -115,6 +128,7 @@ export class AuthState {
           this.router.navigate(['/home-admin']);
         }else if(res.data.user.rol == 2){
           this.router.navigate(['/home']);
+          this.verEstado()
         }else if(res.data.user.rol == 3){
           this.router.navigate(['/home']);
         }

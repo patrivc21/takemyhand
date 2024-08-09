@@ -60,6 +60,12 @@ const routes: Routes = [
     canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/chat-usuarios/chat-usuarios.module').then(m => m.ChatUsuariosModule) 
   },
+  { 
+    path: 'recursos', 
+    title: 'TMH • Novedades',
+    canActivate: [AuthGuard], 
+    loadChildren: () => import('./pages/recursos/recursos.module').then(m => m.RecursosModule) 
+  },
 ];
 
 @NgModule({

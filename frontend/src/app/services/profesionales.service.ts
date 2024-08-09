@@ -77,25 +77,13 @@ export class ProfesionalesService {
       })
     )
   }
-
-
-  // public addRecursos(archivo_adjunto: File, titulo: string, contenido: string, tipo: string): Observable<GenericResponse> {
-
-  //   const formData = new FormData();
-  //   formData.append('titulo', titulo ? titulo : '');
-  //   formData.append('contenido', contenido ? contenido : '');
-  //   formData.append('tipo', tipo ? tipo : '');
-  //   if (archivo_adjunto != null) formData.append('archivo_adjunto', archivo_adjunto, archivo_adjunto.name);
-  //   console.log(formData);
-
-  //   return this.http.post<GenericResponse>(`${BACKEND_API}/addRecursos`, formData).pipe(shareReplay());
-  // }
-
-  public addRecursos(nombre_archivo: File[], titulo: string, contenido: string, tipo: string): Observable<GenericResponse> {
+  
+  public addRecursos(nombre_archivo: File[], titulo: string, contenido: string, tipo: string, url_video: string): Observable<GenericResponse> {
     const formData = new FormData();
     formData.append('titulo', titulo);
     formData.append('contenido', contenido);
     formData.append('tipo', tipo);
+    formData.append('url_video', url_video);
     nombre_archivo.forEach((file, index) => {
       formData.append(`nombre_archivo_${index}`, file, file.name);
     });

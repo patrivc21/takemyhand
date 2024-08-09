@@ -36,10 +36,11 @@ export class CrearPlanComponent {
     this.form = this.fb.group({
       nombre_archivo: this.fb.array([]),
       lugares: this.fb.array([]),
-      personas: this.fb.array([]),
+      personasEmails: this.fb.array([]), // Combinamos personas y emails
       hobbies: this.fb.array([]),
     });
   }
+  
 
   public iniciar() {
     this.route.params.subscribe(params => {
@@ -64,6 +65,26 @@ export class CrearPlanComponent {
       control.setValue(fileArray); // Asigna el array de archivos al form control específico
     }
   }
+
+  // Método para añadir una nueva persona y su email
+  public addPersonEmail() {
+    const group = this.fb.group({
+      persona: ['', Validators.required], // Nombre de la persona
+      email: ['', [Validators.required, Validators.email]] // Email de la persona
+    });
+    this.personasEmails.push(group);
+  }
+
+  // Método para eliminar una persona y su email por índice
+  public removePersonEmail(index: number) {
+    this.personasEmails.removeAt(index);
+  }
+
+  // Getters para acceder al FormArray
+  get personasEmails(): FormArray {
+    return this.form.get('personasEmails') as FormArray;
+  }
+
   
   public crear() {
     let result = this.form.value;
@@ -74,7 +95,12 @@ export class CrearPlanComponent {
       }
     });
   
-    this.planState.addPlan(files, this.id_usuario, result.lugares, result.personas, result.hobbies)
+    // Separar personas y emails del FormArray combinado
+    const personas = result.personasEmails.map((item: any) => item.persona);
+    const emails = result.personasEmails.map((item: any) => item.email);
+
+    // Llamar a addPlan con personas y emails por separado
+    this.planState.addPlan(files, this.id_usuario, result.lugares, personas, result.hobbies, emails);
     this.cerrar();
   }
 
@@ -104,9 +130,13 @@ export class CrearPlanComponent {
     this.nombre_archivo.push(this.fb.control(''));
   }
 
+  public addEmails() {
+    this.emails.push(this.fb.control(''));
+  }
   
   get lugares(): FormArray {return this.form.get('lugares') as FormArray;}
   get personas(): FormArray {return this.form.get('personas') as FormArray;}
   get hobbies(): FormArray {return this.form.get('hobbies') as FormArray;}
+  get emails(): FormArray {return this.form.get('emails') as FormArray;}
   get nombre_archivo(): FormArray {return this.form.get('nombre_archivo') as FormArray;}
 }

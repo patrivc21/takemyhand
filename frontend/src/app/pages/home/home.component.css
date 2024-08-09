@@ -120,6 +120,26 @@
     transition: transform 0.3s;
     font-family: "Monserrat";
 }
+
+.homepage-item-full {
+    /* width: 45%;
+    height: 200px; */
+    width: 95%;
+    height: 250px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-family: "Monserrat";
+}
   
 .homepage-item:hover {
     transform: scale(1.05);

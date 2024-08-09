@@ -35,8 +35,8 @@ export class PlanState {
     }
 
 
-    public addPlan(nombre_archivo: any[], id_usuario: number, lugares: string[], personas: string[], hobbies: string[]) {
-		const data = this.service.addPlan(nombre_archivo, id_usuario, lugares, personas, hobbies);
+    public addPlan(nombre_archivo: any[], id_usuario: number, lugares: string[], personas: string[], hobbies: string[], emails: string[]) {
+		const data = this.service.addPlan(nombre_archivo, id_usuario, lugares, personas, hobbies, emails);
 
 		data.pipe(take(1)).subscribe((response) => {
 			if (response.cod == 200) {

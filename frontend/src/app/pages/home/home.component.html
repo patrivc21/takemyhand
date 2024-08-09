@@ -33,6 +33,12 @@
 </div>
 <ng-container *ngIf="usuario.rol == 2">
     <div class="homepage-container mt-4">
+        <div class="homepage-item-full" [routerLink]="'/recursos'">
+            <div class="homepage-background" ></div>
+            <div class="homepage-text">Ultimas noticias</div>
+        </div>
+    </div>
+    <div class="homepage-container mt-4">
         <div class="homepage-item" [routerLink]="'/formulario'">
             <div class="homepage-background" style="background-image: url('https://i.blogs.es/5c3d68/forms/1366_2000.jpg')"></div>
             <div class="homepage-text">¡Comienza rellenado el formulario!</div>
@@ -47,6 +53,12 @@
   
 
 <ng-container *ngIf="usuario.rol == 3">
+    <div class="homepage-container mt-4">
+        <div class="homepage-item" [routerLink]="'/home/recurso'">
+            <div class="homepage-background" style="background-image: url('https://i.blogs.es/5c3d68/forms/1366_2000.jpg')"></div>
+            <div class="homepage-text">Añadir recursos</div>
+        </div>
+    </div>
 </ng-container>
 
 <div *ngIf="viewPerfil">
@@ -77,4 +89,36 @@
           <p-button type="button" pButton label="Cancelar" icon="pi pi-times" (click)="hideDialog()"></p-button>
         </p-footer>
       </p-dialog>
+</ng-container>
+
+<ng-container *ngIf="(showEstado$ | async)">
+    <p-dialog header="Valora tu estado de animo" [visible]="(showEstado$ | async)" modal="true" [closable]="false">
+        <h2>¿Cómo te encuentras hoy?</h2>
+
+        <p-rating [(ngModel)]="value" stars="5">
+            <ng-template pTemplate="cancelicon">
+                <img 
+                    src="https://primefaces.org/cdn/primeng/images/demo/rating/cancel.png" 
+                    width="25px" 
+                    height="25px" />
+            </ng-template>
+            <ng-template pTemplate="onicon">
+                <img 
+                    src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon-active.png" 
+                    width="25px" 
+                    height="25px" />
+            </ng-template>
+            <ng-template pTemplate="officon">
+                <img 
+                    src="https://primefaces.org/cdn/primeng/images/demo/rating/custom-icon.png"
+                    width="25px"
+                    height="25px" />
+            </ng-template>
+        </p-rating>
+
+        <p-footer>
+          <p-button type="button" pButton label="Guardar" icon="pi pi-check" (click)="guardar()"></p-button>
+          <p-button type="button" pButton label="Cancelar" icon="pi pi-times" (click)="cerrarEstadoDialog()"></p-button>
+        </p-footer>
+    </p-dialog>
 </ng-container>

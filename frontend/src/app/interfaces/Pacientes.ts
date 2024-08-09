@@ -9,3 +9,10 @@ export interface Pacientes {
     activo: boolean
     id_usuario: number;
 }
+
+export interface IEstadoAnimo {
+    id: number;
+    estado: number
+    fecha: Date;
+    id_usuario: number;
+}

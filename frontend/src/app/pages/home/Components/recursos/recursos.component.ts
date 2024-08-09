@@ -48,7 +48,8 @@ export class RecursosComponent {
     this.form = this.fb.group({
       titulo: ['', [Validators.required]],
       contenido: ['', Validators.required],      
-      archivo_adjunto: ['', [Validators.required]]
+      archivo_adjunto: ['', []],
+      url_video: ['', []]
     });
   }
 
@@ -80,19 +81,14 @@ export class RecursosComponent {
 
   crear() {
     console.log(this.img_files)
-      const { titulo, contenido } = this.form.value;
+      const { titulo, contenido, url_video } = this.form.value;
       console.log(this.img_files, titulo, contenido)
-      this.profesionalState.addRecurso(this.img_files, titulo, contenido, 'image').subscribe(response => {
-        console.log('Recurso añadido:', response);
-        // Maneja la respuesta del servidor aquí
-      }, error => {
-        console.error('Error al añadir el recurso:', error);
-        // Maneja el error aquí
-      });
+      this.profesionalState.addRecurso(this.img_files, titulo, contenido, 'image', url_video)
   }
 
 
   get titulo(): AbstractControl | null { return this.form.get('titulo'); }
   get contenido(): AbstractControl | null { return this.form.get('contenido'); }  
   get archivo_adjunto(): AbstractControl | null { return this.form.get('archivo_adjunto') }
+  get url_video(): AbstractControl | null { return this.form.get('url_video') }
 }

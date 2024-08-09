@@ -18,13 +18,14 @@ export class PlanService {
   }
 
 
-  public addPlan(nombre_archivo: File[], id_usuario: number, lugares: string[], personas: string[], hobbies: string[]): Observable<GenericResponse> {
+  public addPlan(nombre_archivo: File[], id_usuario: number, lugares: string[], personas: string[], hobbies: string[], emails: string[],): Observable<GenericResponse> {
 
     const formData = new FormData();
     formData.append('id_usuario', id_usuario.toString());
     formData.append('lugares', lugares ? lugares.join(';') : '');
     formData.append('personas', personas ? personas.join(';') : '');
     formData.append('hobbies', hobbies ? hobbies.join(';') : '');
+    formData.append('emails', emails ? emails.join(';') : '');
 
     if (nombre_archivo) {
       let i = 0;

@@ -6,7 +6,6 @@ import { AppComponent } from './app.component'
 import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ToastrModule } from 'ngx-toastr'
-import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms'
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader'

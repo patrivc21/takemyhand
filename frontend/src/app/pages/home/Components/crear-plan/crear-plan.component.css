@@ -31,4 +31,25 @@
   .label-button-container button {
     padding: 0.5rem 0.5rem; /* Ajusta el padding del botón según sea necesario */
   }
+
+  .label-button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .person-email-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .w-full {
+    flex: 1;
+  }
+  
+  .button-remove {
+    align-self: center;
+  }
+  
   

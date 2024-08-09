@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable, catchError, map, shareReplay, throwError } from 'rxjs';
 import { GenericResponse } from '../interfaces/GenericResponse';
-import { Pacientes } from '../interfaces/Pacientes';
+import { IEstadoAnimo, Pacientes } from '../interfaces/Pacientes';
 
 const BACKEND_API = environment.BACKEND_API + "pacientes"
 
@@ -33,5 +33,8 @@ export class PacientesService {
     return this.http.post<GenericResponse>(`${BACKEND_API}/deletePacientes`, { ids }).pipe(shareReplay());
   }
 
+  public addEstado(estado: IEstadoAnimo):  Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/addEstadoAnimo`, estado).pipe(shareReplay());
+  } 
 
 }

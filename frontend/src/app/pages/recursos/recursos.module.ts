@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home.component';
+import { RecursosComponent } from './recursos.component';
+import { BadgeModule } from 'primeng/badge';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
@@ -16,38 +17,20 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { RouterModule, Routes } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
 import { MenubarModule } from 'primeng/menubar';
-import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
-import { EditarPerfilComponent } from './Components/editar-perfil/editar-perfil.component';
-import { CrearPlanComponent } from './Components/crear-plan/crear-plan.component';
-import { VerPlanComponent } from './Components/ver-plan/ver-plan.component';
 import { CarouselModule } from 'primeng/carousel';
-import { RecursosComponent } from './Components/recursos/recursos.component';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileUploadModule } from 'primeng/fileupload';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { CalendarioComponent } from './Components/calendario/calendario.component';
-import { RatingModule } from 'primeng/rating';
 
-const routes: Routes = [{ path: '', component: HomeComponent },
-  {path: 'editar', component: EditarPerfilComponent},
-  // {path: 'crearPlan/:id', component: CrearPlanComponent},
-  {path: 'verPlan', component: VerPlanComponent},
-  {path: 'recurso', component: RecursosComponent},
+const routes: Routes = [{ path: '', component: RecursosComponent }
 ];
-
 
 @NgModule({
   providers: [ConfirmationService],
   declarations: [
-    HomeComponent,
-    EditarPerfilComponent,
-    CrearPlanComponent,
-    VerPlanComponent,
-    RecursosComponent,
-    CalendarioComponent
+    RecursosComponent
   ],
   imports: [
     CommonModule,
@@ -72,9 +55,7 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     MenubarModule,
     CarouselModule,
     CKEditorModule,
-    FileUploadModule,
-    FullCalendarModule,
-    RatingModule
+    FileUploadModule
   ]
 })
-export class HomeModule { }
+export class RecursosModule { }

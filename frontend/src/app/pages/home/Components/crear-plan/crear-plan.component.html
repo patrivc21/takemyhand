@@ -18,16 +18,19 @@
 
     <div class="field mt-5 mb-2">
       <div class="label-button-container">
-        <label for="personas">¿Qué personas sacan lo mejor de ti?</label>
-        <p-button (click)="addPeople()" class="button-add" type="button">¡Añade los que quieras!</p-button>
+        <label for="personas">¿Qué personas sacan lo mejor de ti y sus correos?</label>
+        <p-button (click)="addPersonEmail()" class="button-add" type="button">¡Añade los que quieras!</p-button>
       </div>
     </div>
     
-    <div formArrayName="personas">
-      <div class="m-2" *ngFor="let place of personas.controls; let i = index">
-        <input [formControlName]="i" class="w-full" type="text" pInputText />
+    <div formArrayName="personasEmails">
+      <div class="person-email-row" *ngFor="let group of personasEmails.controls; let i = index" [formGroupName]="i">
+        <input formControlName="persona" class="w-full" type="text" pInputText placeholder="Nombre de la persona" />
+        <input formControlName="email" class="w-full" type="text" pInputText placeholder="Correo electrónico" />
+        <p-button icon="pi pi-times" class="button-remove" type="button" (click)="removePersonEmail(i)"></p-button>
       </div>
-    </div>   
+    </div>    
+
 
     <div class="field mt-5 mb-2">
       <div class="label-button-container">
