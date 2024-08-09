@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Pacientes } from '../entities/Pacientes';
-import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles, updatePacientesService, deletePacientesService} from '../services/pacientes.service';
+import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles, updatePacientesService, deletePacientesService, addEstadoAnimo, verificarEstadoAnimo} from '../services/pacientes.service';
+import { LoginRegister } from '../entities/LoginRegister';
+import { PlanSeguridad } from '../entities/PlanSeguridad';
+import { getOnePlan } from '../services/planseguridad.service';
+import { Between } from 'typeorm';
 
 export const addNewPaciente = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -99,7 +103,45 @@ export const deletePacientesController = async (req: Request, res: Response) => 
     }
 };
 
+export const addEstadoAnimoC = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        let estado : LoginRegister = req.body as LoginRegister;
+        let result = await addEstadoAnimo(estado);
+        resp.msg = "Estado paciente añadido con exito";
+        resp.cod = result ? 200 : 400;
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp); 
+}
 
 
-export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC, updatePaciente, deletePacientesController
+export const verificarEstadoAnimoC = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        const { id_usuario } = req.body;  // Suponiendo que el id_usuario se pasa en el cuerpo de la solicitud
+        
+        if (!id_usuario) {
+            resp.msg = "El ID del usuario es requerido";
+            resp.cod = 400;
+            return res.json(resp);
+        }
+
+        await verificarEstadoAnimo(id_usuario);  // Llama a la función que verifica el estado de ánimo
+
+        resp.msg = "Verificación de estado de ánimo completada";
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+};
+
+
+export default { addNewPaciente, getOnePacienteController, getAllPacientesControllers, getAllRolesC, updatePaciente, deletePacientesController,
+    addEstadoAnimoC, verificarEstadoAnimoC
 };

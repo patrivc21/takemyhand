@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePacientesController = exports.updatePaciente = exports.getAllRolesC = exports.getAllPacientesControllers = exports.getOnePacienteController = exports.addNewPaciente = void 0;
+exports.verificarEstadoAnimoC = exports.addEstadoAnimoC = exports.deletePacientesController = exports.updatePaciente = exports.getAllRolesC = exports.getAllPacientesControllers = exports.getOnePacienteController = exports.addNewPaciente = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var pacientes_service_1 = require("../services/pacientes.service");
 var addNewPaciente = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -212,6 +212,67 @@ var deletePacientesController = function (req, res) { return __awaiter(void 0, v
     });
 }); };
 exports.deletePacientesController = deletePacientesController;
-exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC, updatePaciente: exports.updatePaciente, deletePacientesController: exports.deletePacientesController
+var addEstadoAnimoC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, estado, result, e_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                estado = req.body;
+                return [4 /*yield*/, (0, pacientes_service_1.addEstadoAnimo)(estado)];
+            case 2:
+                result = _a.sent();
+                resp.msg = "Estado paciente añadido con exito";
+                resp.cod = result ? 200 : 400;
+                return [3 /*break*/, 4];
+            case 3:
+                e_7 = _a.sent();
+                resp.msg = e_7;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.addEstadoAnimoC = addEstadoAnimoC;
+var verificarEstadoAnimoC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, id_usuario, e_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                id_usuario = req.body.id_usuario;
+                if (!id_usuario) {
+                    resp.msg = "El ID del usuario es requerido";
+                    resp.cod = 400;
+                    return [2 /*return*/, res.json(resp)];
+                }
+                return [4 /*yield*/, (0, pacientes_service_1.verificarEstadoAnimo)(id_usuario)];
+            case 2:
+                _a.sent(); // Llama a la función que verifica el estado de ánimo
+                resp.msg = "Verificación de estado de ánimo completada";
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_8 = _a.sent();
+                resp.msg = e_8;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.verificarEstadoAnimoC = verificarEstadoAnimoC;
+exports.default = { addNewPaciente: exports.addNewPaciente, getOnePacienteController: exports.getOnePacienteController, getAllPacientesControllers: exports.getAllPacientesControllers, getAllRolesC: exports.getAllRolesC, updatePaciente: exports.updatePaciente, deletePacientesController: exports.deletePacientesController, addEstadoAnimoC: exports.addEstadoAnimoC, verificarEstadoAnimoC: exports.verificarEstadoAnimoC
 };
 //# sourceMappingURL=pacientes.controller.js.map

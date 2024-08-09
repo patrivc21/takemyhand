@@ -286,7 +286,8 @@ var addRecursos = function (recursos) { return __awaiter(void 0, void 0, void 0,
                     titulo: recursos.titulo,
                     contenido: recursos.contenido,
                     archivo_adjunto: '',
-                    tipo: ''
+                    tipo: '',
+                    url_video: recursos.url_video
                 };
                 return [4 /*yield*/, typeorm_1.DB.getRepository(Recursos_1.Recursos).save(datos)];
             case 1:
@@ -321,7 +322,7 @@ var addArchivosRecursos = function (files, id) { return __awaiter(void 0, void 0
                 datos = {
                     id_recurso: id,
                     nombre_archivo: file ? path_1.default.basename(file.path) : '',
-                    tipo: tipoArchivo,
+                    tipo: tipoArchivo
                 };
                 return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosRecursos_1.ArchivosRecursos).save(datos)];
             case 2:

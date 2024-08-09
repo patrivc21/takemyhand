@@ -9,36 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Recursos = void 0;
+exports.LoginRegister = void 0;
 var typeorm_1 = require("typeorm");
-var ArchivosRecursos_1 = require("./ArchivosRecursos");
-var Recursos = /** @class */ (function () {
-    function Recursos() {
+var Usuarios_1 = require("./Usuarios");
+var LoginRegister = /** @class */ (function () {
+    function LoginRegister() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Recursos.prototype, "id", void 0);
+    ], LoginRegister.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Recursos.prototype, "contenido", void 0);
+        __metadata("design:type", Number)
+    ], LoginRegister.prototype, "estado", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Recursos.prototype, "titulo", void 0);
+        __metadata("design:type", Date)
+    ], LoginRegister.prototype, "fecha", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Recursos.prototype, "url_video", void 0);
+        __metadata("design:type", Number)
+    ], LoginRegister.prototype, "id_usuario", void 0);
     __decorate([
-        (0, typeorm_1.OneToMany)(function () { return ArchivosRecursos_1.ArchivosRecursos; }, function (archivo) { return archivo.recurso; }),
-        __metadata("design:type", Array)
-    ], Recursos.prototype, "archivos", void 0);
-    Recursos = __decorate([
-        (0, typeorm_1.Entity)({ name: 'recursos' })
-    ], Recursos);
-    return Recursos;
+        (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
+        __metadata("design:type", Usuarios_1.Usuarios)
+    ], LoginRegister.prototype, "usuario", void 0);
+    LoginRegister = __decorate([
+        (0, typeorm_1.Entity)({ name: 'login_register' })
+    ], LoginRegister);
+    return LoginRegister;
 }());
-exports.Recursos = Recursos;
-//# sourceMappingURL=Recursos.js.map
+exports.LoginRegister = LoginRegister;
+//# sourceMappingURL=LoginRegister.js.map

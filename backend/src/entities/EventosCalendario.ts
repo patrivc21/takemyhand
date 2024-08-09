@@ -1,23 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne } from 'typeorm';
-import { RolUsuarios } from './RolUsuarios';
 import { Usuarios } from './Usuarios';
 
-@Entity({ name: 'plan_seguridad' })
-export class PlanSeguridad {
+@Entity({ name: 'eventos_calendario' })
+export class EventosCalendario {
   @PrimaryGeneratedColumn()
   id!: number;
 
   @Column()
-  lugares!: string;
+  nombre_evento!: string;
 
   @Column()
-  personas!: string;
-
-  @Column()
-  emails!: string;
-
-  @Column()
-  hobbies!: string;
+  fecha_hora!: Date;
 
   @Column()
   id_usuario!: number;

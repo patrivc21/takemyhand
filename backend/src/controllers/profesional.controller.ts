@@ -196,6 +196,8 @@ export const addRecursosC = async (req: Request, res: Response) => {
         if (nombre_archivo && recursoGuardado) {
             saveFiles = await addArchivosRecursos(nombre_archivo, recursoGuardado.id);
         }
+
+
         resp.data = { saveFiles: saveFiles };
         resp.cod = 200;
     } catch (error) {

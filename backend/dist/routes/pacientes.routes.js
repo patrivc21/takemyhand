@@ -17,5 +17,7 @@ router.get('/getAllPacientes', auth_guard_1.AuthGuard, [pacientes_controller_1.d
 router.get('/getAllRoles', auth_guard_1.AuthGuard, [pacientes_controller_1.default.getAllRolesC]);
 router.put('/updatePaciente', auth_guard_1.AuthGuard, [pacientes_controller_1.default.updatePaciente]);
 router.post('/deletePacientes', auth_guard_1.AuthGuard, [pacientes_controller_1.default.deletePacientesController]);
+router.post('/addEstadoAnimo', auth_guard_1.AuthGuard, [pacientes_controller_1.default.addEstadoAnimoC]);
+router.post('/verificarEstadoAnimo', [pacientes_controller_1.default.verificarEstadoAnimoC]);
 exports.default = router;
 //# sourceMappingURL=pacientes.routes.js.map

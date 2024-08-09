@@ -54,6 +54,7 @@ var addPlanSeguridad = function (plan) { return __awaiter(void 0, void 0, void 0
                     lugares: plan.lugares,
                     hobbies: plan.hobbies,
                     personas: plan.personas,
+                    emails: plan.emails,
                     nombre_archivo: ''
                 };
                 return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).save(datos)];

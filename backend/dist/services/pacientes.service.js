@@ -36,10 +36,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatePacientesResultService = exports.deletePacientesService = exports.deleteOnePacienteService = exports.updatePacientesService = exports.getAllRoles = exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = exports.addUsuarios = void 0;
+exports.verificarEstadoAnimo = exports.addEstadoAnimo = exports.updatePacientesResultService = exports.deletePacientesService = exports.deleteOnePacienteService = exports.updatePacientesService = exports.getAllRoles = exports.getAllPacientes = exports.getOnePaciente = exports.addPaciente = exports.addUsuarios = void 0;
 var Pacientes_1 = require("../entities/Pacientes");
 var typeorm_1 = require("../config/typeorm");
+var typeorm_2 = require("typeorm");
 var Usuarios_1 = require("../entities/Usuarios");
+var LoginRegister_1 = require("../entities/LoginRegister");
+var mail_helper_1 = require("../helpers/mail.helper");
+var PlanSeguridad_1 = require("../entities/PlanSeguridad");
 var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -182,4 +186,65 @@ var updatePacientesResultService = function (id_usuario, resultado) { return __a
     });
 }); };
 exports.updatePacientesResultService = updatePacientesResultService;
+var addEstadoAnimo = function (estado) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(LoginRegister_1.LoginRegister).save(estado)];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res != null];
+        }
+    });
+}); };
+exports.addEstadoAnimo = addEstadoAnimo;
+var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void 0, void 0, function () {
+    var fechaActual, fechaHaceCincoDias, registros, planSeguridad, emails, _i, emails_1, email;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                fechaActual = new Date();
+                fechaHaceCincoDias = new Date();
+                fechaHaceCincoDias.setDate(fechaActual.getDate() - 5);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(LoginRegister_1.LoginRegister).find({
+                        where: {
+                            id_usuario: id_usuario,
+                            fecha: (0, typeorm_2.Between)(fechaHaceCincoDias, fechaActual),
+                        },
+                        order: {
+                            fecha: 'ASC',
+                        },
+                    })];
+            case 1:
+                registros = _a.sent();
+                console.log(registros);
+                if (!(registros.length >= 5 && registros.every(function (registro) { return registro.estado <= 3; }))) return [3 /*break*/, 6];
+                return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).findOne({
+                        where: { id_usuario: id_usuario }
+                    })];
+            case 2:
+                planSeguridad = _a.sent();
+                console.log(planSeguridad);
+                if (!(planSeguridad && planSeguridad.emails)) return [3 /*break*/, 6];
+                emails = planSeguridad.emails.includes(',')
+                    ? planSeguridad.emails.split(',').map(function (email) { return email.trim(); }) // Si hay comas, separar los emails y eliminarlas
+                    : [planSeguridad.emails.trim()];
+                console.log(emails);
+                _i = 0, emails_1 = emails;
+                _a.label = 3;
+            case 3:
+                if (!(_i < emails_1.length)) return [3 /*break*/, 6];
+                email = emails_1[_i];
+                return [4 /*yield*/, (0, mail_helper_1.sendEmail)(email.trim(), "Alerta: Estado de ánimo bajo", "El usuario ha reportado un estado de ánimo bajo durante 5 días consecutivos.")];
+            case 4:
+                _a.sent();
+                _a.label = 5;
+            case 5:
+                _i++;
+                return [3 /*break*/, 3];
+            case 6: return [2 /*return*/];
+        }
+    });
+}); };
+exports.verificarEstadoAnimo = verificarEstadoAnimo;
 //# sourceMappingURL=pacientes.service.js.map

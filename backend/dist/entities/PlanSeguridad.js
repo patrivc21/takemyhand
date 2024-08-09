@@ -30,6 +30,10 @@ var PlanSeguridad = /** @class */ (function () {
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
+    ], PlanSeguridad.prototype, "emails", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
     ], PlanSeguridad.prototype, "hobbies", void 0);
     __decorate([
         (0, typeorm_1.Column)(),

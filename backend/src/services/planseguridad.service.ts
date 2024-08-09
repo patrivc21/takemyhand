@@ -12,6 +12,7 @@ export const addPlanSeguridad = async (plan: any): Promise<any> => {
     lugares: plan.lugares,
     hobbies: plan.hobbies,
     personas: plan.personas,
+    emails: plan.emails,
     nombre_archivo: ''
   };
 

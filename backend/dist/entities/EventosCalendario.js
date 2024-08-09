@@ -9,36 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Recursos = void 0;
+exports.EventosCalendario = void 0;
 var typeorm_1 = require("typeorm");
-var ArchivosRecursos_1 = require("./ArchivosRecursos");
-var Recursos = /** @class */ (function () {
-    function Recursos() {
+var Usuarios_1 = require("./Usuarios");
+var EventosCalendario = /** @class */ (function () {
+    function EventosCalendario() {
     }
     __decorate([
         (0, typeorm_1.PrimaryGeneratedColumn)(),
         __metadata("design:type", Number)
-    ], Recursos.prototype, "id", void 0);
+    ], EventosCalendario.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
-    ], Recursos.prototype, "contenido", void 0);
+    ], EventosCalendario.prototype, "nombre_evento", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Recursos.prototype, "titulo", void 0);
+        __metadata("design:type", Date)
+    ], EventosCalendario.prototype, "fecha_hora", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
-        __metadata("design:type", String)
-    ], Recursos.prototype, "url_video", void 0);
+        __metadata("design:type", Number)
+    ], EventosCalendario.prototype, "id_usuario", void 0);
     __decorate([
-        (0, typeorm_1.OneToMany)(function () { return ArchivosRecursos_1.ArchivosRecursos; }, function (archivo) { return archivo.recurso; }),
-        __metadata("design:type", Array)
-    ], Recursos.prototype, "archivos", void 0);
-    Recursos = __decorate([
-        (0, typeorm_1.Entity)({ name: 'recursos' })
-    ], Recursos);
-    return Recursos;
+        (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
+        __metadata("design:type", Usuarios_1.Usuarios)
+    ], EventosCalendario.prototype, "usuario", void 0);
+    EventosCalendario = __decorate([
+        (0, typeorm_1.Entity)({ name: 'eventos_calendario' })
+    ], EventosCalendario);
+    return EventosCalendario;
 }());
-exports.Recursos = Recursos;
-//# sourceMappingURL=Recursos.js.map
+exports.EventosCalendario = EventosCalendario;
+//# sourceMappingURL=EventosCalendario.js.map

@@ -15,5 +15,7 @@ router.get('/getAllPacientes', AuthGuard, [pacientesController.getAllPacientesCo
 router.get('/getAllRoles', AuthGuard, [pacientesController.getAllRolesC]);
 router.put('/updatePaciente', AuthGuard, [pacientesController.updatePaciente]);
 router.post('/deletePacientes', AuthGuard, [pacientesController.deletePacientesController]);
+router.post('/addEstadoAnimo',AuthGuard, [pacientesController.addEstadoAnimoC]);
+router.post('/verificarEstadoAnimo',  [pacientesController.verificarEstadoAnimoC]);
 
 export default router;

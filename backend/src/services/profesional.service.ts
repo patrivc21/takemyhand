@@ -148,7 +148,8 @@ export const addRecursos = async (recursos: any): Promise<any> => {
         titulo: recursos.titulo,
         contenido: recursos.contenido,
         archivo_adjunto: '',
-        tipo: ''
+        tipo: '',
+        url_video: recursos.url_video
       };
 
     let res = await DB.getRepository(Recursos).save(datos);
@@ -169,7 +170,7 @@ export const addArchivosRecursos = async (files: any, id:number): Promise<boolea
 			let datos = {
                 id_recurso: id,
 				nombre_archivo: file ? path.basename(file.path) : '',
-				tipo: tipoArchivo,
+				tipo: tipoArchivo
 			};
 
 			filesSaved = await DB.getRepository(ArchivosRecursos).save(datos);
