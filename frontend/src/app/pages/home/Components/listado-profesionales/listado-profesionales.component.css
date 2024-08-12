@@ -1,0 +1,14 @@
+.menu-item-left {
+    flex: 0 0 auto;
+    margin-left: 10%;
+}
+
+.header {
+    width: 100%;
+    background-color: #167496;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    z-index: 1;
+}

@@ -41,6 +41,9 @@ export class RegistroComponent {
       apellidos: ['', Validators.required],
       username: ['', Validators.required],
       rol: [null, Validators.required],
+      direccion: [''],
+      latitud: [0],
+      longitud: [0],
     });
   }
 
@@ -95,4 +98,7 @@ export class RegistroComponent {
   get username(): AbstractControl | null { return this.form.get('username'); }
   get password(): AbstractControl | null { return this.form.get('password'); }
   get rol(): AbstractControl | null { return this.form.get('rol'); }
+  get direccion(): AbstractControl | null { return this.form.get('direccion'); }
+  get latitud(): AbstractControl | null { return this.form.get('latitud'); }
+  get longitud(): AbstractControl | null { return this.form.get('longitud'); }
 }

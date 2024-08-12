@@ -61,13 +61,33 @@
         <small class="ml-2 p-error block" *ngIf="rol?.invalid && (rol?.dirty||rol?.touched)">Campo requerido</small>
       </div>
 
-      <!-- <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
+      <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
+        <h5>¿Quieres volcarte del todo en este proyecto? ¡Deja los datos donde se encuentra tu consulta para que los pacientes puedan visitarte!</h5>
+        <small><i>Estos campos no son obligatorios.</i></small>
+      </div> 
+
+      <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
         <span class="p-float-label">
-          <input id="especialidad" type="text" pInputText formControlName="especialidad" class="w-full" />
-          <label for="especialidad">Especialidad</label>
+          <input id="direccion" type="text" pInputText formControlName="direccion" class="w-full" />
+          <label for="direccion">Dirección consulta</label>
         </span>
-        <small class="ml-2 p-error block" *ngIf="especialidad?.invalid && (especialidad?.dirty || especialidad?.touched)">Campo requerido</small> 
-      </div>       -->
+      </div> 
+      
+      <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
+        <span class="p-float-label">
+          <input id="longitud" type="number" pInputText formControlName="longitud" class="w-full" />
+          <label for="longitud">Longitud dirección consulta</label>
+        </span>
+        <small>¡Consúltala en google si tienes dudas!</small>
+      </div>   
+
+      <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
+        <span class="p-float-label">
+          <input id="latitud" type="number" pInputText formControlName="latitud" class="w-full" />
+          <label for="latitud">Latitud dirección consulta</label>
+        </span>
+        <small>¡Consúltala en google si tienes dudas!</small>
+      </div>   
 
       <div class="button-save-form d-flex justify-content-center align-items-center mt-4">
         <button pButton pRipple type="button" [disabled]="!form.valid" [loading]="loading" class="button-save-form" label="Registrarse" type="submit"></button>

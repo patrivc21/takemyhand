@@ -30,12 +30,15 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarioComponent } from './Components/calendario/calendario.component';
 import { RatingModule } from 'primeng/rating';
+import { ListadoProfesionalesComponent } from './Components/listado-profesionales/listado-profesionales.component';
+import { MapaViewComponent } from 'src/app/components/maps/map-view/map-view.component'
 
 const routes: Routes = [{ path: '', component: HomeComponent },
   {path: 'editar', component: EditarPerfilComponent},
   // {path: 'crearPlan/:id', component: CrearPlanComponent},
   {path: 'verPlan', component: VerPlanComponent},
   {path: 'recurso', component: RecursosComponent},
+  {path: 'listadoprof', component: ListadoProfesionalesComponent},
 ];
 
 
@@ -47,7 +50,8 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     CrearPlanComponent,
     VerPlanComponent,
     RecursosComponent,
-    CalendarioComponent
+    CalendarioComponent,
+    ListadoProfesionalesComponent
   ],
   imports: [
     CommonModule,
@@ -74,7 +78,8 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     CKEditorModule,
     FileUploadModule,
     FullCalendarModule,
-    RatingModule
+    RatingModule,
+    MapaViewComponent
   ]
 })
 export class HomeModule { }

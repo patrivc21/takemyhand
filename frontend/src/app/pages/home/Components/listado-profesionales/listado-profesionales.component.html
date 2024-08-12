@@ -1,0 +1,58 @@
+<div class="header">
+    <h2 style="color: white;">Listado profesionales</h2>
+    <div class="menu-item-left ml-2">
+        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+    </div>
+</div>
+
+<div class="menu-item-left m-4">
+    <p-dropdown class="d-flex flex-align-center" [style]="{'width': '22rem'}" placeholder="Ciudades" 
+        [options]="allCiudades$ | async" [filter]="true" appendTo="body" 
+        [(ngModel)]="ciudadSelect" (onChange)="filtrar()">
+    </p-dropdown>
+</div>
+
+<ng-container *ngIf="(allProfesionales$ | async) as profesionales">
+      <p-table
+      #dt1
+      [value]="profesionales"
+      [loading]="!view"
+      [paginator]="true"
+      [rows]="10"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Página {currentPage} de {totalPages}"
+      styleClass="p-datatable-sm"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th class="text-header-table">Nombre</th>
+          <th class="text-header-table">Username</th>
+          <th class="text-header-table">Email</th>
+          <th class="text-header-table">Ciudad</th>
+          <th class="text-header-table">Ubicacion</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-pro>
+        <tr>
+          <td class="text-center">{{ pro.nombre }}</td>
+          <td class="text-center">{{ pro.username }}</td>
+          <td class="text-center">{{ pro.email }} </td>
+          <td class="text-center">{{ pro.ciudad }}</td>
+          <td class="text-center">
+            <p-button
+              icon="pi pi-map-marker"
+              class="boton-tabla"
+              (onClick)="verMapa(pro.direccion, pro.latitud, pro.longitud)"
+            ></p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+</ng-container>
+
+
+<div *ngIf="mapView">
+    <app-map-view [address]="map.direccion" [latitud]="map.latitud" [longitud]="map.longitud" (res)="cerrarMapa()"></app-map-view>
+</div>
+      

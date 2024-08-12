@@ -9,6 +9,7 @@ interface IProfesionalesState {
     allProfesionales?: Profesionales[];
     allPublis?: any[];
     onePubli?: any;
+    allCiudades?: any[];
 }
 
 @Injectable({
@@ -33,6 +34,10 @@ export class ProfesionalesState {
     public readonly onePubli$: Observable<any> = this._state
         .asObservable()
         .pipe(map((state) => state && state.onePubli));
+
+    public readonly allCiudades$: Observable<any[]> = this._state
+        .asObservable()
+        .pipe(map((state) => state && state.allCiudades));
 
     private get state() {
         return this._state.getValue();
@@ -141,6 +146,35 @@ export class ProfesionalesState {
           // this.getAllComentarios()
         }
       });
+      return data;
+    }
+
+    public getCiudades(): Observable<GenericResponse> {
+      const data = this.service.getCiudades()
+      data.pipe(take(1)).subscribe((response) => {
+        console.log(response)
+        if (response.cod == 200) {
+          this._state.next({
+            ...this.state,
+            allCiudades: response.data
+          })
+        }
+      })
+      return data
+    }
+
+    public getProfByCiudad(ciudad: string){
+      const data = this.service.getProfByCiudad(ciudad);
+      data.pipe(take(1)).subscribe((response) => {
+        if(response.cod !== 200){
+            return;
+        }
+
+        this._state.next({
+            ...this.state,
+            allProfesionales: response.data.result
+        })
+      })
       return data;
     }
 

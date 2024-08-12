@@ -31,6 +31,7 @@
             <th class="text-header-table">Username</th>
             <th class="text-header-table">Email</th>
             <th class="text-header-table">Activo</th>
+            <th class="text-header-table">Ubicacion</th>
             <th></th>
           </tr>
         </ng-template>
@@ -44,6 +45,13 @@
             <td class="text-center">{{ pro.username }}</td>
             <td class="text-center">{{ pro.email }} </td>
             <td class="text-center">{{ pro.activo ? 'Sí' : 'No' }}</td>
+            <td class="text-center">
+              <p-button
+                icon="pi pi-map-marker"
+                class="boton-tabla"
+                (onClick)="verMapa(pro.direccion, pro.latitud, pro.longitud)"
+              ></p-button>
+            </td>
           </tr>
         </ng-template>
       </p-table>
@@ -52,5 +60,7 @@
     </div>
   </ng-container>
   
-
+  <div *ngIf="mapView">
+    <app-map-view [address]="map.direccion" [latitud]="map.latitud" [longitud]="map.longitud" (res)="cerrarMapa()"></app-map-view>
+  </div>
   

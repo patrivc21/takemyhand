@@ -90,5 +90,26 @@ export class ProfesionalesService {
     return this.http.post<GenericResponse>(`${BACKEND_API}/addRecursos`, formData).pipe(shareReplay());
   }
 
+  public getCiudades(): Observable<GenericResponse> {
+    return this.http.get<GenericResponse>(`${BACKEND_API}/getCiudades`, {}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener las ciudades'))
+      })
+    )
+  }
+
+  public getProfByCiudad(ciudad:string): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getProfByCiudad`, {ciudad}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener profesionales por ciudad'))
+      })
+    )
+  }
 
 }

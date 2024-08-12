@@ -3,22 +3,23 @@ import { Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { Profesionales } from 'src/app/interfaces/Profesionales';
 import { ProfesionalesState } from 'src/app/state/profesionales.state';
-import * as XLSX from 'xlsx'
 
 @Component({
-  selector: 'app-profesionales',
-  templateUrl: './profesionales.component.html',
-  styleUrls: ['./profesionales.component.css']
+  selector: 'app-listado-profesionales',
+  templateUrl: './listado-profesionales.component.html',
+  styleUrls: ['./listado-profesionales.component.css']
 })
-export class ProfesionalesComponent {
+export class ListadoProfesionalesComponent {
   public allProfesionales$: Observable<Profesionales[]>
+  public allCiudades$: Observable<any[]>
   public view: boolean
-  public profSeleccionados: number[] = [];
 
   // almacenamiento de datos para el mapa
   public map = {} as any
   public mapView = false
   public display = true
+
+  public ciudadSelect: string
 
   ngOnInit(): void {
     this.iniciar()
@@ -30,6 +31,7 @@ export class ProfesionalesComponent {
 
   private setStateSelector() {
     this.allProfesionales$ = this.profState.allProfesionales$;
+    this.allCiudades$ = this.profState.allCiudades$;
   }
 
   public iniciar(): void {
@@ -37,35 +39,10 @@ export class ProfesionalesComponent {
       console.log(data)
       this.view = true
     })
+
+    this.profState.getCiudades()
   }
-
-  public descargarExcel(): void {
-    this.allProfesionales$.pipe(take(1)).subscribe(dat => {
-      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dat);
-      const wb: XLSX.WorkBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-      XLSX.writeFile(wb, 'profesionales.xlsx');
-    })
-  }
-
-
-  public borrarProfesionales(){
-    console.log(this.profSeleccionados)
-    this.profState.borrarProfesionales(this.profSeleccionados).pipe(take(1)).subscribe(dat => {
-      console.log(dat)
-      if (dat.cod == 200) {
-        this.iniciar()
-      } 
-    })
-
-    this.profState.getAllProfesionales()
-    this.profSeleccionados = []
-  }
-
-  public volver(){
-    this.router.navigate(['/home-admin']);
-  }
-
+  
   public verMapa(direccion: string, latitud: number, longitud: number): void {
     this.map = { direccion, latitud, longitud };
     this.mapView = true;
@@ -74,5 +51,13 @@ export class ProfesionalesComponent {
 
   public cerrarMapa (): void {
     this.mapView = false
+  }
+
+  public filtrar () {
+    this.profState.getProfByCiudad(this.ciudadSelect)
+  }
+
+  public volver(){
+    this.router.navigate(['/home']);
   }
 }
