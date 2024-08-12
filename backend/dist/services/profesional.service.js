@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addArchivosRecursos = exports.addRecursos = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.getProfByCiudad = exports.getCiudades = exports.addArchivosRecursos = exports.addRecursos = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
 var path_1 = __importDefault(require("path"));
@@ -336,4 +336,36 @@ var addArchivosRecursos = function (files, id) { return __awaiter(void 0, void 0
     });
 }); };
 exports.addArchivosRecursos = addArchivosRecursos;
+var getCiudades = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var ciudades;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales)
+                    .createQueryBuilder('profesionales')
+                    .select('DISTINCT(profesionales.ciudad)', 'ciudad')
+                    .orderBy('profesionales.ciudad', 'ASC')
+                    .getRawMany()];
+            case 1:
+                ciudades = _a.sent();
+                return [2 /*return*/, ciudades.map(function (c) { return c.ciudad; })];
+        }
+    });
+}); };
+exports.getCiudades = getCiudades;
+var getProfByCiudad = function (ciudad) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Profesional_1.Profesionales).find({
+                    where: [
+                        { ciudad: ciudad }
+                    ]
+                })];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getProfByCiudad = getProfByCiudad;
 //# sourceMappingURL=profesional.service.js.map

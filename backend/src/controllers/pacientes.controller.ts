@@ -3,9 +3,6 @@ import RespGeneric from '../models/RespGeneric';
 import { Pacientes } from '../entities/Pacientes';
 import { addPaciente, getAllPacientes, getOnePaciente, getAllRoles, updatePacientesService, deletePacientesService, addEstadoAnimo, verificarEstadoAnimo} from '../services/pacientes.service';
 import { LoginRegister } from '../entities/LoginRegister';
-import { PlanSeguridad } from '../entities/PlanSeguridad';
-import { getOnePlan } from '../services/planseguridad.service';
-import { Between } from 'typeorm';
 
 export const addNewPaciente = async (req: Request, res: Response) => {
     let resp = new RespGeneric();

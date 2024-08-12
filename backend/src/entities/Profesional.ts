@@ -25,13 +25,22 @@ export class Profesionales {
   @Column()
   activo!: boolean;
 
-  // @Column()
-  // especialidad!: string;
-
   @Column()
   id_usuario!: number;
 
   @ManyToOne(() => Usuarios, usuario => usuario.id)
   @JoinColumn({ name: 'id_usuario' })
   usuario!: Usuarios;
+
+  @Column()
+  ciudad!: string;
+
+  @Column()
+  direccion!: string;
+
+  @Column('float', { precision: 10, scale: 6 })
+  latitud!: number;
+
+  @Column('float', { precision: 10, scale: 6 })
+  longitud!: number;
 }

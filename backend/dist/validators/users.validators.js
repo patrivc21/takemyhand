@@ -13,7 +13,11 @@ var userSchema = joi_1.default.object({
     rol: joi_1.default.number().required(),
     username: joi_1.default.string().required(),
     activo: joi_1.default.boolean().default(true),
-    rolpaciente: joi_1.default.number()
+    rolpaciente: joi_1.default.number(),
+    ciudad: joi_1.default.string(),
+    direccion: joi_1.default.string(),
+    latitud: joi_1.default.number(),
+    longitud: joi_1.default.number()
 });
 var UserValidator = function (req, res, next) {
     var error = userSchema.validate(req.body).error;

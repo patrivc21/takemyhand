@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addRecursosC = exports.buscarC = exports.deletePublicacionesController = exports.getAllPublicacionesControllers = exports.getOnePublicacionController = exports.addPublicacionC = exports.deleteProfesionalesController = exports.updateProfesional = exports.getAllProfesionalesControllers = exports.getOneProfesionalController = exports.addNewProfesional = void 0;
+exports.getProfByCiudadC = exports.getAllCiudades = exports.addRecursosC = exports.buscarC = exports.deletePublicacionesController = exports.getAllPublicacionesControllers = exports.getOnePublicacionController = exports.addPublicacionC = exports.deleteProfesionalesController = exports.updateProfesional = exports.getAllProfesionalesControllers = exports.getOneProfesionalController = exports.addNewProfesional = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var profesional_service_1 = require("../services/profesional.service");
 var addNewProfesional = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -379,5 +379,60 @@ var addRecursosC = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.addRecursosC = addRecursosC;
-exports.default = { addNewProfesional: exports.addNewProfesional, getOneProfesionalController: exports.getOneProfesionalController, getAllProfesionalesControllers: exports.getAllProfesionalesControllers, updateProfesional: exports.updateProfesional, deleteProfesionalesController: exports.deleteProfesionalesController, addPublicacionC: exports.addPublicacionC, getOnePublicacionController: exports.getOnePublicacionController, getAllPublicacionesControllers: exports.getAllPublicacionesControllers, deletePublicacionesController: exports.deletePublicacionesController, buscarC: exports.buscarC, addRecursosC: exports.addRecursosC };
+var getAllCiudades = function (_req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, result, e_10;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (0, profesional_service_1.getCiudades)()];
+            case 2:
+                result = _a.sent();
+                resp.data = result;
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_10 = _a.sent();
+                resp.msg = e_10;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getAllCiudades = getAllCiudades;
+var getProfByCiudadC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_11;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, profesional_service_1.getProfByCiudad)(body.ciudad)];
+            case 2:
+                result = _a.sent();
+                resp.data = { result: result };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_11 = _a.sent();
+                resp.msg = e_11;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getProfByCiudadC = getProfByCiudadC;
+exports.default = { addNewProfesional: exports.addNewProfesional, getOneProfesionalController: exports.getOneProfesionalController, getAllProfesionalesControllers: exports.getAllProfesionalesControllers, updateProfesional: exports.updateProfesional, deleteProfesionalesController: exports.deleteProfesionalesController, addPublicacionC: exports.addPublicacionC, getOnePublicacionController: exports.getOnePublicacionController, getAllPublicacionesControllers: exports.getAllPublicacionesControllers, deletePublicacionesController: exports.deletePublicacionesController, buscarC: exports.buscarC, addRecursosC: exports.addRecursosC, getAllCiudades: exports.getAllCiudades, getProfByCiudadC: exports.getProfByCiudadC };
 //# sourceMappingURL=profesional.controller.js.map

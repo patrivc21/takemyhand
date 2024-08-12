@@ -180,3 +180,20 @@ export const addArchivosRecursos = async (files: any, id:number): Promise<boolea
     return filesSaved != null;
 }
   
+export const getCiudades = async (): Promise<string[]> => {
+    const ciudades = await DB.getRepository(Profesionales)
+        .createQueryBuilder('profesionales')
+        .select('DISTINCT(profesionales.ciudad)', 'ciudad')
+        .orderBy('profesionales.ciudad', 'ASC')
+        .getRawMany();
+
+    return ciudades.map(c => c.ciudad);
+}
+
+export const getProfByCiudad = async (ciudad: string): Promise<Profesionales[]> => {
+    let res = await DB.getRepository(Profesionales).find({
+        where: [
+            { ciudad: ciudad }]
+    });
+    return res;
+}

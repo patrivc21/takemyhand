@@ -23,4 +23,7 @@ router.post('/buscar', AuthGuard, [profesionalController.buscarC]);
 
 router.post('/addRecursos',  AuthGuard, multipartMiddleware, [profesionalController.addRecursosC]);
 
+router.get('/getCiudades', [profesionalController.getAllCiudades]);
+router.post('/getProfByCiudad', [profesionalController.getProfByCiudadC]);
+
 export default router;

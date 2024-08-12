@@ -52,6 +52,22 @@ var Profesionales = /** @class */ (function () {
         (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
         __metadata("design:type", Usuarios_1.Usuarios)
     ], Profesionales.prototype, "usuario", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Profesionales.prototype, "ciudad", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], Profesionales.prototype, "direccion", void 0);
+    __decorate([
+        (0, typeorm_1.Column)('float', { precision: 10, scale: 6 }),
+        __metadata("design:type", Number)
+    ], Profesionales.prototype, "latitud", void 0);
+    __decorate([
+        (0, typeorm_1.Column)('float', { precision: 10, scale: 6 }),
+        __metadata("design:type", Number)
+    ], Profesionales.prototype, "longitud", void 0);
     Profesionales = __decorate([
         (0, typeorm_1.Entity)({ name: 'profesionales' })
     ], Profesionales);

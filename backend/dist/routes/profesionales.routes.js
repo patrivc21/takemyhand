@@ -22,5 +22,7 @@ router.get('/getAllPublis', auth_guard_1.AuthGuard, [profesional_controller_1.de
 router.post('/deletePubli', auth_guard_1.AuthGuard, [profesional_controller_1.default.deletePublicacionesController]);
 router.post('/buscar', auth_guard_1.AuthGuard, [profesional_controller_1.default.buscarC]);
 router.post('/addRecursos', auth_guard_1.AuthGuard, multipartMiddleware, [profesional_controller_1.default.addRecursosC]);
+router.get('/getCiudades', [profesional_controller_1.default.getAllCiudades]);
+router.post('/getProfByCiudad', [profesional_controller_1.default.getProfByCiudadC]);
 exports.default = router;
 //# sourceMappingURL=profesionales.routes.js.map

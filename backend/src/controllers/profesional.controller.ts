@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Profesionales } from '../entities/Profesional';
-import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService, addPublicacion, addArchivoPublicacion, getOnePublicacion, getAllPublicaciones, deletePublicacion, buscarPublis, addRecursos, addArchivosRecursos} from '../services/profesional.service'
+import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService, addPublicacion, addArchivoPublicacion, getOnePublicacion, getAllPublicaciones, deletePublicacion, buscarPublis, addRecursos, addArchivosRecursos, getCiudades, getProfByCiudad} from '../services/profesional.service'
 
 export const addNewProfesional = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -208,6 +208,33 @@ export const addRecursosC = async (req: Request, res: Response) => {
     return res.json(resp);
 }
 
+export const getAllCiudades = async (_req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let result = await getCiudades();
+        resp.data = result;
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp); 
+}
+
+export const getProfByCiudadC = async (req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let body = req.body;
+        let result = await getProfByCiudad(body.ciudad);
+        resp.data = {result: result};
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
 
 export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers, updateProfesional, deleteProfesionalesController, 
-    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC, addRecursosC};
+    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC, addRecursosC,
+    getAllCiudades, getProfByCiudadC};

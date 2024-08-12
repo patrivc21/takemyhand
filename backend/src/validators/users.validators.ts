@@ -9,7 +9,11 @@ const userSchema = Joi.object({
     rol: Joi.number().required(),
     username: Joi.string().required(),
     activo: Joi.boolean().default(true),
-    rolpaciente: Joi.number()
+    rolpaciente: Joi.number(),
+    ciudad: Joi.string(),
+    direccion: Joi.string(),
+    latitud: Joi.number(),
+    longitud: Joi.number()
   });
   
 export const UserValidator = (req: Request, res: Response, next: NextFunction) => {
