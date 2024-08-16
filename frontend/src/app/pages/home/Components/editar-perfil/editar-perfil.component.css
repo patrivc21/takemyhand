@@ -1,1 +1,33 @@
 
+.tituloG {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #167496;
+    padding: 1rem 0;
+    background-color: white;
+}
+
+
+.menu-container {
+    background-color: #167496;
+    padding: 1rem 0;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.menu-item-left {
+    flex: 0 0 auto;
+    margin-left: 1rem;
+}
+
+.menu-item-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

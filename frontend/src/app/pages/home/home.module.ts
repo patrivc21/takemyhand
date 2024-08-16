@@ -32,9 +32,15 @@ import { CalendarioComponent } from './Components/calendario/calendario.componen
 import { RatingModule } from 'primeng/rating';
 import { ListadoProfesionalesComponent } from './Components/listado-profesionales/listado-profesionales.component';
 import { MapaViewComponent } from 'src/app/components/maps/map-view/map-view.component'
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { CalendarModule } from 'primeng/calendar'
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+
 
 const routes: Routes = [{ path: '', component: HomeComponent },
-  {path: 'editar', component: EditarPerfilComponent},
+  {path: 'editar-perfil', component: EditarPerfilComponent},
   // {path: 'crearPlan/:id', component: CrearPlanComponent},
   {path: 'verPlan', component: VerPlanComponent},
   {path: 'recurso', component: RecursosComponent},
@@ -79,7 +85,12 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     FileUploadModule,
     FullCalendarModule,
     RatingModule,
-    MapaViewComponent
+    MapaViewComponent,
+    ProgressSpinnerModule,
+    CalendarModule,
+    RadioButtonModule,
+    IconFieldModule,
+    InputIconModule,
   ]
 })
 export class HomeModule { }

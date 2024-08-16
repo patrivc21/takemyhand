@@ -62,9 +62,9 @@
     </div>
 </ng-container>
 
-<div *ngIf="viewPerfil">
+<!-- <div *ngIf="viewPerfil">
     <app-editar-perfil (res)="cerrar()" [usuario]="usuario"></app-editar-perfil>
-</div>
+</div> -->
 
 
 <p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '40%'}" [draggable]="false" [resizable]="false" (onHide)="cerrarBusqueda()">

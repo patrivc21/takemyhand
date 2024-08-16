@@ -24,7 +24,18 @@ export class EventoCalendarioService {
 
   public addEvento (evento: IEventoCalendario):  Observable<GenericResponse> {
     return this.http.post<GenericResponse>(`${BACKEND_API}/addEventoCalendario`, evento).pipe(shareReplay());
-}
+  }
+
+  public getEventosUsuario(id:number): Observable<any> {
+    return this.http.post<any>(`${BACKEND_API}/getEventosUsuario`, {id}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener los eventos del usuario'))
+      })
+    )
+  }
 
 
 }

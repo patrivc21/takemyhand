@@ -1,9 +1,27 @@
-<!-- <div>
-    <h1>Calendario de eventos/h1>
-    <full-calendar [options]="calendarOptions">
+
+<!-- <ng-container *ngIf="loadingCalendario$ | async; else calendarContent">
+  <div class="spinner">
+    <p-progressSpinner [style]="{'width': '45px', 'height': '45px'}"></p-progressSpinner>
+  </div>
+</ng-container> -->
+
+<!-- <ng-template #calendarContent> -->
+  <!-- <ng-container *ngIf="allEventos$ | async as eventos">
+    <div class="div-calendar">
+      <full-calendar [options]="eventos">
         <ng-template #eventContent let-arg>
-          <b>{{arg.timeText}}</b>
-          <i>{{arg.event.title}}</i>
+          <ng-container>
+            <div class="info-calendar">
+              <div class="texto-disp" >{{arg.event.title}}</div>
+              <div class="texto-disp">{{arg.event.date}}</div>
+            </div>
+          </ng-container>
         </ng-template>
-    </full-calendar>
-</div> -->
+      </full-calendar>
+    </div>
+  </ng-container> -->
+<!-- </ng-template> -->
+
+<div class="div-calendar" *ngIf="allEventos$ | async as eventos">
+  <full-calendar [options]="eventos"></full-calendar>
+</div>

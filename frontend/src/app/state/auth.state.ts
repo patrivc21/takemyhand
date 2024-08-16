@@ -241,8 +241,10 @@ export class AuthState {
         console.log(response);
         if(response.cod==200){
           this.setUser(response.data.user);
+          this.toastr.success('Perfil del usuario editado con éxito.', 'Éxito')
         }
         else {
+            this.toastr.error('Error al editar el perfil del usuario.', 'Error')
             return;
         }
         // this.getUsers();

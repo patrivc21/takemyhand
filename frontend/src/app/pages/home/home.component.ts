@@ -77,9 +77,9 @@ export class HomeComponent {
     this.viewPerfil = false;
   }
 
-
   public verPerfil(){
-    this.viewPerfil = true
+    // this.viewPerfil = true
+    this.router.navigate(['/home/editar-perfil']);
   }
 
   public buscar(){
