@@ -13,5 +13,6 @@ var multipartMiddleware = multipart({ uploadDir: 'assets' });
 router.post('/addEventoCalendario', [eventocalendario_controller_1.default.addEventoCalendario]); //AuthGuard,
 router.post('/updateEventoCalendario', [eventocalendario_controller_1.default.updateEventoCalendario]); //AuthGuard,
 router.post('/deleteEventoCalendario', [eventocalendario_controller_1.default.deleteEventoCalendario]); //AuthGuard,
+router.post('/getEventosUsuario', [eventocalendario_controller_1.default.getEventosUsuario]);
 exports.default = router;
 //# sourceMappingURL=eventocalendario.routes.js.map

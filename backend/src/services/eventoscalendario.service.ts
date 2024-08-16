@@ -28,3 +28,12 @@ export const deleteEvento = async(ids: number[]): Promise<boolean> => {
         return false;
     }
 }
+
+export const getEventoUsuario = async (id: number): Promise<any[]> => {
+    let res = await DB.getRepository(EventosCalendario).find({
+        where: [
+            { id_usuario: id }]
+    });
+
+    return res;
+}
