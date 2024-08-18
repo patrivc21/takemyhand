@@ -177,6 +177,15 @@ a {
   width: 100%;
 }
 
+.respuesta .p-button {
+  padding: 10px;
+  background-color: white;
+  color: #167496;
+  border: none;
+  cursor: pointer;
+  font-family: "Monserrat";
+}
+
 
 .fc .fc-timegrid-slot {
   border-bottom: 0px;

@@ -25,6 +25,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { CrearPublicacionComponent } from './Components/crear-publicacion/crear-publicacion.component';
 import {CardModule} from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
+import { RespuestaComponent } from './Components/respuesta/respuesta.component';
 
 const routes: Routes = [{ path: '', component: ChatProfesionalesComponent },
   {path: 'crearPubli', component: CrearPublicacionComponent}
@@ -34,7 +35,8 @@ const routes: Routes = [{ path: '', component: ChatProfesionalesComponent },
   providers: [ConfirmationService],
   declarations: [
     ChatProfesionalesComponent,
-    CrearPublicacionComponent
+    CrearPublicacionComponent,
+    RespuestaComponent
   ],
   imports: [
     CommonModule,

@@ -116,6 +116,43 @@ ul.timeline > li:before {
 }
 
 
+.respuesta-lista {
+    list-style-type: none; /* Sin viñetas */
+    padding-left: 20px; /* Añade espacio en el margen izquierdo para indentación */
+  }
+  
+  .respuesta-item {
+    margin-bottom: 20px; /* Espacio entre respuestas */
+    margin-left: 20px; /* Indentación de las respuestas */
+  }
+  
+  .respuesta-card {
+    padding: 12px; /* Espacio dentro de cada tarjeta */
+    background-color: #f9f9f9; /* Fondo gris claro */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 5px; /* Bordes redondeados */
+  }
+  
+  .respuesta-titulo {
+    font-weight: bold; /* Título en negrita */
+    margin-bottom: 5px; /* Espacio debajo del título */
+  }
+  
+  .respuesta-mensaje {
+    margin-bottom: 10px; /* Espacio debajo del mensaje */
+  }
+  
+  .respuesta-archivo {
+    margin-top: 10px; /* Espacio por encima de las imágenes adjuntas */
+  }
+  
+  .respuesta-fecha {
+    text-align: right; /* Fecha alineada a la derecha */
+    font-size: 0.85em; /* Tamaño de fuente más pequeño */
+    color: #888; /* Color de texto gris */
+  }
+  
+
 @media (max-width: 768px) {
     .organizacion {
         flex-direction: column;

@@ -20,6 +20,7 @@ interface IAuthState {
     allPublis?: any[]
     onePubli?: any;
     showEstado: boolean
+    allRespuestas?: any[]
 }
 
 @Injectable({
@@ -72,6 +73,10 @@ export class AuthState {
   public readonly showEstado$: Observable<boolean> = this._state
     .asObservable()
     .pipe(map((state) => state && state.showEstado))
+
+  public readonly allRespuestas$: Observable<any[]> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.allRespuestas));
 
   private get state() {
     return this._state.getValue()
@@ -334,4 +339,28 @@ export class AuthState {
     return data;
   }
 
+  public addRespuesta(archivo_adjunto: any, id_usuario: number, titulo: string, mensaje: string, id_hilo: number) {
+    const data = this.authService.addRespuesta(archivo_adjunto, id_usuario, titulo, mensaje, id_hilo);
+
+    data.pipe(take(1)).subscribe((response) => {
+      if (response.cod == 200) {
+        this.getRespuestas(id_hilo)
+      }
+    });
+    return data;
+  }
+
+  public getRespuestas(id: number){
+    const data = this.authService.getRespuestas(id);
+    data.pipe(take(1)).subscribe((response) => {
+      console.log(response)
+      if(response.cod == 200){
+        this._state.next({
+          ...this.state,
+          allRespuestas: response.data.result
+        })
+      }
+    })
+    return data;
+  }
 }

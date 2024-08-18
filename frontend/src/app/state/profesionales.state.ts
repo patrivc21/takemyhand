@@ -10,6 +10,7 @@ interface IProfesionalesState {
     allPublis?: any[];
     onePubli?: any;
     allCiudades?: any[];
+    allRespuestas?: any[]
 }
 
 @Injectable({
@@ -38,6 +39,10 @@ export class ProfesionalesState {
     public readonly allCiudades$: Observable<any[]> = this._state
         .asObservable()
         .pipe(map((state) => state && state.allCiudades));
+
+    public readonly allRespuestas$: Observable<any[]> = this._state
+        .asObservable()
+        .pipe(map((state) => state && state.allRespuestas));
 
     private get state() {
         return this._state.getValue();
@@ -99,7 +104,7 @@ export class ProfesionalesState {
     public getAllComentarios(): Observable<GenericResponse> {
       const data = this.service.getAllComentarios()
       data.pipe(take(1)).subscribe((response) => {
-        console.log(response)
+        console.log('resp', response)
         if (response.cod == 200) {
           this._state.next({
             ...this.state,
@@ -166,16 +171,38 @@ export class ProfesionalesState {
     public getProfByCiudad(ciudad: string){
       const data = this.service.getProfByCiudad(ciudad);
       data.pipe(take(1)).subscribe((response) => {
-        if(response.cod !== 200){
-            return;
-        }
-
-        this._state.next({
+        if(response.cod == 200){
+          this._state.next({
             ...this.state,
             allProfesionales: response.data.result
         })
+        }
       })
       return data;
     }
 
+    public addRespuesta(archivo_adjunto: any, id_usuario: number, titulo: string, mensaje: string, id_hilo: number) {
+      const data = this.service.addRespuesta(archivo_adjunto, id_usuario, titulo, mensaje, id_hilo);
+  
+      data.pipe(take(1)).subscribe((response) => {
+        if (response.cod == 200) {
+          this.getRespuestas(id_hilo)
+        }
+      });
+      return data;
+    }
+
+    public getRespuestas(id: number){
+      const data = this.service.getRespuestas(id);
+      data.pipe(take(1)).subscribe((response) => {
+        console.log(response)
+        if(response.cod == 200){
+          this._state.next({
+            ...this.state,
+            allRespuestas: response.data.result
+          })
+        }
+      })
+      return data;
+    }
 }

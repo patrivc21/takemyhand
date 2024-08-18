@@ -23,6 +23,11 @@ export class ChatUsuariosComponent {
   public fecha_inicio: string;
   public fecha_fin: string;
 
+  public showResponder: boolean;
+  public responderSelect: number;
+  public allRespuestas$: Observable<any[]>
+  public showVer: boolean
+
   public BACKEND_FILES = environment.BACKEND_FILES
 
   constructor(private readonly authState: AuthState, private router: Router) {
@@ -36,6 +41,7 @@ export class ChatUsuariosComponent {
   private setStateSelector() {
     this.allPublis$ = this.authState.allPublis$;
     this.onePubli$ = this.authState.onePubli$
+    this.allRespuestas$ = this.authState.allRespuestas$
   }
 
   public crearPlan(){
@@ -103,5 +109,45 @@ export class ChatUsuariosComponent {
     this.rangeDates = []
     this.authState.getAllComentarios();
   }
+
+
+  public selectedCommentId: number | null = null;
+  public respuestasFiltradas: any[] = [];
+  public respuestasVisibles: { [key: number]: boolean } = {}; // Track visibility of responses
+
+  public verRespuestas(id: number) {
+    if (this.selectedCommentId === id && this.respuestasVisibles[id]) {
+      // Si ya están visibles, ocultarlas
+      this.respuestasVisibles[id] = false;
+      this.selectedCommentId = null;
+      this.respuestasFiltradas = [];
+    } else {
+      // Si no están visibles, mostrarlas
+      this.selectedCommentId = id;
+      this.authState.getRespuestas(id).subscribe(res => {
+        this.respuestasFiltradas = res.data.result.map(r => ({
+          id: r.id,
+          id_hilo: r.id_hilo || id,
+          titulo: r.titulo,
+          mensaje: r.mensaje,
+          archivos: r.archivos || [],
+          fecha_hora: r.fecha_hora,
+          nombre: r.usuario.nombre,
+          apellidos: r.usuario.apellidos
+        }));
+        this.respuestasVisibles[id] = true;
+      });
+    }
+  }
+
+  public responder(id: number) {
+    this.showResponder = true
+    this.responderSelect = id
+  }
+
+  public cerrarResponder(): void {
+    this.showResponder = false;
+  }
+
   
 }

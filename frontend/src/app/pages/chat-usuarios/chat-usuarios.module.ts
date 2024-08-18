@@ -25,6 +25,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileUploadModule } from 'primeng/fileupload';
 import {CardModule} from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
+import { RespuestaComponent } from './Components/respuesta/respuesta.component';
 
 const routes: Routes = [{ path: '', component: ChatUsuariosComponent },
   {path: 'crearPubli', component: CrearPublicacionComponent}
@@ -35,7 +36,8 @@ const routes: Routes = [{ path: '', component: ChatUsuariosComponent },
   providers: [ConfirmationService],
   declarations: [
     ChatUsuariosComponent,
-    CrearPublicacionComponent
+    CrearPublicacionComponent,
+    RespuestaComponent
   ],
   imports: [
     CommonModule,

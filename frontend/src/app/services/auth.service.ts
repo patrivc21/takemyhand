@@ -100,4 +100,29 @@ export class AuthService {
     )
   }
 
+
+  public addRespuesta(archivo_adjunto: File, id_usuario: number, titulo: string, mensaje: string, id_hilo: number, ): Observable<GenericResponse> {
+
+    const formData = new FormData();
+    formData.append('id_usuario', id_usuario.toString());
+    formData.append('titulo', titulo ? titulo : '');
+    formData.append('mensaje', mensaje ? mensaje : '');
+    formData.append('id_hilo', id_hilo.toString());
+    if (archivo_adjunto != null) formData.append('archivo_adjunto', archivo_adjunto, archivo_adjunto.name);
+    console.log(formData);
+
+    return this.http.post<GenericResponse>(`${BACKEND_API}/addRespuesta`, formData).pipe(shareReplay());
+  }
+
+  public getRespuestas(id:number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getRespuestas`, {id}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener las respuestas'))
+      })
+    )
+  }
+
 }

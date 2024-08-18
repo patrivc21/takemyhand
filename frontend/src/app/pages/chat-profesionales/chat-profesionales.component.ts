@@ -1,11 +1,7 @@
 import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
 import { AuthState } from 'src/app/state/auth.state';
 import { ProfesionalesState } from 'src/app/state/profesionales.state';
-import * as CKEditor from '@ckeditor/ckeditor5-build-classic';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { FileUpload } from 'primeng/fileupload';
 import { Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
@@ -34,6 +30,11 @@ export class ChatProfesionalesComponent {
   public fecha_inicio: string;
   public fecha_fin: string;
 
+  public showResponder: boolean;
+  public responderSelect: number;
+  public allRespuestas$: Observable<any[]>
+  public showVer: boolean
+
   public BACKEND_FILES = environment.BACKEND_FILES
 
   ngOnInit(): void {
@@ -49,6 +50,7 @@ export class ChatProfesionalesComponent {
   private setStateSelector() {
     this.allPublis$ = this.profesionalState.allPublis$;
     this.onePubli$ = this.profesionalState.onePubli$
+    this.allRespuestas$ = this.profesionalState.allRespuestas$
   }
 
   private generateLoginForm(): void {
@@ -123,6 +125,47 @@ export class ChatProfesionalesComponent {
   public volver(){
     this.router.navigate(['/home']);
   }
+
+  public responder(id: number) {
+    this.showResponder = true
+    this.responderSelect = id
+  }
+
+  public cerrarResponder(): void {
+    this.showResponder = false;
+  }
+
+  public selectedCommentId: number | null = null;
+  public respuestasFiltradas: any[] = [];
+  public respuestasVisibles: { [key: number]: boolean } = {}; // Track visibility of responses
+
+  public verRespuestas(id: number) {
+    if (this.selectedCommentId === id && this.respuestasVisibles[id]) {
+      // Si ya están visibles, ocultarlas
+      this.respuestasVisibles[id] = false;
+      this.selectedCommentId = null;
+      this.respuestasFiltradas = [];
+    } else {
+      // Si no están visibles, mostrarlas
+      this.selectedCommentId = id;
+      this.profesionalState.getRespuestas(id).subscribe(res => {
+        this.respuestasFiltradas = res.data.result.map(r => ({
+          id: r.id,
+          id_hilo: r.id_hilo || id,
+          titulo: r.titulo,
+          mensaje: r.mensaje,
+          archivos: r.archivos || [],
+          fecha_hora: r.fecha_hora,
+          nombre: r.usuario.nombre,
+          apellidos: r.usuario.apellidos
+        }));
+        this.respuestasVisibles[id] = true;
+      });
+    }
+  }
+
+  
+
 
   get desde(): AbstractControl | null { return this.form.get('desde'); }
   get hasta(): AbstractControl | null { return this.form.get('hasta'); }  
