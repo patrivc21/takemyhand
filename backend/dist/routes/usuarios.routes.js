@@ -26,5 +26,7 @@ router.post('/getOnePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.defau
 router.get('/getAllPublis', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getAllPublicacionesControllers]);
 router.post('/deletePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.deletePublicacionesController]);
 router.post('/buscar', auth_guard_1.AuthGuard, [usuarios_controller_1.default.buscarC]);
+router.post('/addRespuesta', multipartMiddleware, [usuarios_controller_1.default.addRespuesta]);
+router.post('/getRespuestas', [usuarios_controller_1.default.getRespuestasC]);
 exports.default = router;
 //# sourceMappingURL=usuarios.routes.js.map

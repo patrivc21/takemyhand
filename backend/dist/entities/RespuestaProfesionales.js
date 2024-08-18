@@ -11,8 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RespuestaHiloProfesionales = void 0;
 var typeorm_1 = require("typeorm");
-var Profesional_1 = require("./Profesional");
 var HiloProfesionales_1 = require("./HiloProfesionales");
+var Usuarios_1 = require("./Usuarios");
+var ArchivosHiloProf_1 = require("./ArchivosHiloProf");
 var RespuestaHiloProfesionales = /** @class */ (function () {
     function RespuestaHiloProfesionales() {
     }
@@ -21,15 +22,23 @@ var RespuestaHiloProfesionales = /** @class */ (function () {
         __metadata("design:type", Number)
     ], RespuestaHiloProfesionales.prototype, "id", void 0);
     __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return HiloProfesionales_1.HiloProfesionales; }, function (respuesta) { return respuesta.id; }),
-        (0, typeorm_1.JoinColumn)({ name: 'id_respuesta' }),
-        __metadata("design:type", HiloProfesionales_1.HiloProfesionales)
-    ], RespuestaHiloProfesionales.prototype, "id_respuesta", void 0);
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], RespuestaHiloProfesionales.prototype, "id_hilo", void 0);
     __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return Profesional_1.Profesionales; }, function (profesional) { return profesional.id; }),
-        (0, typeorm_1.JoinColumn)({ name: 'id_profesional' }),
-        __metadata("design:type", Profesional_1.Profesionales)
-    ], RespuestaHiloProfesionales.prototype, "id_profesional", void 0);
+        (0, typeorm_1.ManyToOne)(function () { return HiloProfesionales_1.HiloProfesionales; }, function (respuesta) { return respuesta.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_hilo' }),
+        __metadata("design:type", HiloProfesionales_1.HiloProfesionales)
+    ], RespuestaHiloProfesionales.prototype, "respuesta", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Number)
+    ], RespuestaHiloProfesionales.prototype, "id_usuario", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Usuarios_1.Usuarios; }, function (usuario) { return usuario.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
+        __metadata("design:type", Usuarios_1.Usuarios)
+    ], RespuestaHiloProfesionales.prototype, "usuario", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", String)
@@ -42,6 +51,14 @@ var RespuestaHiloProfesionales = /** @class */ (function () {
         (0, typeorm_1.Column)(),
         __metadata("design:type", Date)
     ], RespuestaHiloProfesionales.prototype, "fecha_hora", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], RespuestaHiloProfesionales.prototype, "titulo", void 0);
+    __decorate([
+        (0, typeorm_1.OneToMany)(function () { return ArchivosHiloProf_1.ArchivosHiloProf; }, function (archivo) { return archivo.respuesta; }),
+        __metadata("design:type", Array)
+    ], RespuestaHiloProfesionales.prototype, "archivos", void 0);
     RespuestaHiloProfesionales = __decorate([
         (0, typeorm_1.Entity)({ name: 'respuesta_hilo_profesionales' })
     ], RespuestaHiloProfesionales);

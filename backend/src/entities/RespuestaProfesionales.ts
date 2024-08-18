@@ -1,19 +1,27 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Profesionales } from './Profesional'; 
 import { HiloProfesionales } from './HiloProfesionales'; 
+import { Usuarios } from './Usuarios';
+import { ArchivosHiloProf } from './ArchivosHiloProf';
 
 @Entity({ name: 'respuesta_hilo_profesionales' })
 export class RespuestaHiloProfesionales {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @ManyToOne(() => HiloProfesionales, respuesta => respuesta.id)
-  @JoinColumn({ name: 'id_respuesta' })
-  id_respuesta!: HiloProfesionales;
+  @Column()
+  id_hilo!: number;
 
-  @ManyToOne(() => Profesionales, profesional => profesional.id)
-  @JoinColumn({ name: 'id_profesional' })
-  id_profesional!: Profesionales;
+  @ManyToOne(() => HiloProfesionales, respuesta => respuesta.id)
+  @JoinColumn({ name: 'id_hilo' })
+  respuesta!: HiloProfesionales;
+
+  @Column()
+  id_usuario!: number;
+
+  @ManyToOne(() => Usuarios, usuario => usuario.id)
+  @JoinColumn({ name: 'id_usuario' })
+  usuario!: Usuarios;
 
   @Column()
   mensaje!: string;
@@ -23,4 +31,10 @@ export class RespuestaHiloProfesionales {
 
   @Column()
   fecha_hora!: Date;
+
+  @Column()
+  titulo!: string;
+
+  @OneToMany(() => ArchivosHiloProf, archivo => archivo.respuesta) 
+    archivos!: ArchivosHiloProf[];
 }

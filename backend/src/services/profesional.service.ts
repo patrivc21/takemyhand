@@ -6,6 +6,7 @@ import { HiloProfesionales } from "../entities/HiloProfesionales";
 import { ArchivosHiloProf } from "../entities/ArchivosHiloProf";
 import { Recursos } from "../entities/Recursos";
 import { ArchivosRecursos } from "../entities/ArchivosRecursos";
+import { RespuestaHiloProfesionales } from "../entities/RespuestaProfesionales";
 
 export const addProfesional = async (admin: Profesionales): Promise<boolean> => {
     let res = await DB.getRepository(Profesionales).save(admin);
@@ -197,3 +198,52 @@ export const getProfByCiudad = async (ciudad: string): Promise<Profesionales[]> 
     });
     return res;
 }
+
+
+
+export const addRespuestaPublicacion = async (publicacion: any): Promise<any> => {
+    let datos = {
+      fecha_hora: new Date(),
+      titulo: publicacion.titulo,
+      mensaje: publicacion.mensaje,
+      id_usuario: publicacion.id_usuario,
+      archivo_adjunto: '',
+      id_hilo: publicacion.id_hilo
+    };
+
+    let res = await DB.getRepository(RespuestaHiloProfesionales).save(datos);
+    console.log(res)
+    return res;
+}
+
+export const addArchivoRespuestaPublicacion = async (plan: any, id: number, id_resp: number): Promise<boolean> => {
+    let filesSaved;
+    
+      for (const key in plan) {
+          if (plan.hasOwnProperty(key)) {
+              const file = plan[key];
+              let archivo_com = {
+                  id_hilo: id,
+                  id_respuesta: id_resp,
+                  archivo_adjunto: file ? path.basename(file.path) : '',
+              };
+    
+              filesSaved = await DB.getRepository(ArchivosHiloProf).save(archivo_com);
+          }
+      }
+    
+      return filesSaved != null;
+}
+
+export const getRespuestas = async (id: number): Promise<any[]> => {
+    const respuestas = await DB.getRepository(RespuestaHiloProfesionales)
+        .createQueryBuilder('rp')
+        .leftJoinAndSelect('rp.usuario', 'p')
+        .leftJoinAndSelect('rp.archivos', 'a')
+        .where('rp.id_hilo = :id', { id })
+        .orderBy('rp.fecha_hora', 'DESC')
+        .getMany();
+
+    return respuestas;
+}
+

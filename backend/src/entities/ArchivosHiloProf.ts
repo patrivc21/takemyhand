@@ -3,6 +3,7 @@ import { RolUsuarios } from './RolUsuarios';
 import { Usuarios } from './Usuarios';
 import { PlanSeguridad } from './PlanSeguridad';
 import { HiloProfesionales } from './HiloProfesionales';
+import { RespuestaHiloProfesionales } from './RespuestaProfesionales';
 
 @Entity({ name: 'archivos_hilo_prof' })
 export class ArchivosHiloProf {
@@ -18,5 +19,12 @@ export class ArchivosHiloProf {
   @ManyToOne(() => HiloProfesionales, hilo => hilo.id)
   @JoinColumn({ name: 'id_hilo' })
   hilo!: HiloProfesionales;
+
+  @Column({nullable: true })
+  id_respuesta!: number;
+
+  @ManyToOne(() => RespuestaHiloProfesionales, respuesta => respuesta.id)
+  @JoinColumn({ name: 'id_respuesta' })
+  respuesta!: RespuestaHiloProfesionales;
 
 }

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Usuarios } from '../entities/Usuarios';
-import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion, buscarPublis} from '../services/usuarios.service';
+import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion, buscarPublis, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas} from '../services/usuarios.service';
 import authHelper from '../helpers/auth.helper';
 import { sendLoginEmail } from '../helpers/mail.helper';
 
@@ -299,7 +299,48 @@ export const buscarC = async (req:Request, res:Response) => {
 }
 
 
+export const addRespuesta = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    let infor = req.body
+    const archivos_adjuntos = (req as any).files;
+    try {
+        let datos = {infor, archivos_adjuntos}
+        console.log(datos)
+        
+        let publi = await addRespuestaPublicacion(infor);
+        console.log(publi)
+        let saveFiles = true;
+        
+        if (archivos_adjuntos) {
+            saveFiles = await addArchivoRespuestaPublicacion(archivos_adjuntos, publi.id_hilo, publi.id);
+        }
+        resp.data = { saveFiles: saveFiles };
+        resp.cod = 200;
+    } catch (error) {
+        console.log(error as string);
+        resp.msg = error as string;
+        resp.cod = 500;
+    }
+    return res.json(resp);
+}
+
+export const getRespuestasC = async (req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let body = req.body;
+        let result = await getRespuestas(body.id);
+        resp.data = {result: result};
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
+
+
 
 export default { addNewUser, getAllUsersControllers, getOneUserController, login, register, getAllRolesC, updateUsuarios, getUserByEmailC, getAllUsersExceptMeC,
-    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC
+    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC,
+    addRespuesta, getRespuestasC
 };

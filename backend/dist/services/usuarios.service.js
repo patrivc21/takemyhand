@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
+exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
 var Usuarios_1 = require("../entities/Usuarios");
 var typeorm_1 = require("../config/typeorm");
 var typeorm_2 = require("typeorm");
@@ -47,6 +47,7 @@ var RolUsuarios_1 = require("../entities/RolUsuarios");
 var HiloUsuarios_1 = require("../entities/HiloUsuarios");
 var ArchivosHiloUsuarios_1 = require("../entities/ArchivosHiloUsuarios");
 var path_1 = __importDefault(require("path"));
+var RespuestaUsuarios_1 = require("../entities/RespuestaUsuarios");
 var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -285,4 +286,79 @@ var buscarPublis = function (fechaInicio, fechaFin) { return __awaiter(void 0, v
     });
 }); };
 exports.buscarPublis = buscarPublis;
+var addRespuestaPublicacion = function (publicacion) { return __awaiter(void 0, void 0, void 0, function () {
+    var datos, res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                datos = {
+                    fecha_hora: new Date(),
+                    titulo: publicacion.titulo,
+                    mensaje: publicacion.mensaje,
+                    id_usuario: publicacion.id_usuario,
+                    archivo_adjunto: '',
+                    id_hilo: publicacion.id_hilo
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(RespuestaUsuarios_1.RespuestaHiloUsuarios).save(datos)];
+            case 1:
+                res = _a.sent();
+                console.log(res);
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.addRespuestaPublicacion = addRespuestaPublicacion;
+var addArchivoRespuestaPublicacion = function (plan, id, id_resp) { return __awaiter(void 0, void 0, void 0, function () {
+    var filesSaved, _a, _b, _c, _i, key, file, archivo_com;
+    return __generator(this, function (_d) {
+        switch (_d.label) {
+            case 0:
+                _a = plan;
+                _b = [];
+                for (_c in _a)
+                    _b.push(_c);
+                _i = 0;
+                _d.label = 1;
+            case 1:
+                if (!(_i < _b.length)) return [3 /*break*/, 4];
+                _c = _b[_i];
+                if (!(_c in _a)) return [3 /*break*/, 3];
+                key = _c;
+                if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
+                file = plan[key];
+                archivo_com = {
+                    id_hilo: id,
+                    id_respuesta: id_resp,
+                    archivo_adjunto: file ? path_1.default.basename(file.path) : '',
+                };
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosHiloUsuarios_1.ArchivosHiloUsuario).save(archivo_com)];
+            case 2:
+                filesSaved = _d.sent();
+                _d.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/, filesSaved != null];
+        }
+    });
+}); };
+exports.addArchivoRespuestaPublicacion = addArchivoRespuestaPublicacion;
+var getRespuestas = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var respuestas;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(RespuestaUsuarios_1.RespuestaHiloUsuarios)
+                    .createQueryBuilder('rp')
+                    .leftJoinAndSelect('rp.usuario', 'p')
+                    .leftJoinAndSelect('rp.archivos', 'a')
+                    .where('rp.id_hilo = :id', { id: id })
+                    .orderBy('rp.fecha_hora', 'DESC')
+                    .getMany()];
+            case 1:
+                respuestas = _a.sent();
+                return [2 /*return*/, respuestas];
+        }
+    });
+}); };
+exports.getRespuestas = getRespuestas;
 //# sourceMappingURL=usuarios.service.js.map

@@ -5,6 +5,7 @@ import { RolUsuarios } from "../entities/RolUsuarios";
 import { HiloUsuarios } from "../entities/HiloUsuarios";
 import { ArchivosHiloUsuario } from "../entities/ArchivosHiloUsuarios";
 import path from "path";
+import { RespuestaHiloUsuarios } from "../entities/RespuestaUsuarios";
 
 export const addUsuarios = async (usuarios: Usuarios): Promise<Usuarios> => {
     let res = await DB.getRepository(Usuarios).save(usuarios);
@@ -147,4 +148,51 @@ export const buscarPublis = async (fechaInicio?: string, fechaFin?: string): Pro
     return res;
   };
     
+
+  export const addRespuestaPublicacion = async (publicacion: any): Promise<any> => {
+    let datos = {
+      fecha_hora: new Date(),
+      titulo: publicacion.titulo,
+      mensaje: publicacion.mensaje,
+      id_usuario: publicacion.id_usuario,
+      archivo_adjunto: '',
+      id_hilo: publicacion.id_hilo
+    };
+
+    let res = await DB.getRepository(RespuestaHiloUsuarios).save(datos);
+    console.log(res)
+    return res;
+}
+
+  export const addArchivoRespuestaPublicacion = async (plan: any, id: number, id_resp: number): Promise<boolean> => {
+    let filesSaved;
+    
+      for (const key in plan) {
+          if (plan.hasOwnProperty(key)) {
+              const file = plan[key];
+              let archivo_com = {
+                  id_hilo: id,
+                  id_respuesta: id_resp,
+                  archivo_adjunto: file ? path.basename(file.path) : '',
+              };
+    
+              filesSaved = await DB.getRepository(ArchivosHiloUsuario).save(archivo_com);
+          }
+      }
+    
+      return filesSaved != null;
+}
+
+export const getRespuestas = async (id: number): Promise<any[]> => {
+    const respuestas = await DB.getRepository(RespuestaHiloUsuarios)
+        .createQueryBuilder('rp')
+        .leftJoinAndSelect('rp.usuario', 'p')
+        .leftJoinAndSelect('rp.archivos', 'a')
+        .where('rp.id_hilo = :id', { id })
+        .orderBy('rp.fecha_hora', 'DESC')
+        .getMany();
+
+    return respuestas;
+}
+
 
