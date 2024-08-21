@@ -17,6 +17,7 @@ import { registerLocaleData } from '@angular/common';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { MessageService } from 'primeng/api';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 registerLocaleData(localeEs, 'es-ES');
 

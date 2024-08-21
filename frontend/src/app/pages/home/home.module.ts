@@ -37,6 +37,8 @@ import { CalendarModule } from 'primeng/calendar'
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { ChatComponent } from 'src/app/components/chat/chat.component';
+
 
 
 const routes: Routes = [{ path: '', component: HomeComponent },
@@ -91,6 +93,7 @@ const routes: Routes = [{ path: '', component: HomeComponent },
     RadioButtonModule,
     IconFieldModule,
     InputIconModule,
+    ChatComponent
   ]
 })
 export class HomeModule { }

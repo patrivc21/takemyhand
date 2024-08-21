@@ -27,6 +27,7 @@ export class HomeComponent {
 
   public users$: Observable<User[]>
   public selectedPerfil: any
+  public selectedPerfilId: any
   filterValue: string | undefined = '';
 
   public verDialog$: Observable<boolean>
@@ -83,7 +84,7 @@ export class HomeComponent {
   }
 
   public buscar(){
-    console.log(this.selectedPerfil)
+    console.log('1',this.selectedPerfil)
     this.perfilBusqueda = true
   }
 

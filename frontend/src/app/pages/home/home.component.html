@@ -77,6 +77,10 @@
         <p><strong>Activo:</strong> {{selectedPerfil.activo}}</p>
     </div>
 
+    <div>
+        <p>Iniciar chat</p>
+        <app-chat [id_receptor]="selectedPerfil.id"></app-chat>
+    </div>
     <div class="d-flex justify-content-center align-items-center mt-5">
       <p-button class="d-flex justify-content-center align-items-center button-save-form" (onClick)="cerrarBusqueda()">Cancelar</p-button>
     </div>

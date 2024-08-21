@@ -259,7 +259,6 @@ export class AuthState {
 
   public getUserByEmail(email: string): Observable<GenericResponse> {
     const data = this.authService.getUserByEmail(email);
-    console.log(data)
     return data
   }
 
