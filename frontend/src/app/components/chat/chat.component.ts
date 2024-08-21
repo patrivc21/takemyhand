@@ -1,84 +1,90 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, SimpleChanges } from '@angular/core';
 import { AuthState } from 'src/app/state/auth.state';
 import { FormsModule } from '@angular/forms';
 import { ChatService } from 'src/app/services/chatprivado.service';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
+import { ChatState } from 'src/app/state/chatprivado.state';
+import { ChatPrivado } from 'src/app/interfaces/ChatPrivado';
+import { ButtonModule } from 'primeng/button';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
   standalone: true,
-  imports: [CommonModule, FormsModule] 
+  imports: [CommonModule, FormsModule,ButtonModule] 
 })
+
 export class ChatComponent {
   @Input() id_receptor!: number;
+  @Output() res: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  public allChat$: Observable<ChatPrivado[]>;
+  public nuevoMensaje: string = "";
+  public usuario: any;
+  public mostrarChat: boolean = false;
+
   private readonly authState = inject(AuthState);
-  private readonly chatService = inject(ChatService);
+  private readonly chatState = inject(ChatState);
 
-  nuevoMensaje: string = ""
-  mensajes: any = []
-
-  usuario: any
-  mostrarChat: boolean
-
-  constructor(){
-
+  constructor(private cdr: ChangeDetectorRef, private readonly router: Router) {
+    this.setStateSelector();
   }
 
-  ngOnInit(): void{
-    this.usuario = this.authState.getUser()
-    console.log(this.id_receptor)
-     // Obtener los mensajes privados del chat entre el usuario y el receptor
-     this.chatService.getChatPrivado(this.usuario.id, this.id_receptor).pipe(take(1)).subscribe(dat => {
+  ngOnInit(): void {
+    this.usuario = this.authState.getUser();
+    this.cargarMensajes();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['id_receptor'] && !changes['id_receptor'].isFirstChange()) {
+      this.cargarMensajes();
+    }
+  }
+
+  private setStateSelector() {
+    this.allChat$ = this.chatState.allChat$;
+  }
+
+  private cargarMensajes(): void {
+    console.log(this.usuario.id, this.id_receptor)
+    this.chatState.getChatPrivado(this.usuario.id, this.id_receptor).pipe(take(1)).subscribe(dat => {
       console.log(dat);
-      
-      // Procesar la data recibida
-      this.mensajes = dat.data.map((msg: any) => {
-        return {
-          id_emisor: msg.id_emisor,
-          id_receptor: msg.id_receptor,
-          mensaje: msg.mensaje,
-          fecha_hora: msg.fecha_hora
-        };
-      });
-
-      // Opcional: Mostrar los mensajes procesados
-      console.log(this.mensajes);
     });
-
   }
 
-  enviarMensaje(){
-    console.log(this.nuevoMensaje)
+  public enviarMensaje() {
+    if (this.nuevoMensaje === "") return;
 
-    //para no enviar mensajes vacios
-    if(this.nuevoMensaje = "") return
+    let mensaje = {
+      id_emisor: this.usuario.id,
+      id_receptor: this.id_receptor,
+      mensaje: this.nuevoMensaje,
+      id: 0,
+      fecha_hora: new Date()
+    };
 
-    // let mensaje = {
-    //   id_emisor = this.usuario.id,
-    //   id_receptor = this.id_receptor,
-    //   mensaje = this.nuevoMensaje
-    // }
+    this.chatState.addChat(mensaje);
+    this.nuevoMensaje = "";
 
-    this.nuevoMensaje = ""
-
+    this.cdr.detectChanges();
     setTimeout(() => {
-      this.scrollToTheLastElementByClassName()
-    }, 20);
+      this.scrollToTheLastElementByClassName();
+    }, 0);
   }
 
-  public scrollToTheLastElementByClassName(){
-    //obtenemos todos los elementos con clase mensaje
-    let elements = document.getElementsByClassName('msj')
-
-    //obtenemos ultimo
-    let ultimo: any = elements[(elements.length - 1)]
-
-    //para scrollear automatico cada vez que enviamos mensaje
+  public scrollToTheLastElementByClassName() {
+    let elements = document.getElementsByClassName('msj');
+    let ultimo: any = elements[(elements.length - 1)];
     let toppos = ultimo.offsetTop;
-
-    document.getElementById('contenedorMensajes').scrollTop = toppos
+    document.getElementById('contenedorMensajes').scrollTop = toppos;
   }
+
+  public volver(){
+    this.router.navigate(['/home']);
+  }
+
 }

@@ -1,0 +1,68 @@
+.container {
+  display: flex;
+  height: 90vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+  background-color: #f0f0f0;
+}
+
+.users-list {
+  width: 30%;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+  overflow-y: auto;
+}
+
+.users-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.users-list li {
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.users-list li:hover {
+  background-color: #f5f5f5;
+}
+
+.chat-area {
+  width: 70%;
+  height: 90vh; /* Asegura que el área del chat ocupe toda la altura de la ventana */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Para evitar desbordamientos */
+}
+
+app-chat {
+  flex: 1; /* Esto asegura que el componente <app-chat> ocupe todo el espacio disponible dentro del .chat-area */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+
+.menu-container {
+  background-color: #167496;
+  padding: 0.3rem;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.menu-item-left {
+  flex: 0 0 auto;
+  margin-left: 1rem;
+}
+
+.menu-item-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+

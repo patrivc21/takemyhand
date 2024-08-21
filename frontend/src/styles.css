@@ -56,6 +56,14 @@ ol, ul {
   font-family: "Monserrat";
 }
 
+.button-save .p-button {
+  background-color: #167496;
+  color: white;
+  font-family: "Monserrat";
+  border: none;
+  margin: 0.3rem;
+}
+
 .leer-mas .p-button {
   padding: 10px;
   background-color: #167496;

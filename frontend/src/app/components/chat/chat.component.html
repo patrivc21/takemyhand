@@ -1,18 +1,23 @@
-<div *ngIf="usuario && !mostrarChat" class="chatIconContainer" (click)="mostrarChat = true">
+<!-- <div *ngIf="usuario && !mostrarChat" class="chatIconContainer" (click)="mostrarChat = true">
     <img src="https://icons.veryicon.com/png/o/miscellaneous/forestry-in-yiliang/icon-chat.png" class="chatIcon" alt="Chat">
-</div>
+</div>  -->
 
-<div class="card text-center chatContainer" *ngIf="usuario && mostrarChat">
+<!-- <div *ngIf="usuario && !mostrarChat">
+    <button pButton type="button" label="Iniciar chat" icon="pi pi-comments" class="p-button-rounded p-button-success" 
+                (click)="mostrarChat = true"></button>
+</div> -->
+
+<div class="card text-center chatContainer" *ngIf="usuario">
 
     <div class="card-header">
         CHAT
-        <div class="closeIcon" (click)="mostrarChat = false">X</div>
     </div>
 
-    <div class="card-body">
+    <div class="card-body" *ngIf="(allChat$ | async) as mensajes">
         <div id="contenedorMensajes" class="contenedorMensajes h-100">
             <p *ngFor="let mensaje of mensajes" class="msj p-2" [ngClass]="(usuario.id === mensaje.id_emisor)? 'enviado' : 'recibido'">
                 {{mensaje.mensaje}}
+                <span class="fecha-hora">{{mensaje.fecha_hora | date:'dd-MM-yyyy HH:mm'}}</span>
             </p>
         </div>
     </div>

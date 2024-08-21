@@ -26,14 +26,14 @@ export class HomeComponent {
   public perfilBusqueda: boolean
 
   public users$: Observable<User[]>
-  public selectedPerfil: any
-  public selectedPerfilId: any
+  public selectedPerfil: any = {}
   filterValue: string | undefined = '';
 
   public verDialog$: Observable<boolean>
   public showEstado$: Observable<boolean>
   public displayDialog: boolean = false
   public cerrarEstado: boolean = false
+  public displayChat: boolean = false
 
   public BACKEND_FILES = environment.BACKEND_FILES
   public datos: any
@@ -79,17 +79,20 @@ export class HomeComponent {
   }
 
   public verPerfil(){
-    // this.viewPerfil = true
     this.router.navigate(['/home/editar-perfil']);
   }
 
+
+  public abrirChat(){
+    this.displayChat = true
+  }
+
   public buscar(){
-    console.log('1',this.selectedPerfil)
     this.perfilBusqueda = true
   }
 
   public cerrarBusqueda(){
-    this.selectedPerfil = []
+    this.selectedPerfil = null
     this.perfilBusqueda = false
   }
 

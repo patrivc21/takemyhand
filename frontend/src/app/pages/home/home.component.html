@@ -16,6 +16,7 @@
             <a href="#" [routerLink]="'/foroprofesionales'" style="color: white; font-family: 'Monserrat'">Foro Profesionales</a>
             <a href="#" [routerLink]="'/forousuarios'" class="ml-3" style="color: white; font-family: 'Monserrat'">Foro Usuarios</a>
             <a href="#" [routerLink]="'/home/listadoprof'" class="ml-3" style="color: white; font-family: 'Monserrat'">Listado profesionales por ciudades</a>
+            <a href="#" [routerLink]="'/chats'" class="ml-3" style="color: white; font-family: 'Monserrat'">Chats</a>
         </div>
 
         <div class="menu-item-left mb-4 mr-4">
@@ -66,23 +67,45 @@
     <app-editar-perfil (res)="cerrar()" [usuario]="usuario"></app-editar-perfil>
 </div> -->
 
-
-<p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '40%'}" [draggable]="false" [resizable]="false" (onHide)="cerrarBusqueda()">
-    <div *ngIf="selectedPerfil" class="d-flex flex-column justify-content-center align-items-center">
-        <p><strong>Nombre:</strong> {{selectedPerfil.nombre}}</p>
-        <p><strong>Apellidos:</strong> {{selectedPerfil.apellidos}}</p>
-        <p><strong>Email:</strong> {{selectedPerfil.email}}</p>
-        <p><strong>Username:</strong> {{selectedPerfil.username}}</p>
-        <p><strong>Rol:</strong> {{selectedPerfil.rol}}</p>
-        <p><strong>Activo:</strong> {{selectedPerfil.activo}}</p>
+<p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '100%', height: '100%'}" [draggable]="false" [maximizable]="true" [resizable]="false" (onHide)="cerrarBusqueda()">
+    <div *ngIf="selectedPerfil" class="d-flex flex-column justify-content-center align-items-start p-4">
+        <table class="table table-borderless w-100">
+            <tr>
+                <td><strong>Nombre:</strong></td>
+                <td>{{selectedPerfil.nombre}}</td>
+            </tr>
+            <tr>
+                <td><strong>Apellidos:</strong></td>
+                <td>{{selectedPerfil.apellidos}}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{selectedPerfil.email}}</td>
+            </tr>
+            <tr>
+                <td><strong>Username:</strong></td>
+                <td>{{selectedPerfil.username}}</td>
+            </tr>
+            <tr>
+                <td><strong>Rol:</strong></td>
+                <td>{{selectedPerfil.rol}}</td>
+            </tr>
+            <tr>
+                <td><strong>Activo:</strong></td>
+                <td>{{selectedPerfil.activo}}</td>
+            </tr>
+        </table>
     </div>
 
-    <div>
-        <p>Iniciar chat</p>
-        <app-chat [id_receptor]="selectedPerfil.id"></app-chat>
+    <div *ngIf="selectedPerfil?.id" class="d-flex justify-content-start mb-4 mr-4">
+        <!-- <button pButton type="button" label="Iniciar chat" icon="pi pi-comments" class="p-button-rounded p-button-success" 
+                (click)="abrirChat()">
+        </button> -->
+        <app-chat *ngIf="perfilBusqueda" [id_receptor]="selectedPerfil.id" (res)="cerrarBusqueda()"></app-chat>
     </div>
-    <div class="d-flex justify-content-center align-items-center mt-5">
-      <p-button class="d-flex justify-content-center align-items-center button-save-form" (onClick)="cerrarBusqueda()">Cancelar</p-button>
+
+    <div class="d-flex justify-content-start align-items-center mt-4">
+      <p-button label="Cancelar" icon="pi pi-times" class="p-button-rounded p-button-secondary" (onClick)="cerrarBusqueda()"></p-button>
     </div>
 </p-dialog>
 
@@ -122,8 +145,12 @@
         </p-rating>
 
         <p-footer>
-          <p-button type="button" pButton label="Guardar" icon="pi pi-check" (click)="guardar()"></p-button>
-          <p-button type="button" pButton label="Cancelar" icon="pi pi-times" (click)="cerrarEstadoDialog()"></p-button>
+          <p-button class="button-save"  label="Guardar" icon="pi pi-check" (click)="guardar()"></p-button>
+          <p-button class="button-save" label="Cancelar" icon="pi pi-times" (click)="cerrarEstadoDialog()"></p-button>
         </p-footer>
     </p-dialog>
 </ng-container>
+
+<div *ngIf="displayChat">
+    <app-chat [id_receptor]="selectedPerfil.id" (res)="cerrarBusqueda()"></app-chat>
+</div>
