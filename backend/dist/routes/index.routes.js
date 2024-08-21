@@ -12,6 +12,7 @@ var cuestionarios_routes_1 = __importDefault(require("./cuestionarios.routes"));
 var planseguridad_routes_1 = __importDefault(require("./planseguridad.routes"));
 var recursos_routes_1 = __importDefault(require("./recursos.routes"));
 var eventocalendario_routes_1 = __importDefault(require("./eventocalendario.routes"));
+var chatprivado_routes_1 = __importDefault(require("./chatprivado.routes"));
 var router = (0, express_1.Router)();
 router.use('/usuarios', usuarios_routes_1.default);
 router.use('/pacientes', pacientes_routes_1.default);
@@ -21,5 +22,6 @@ router.use('/cuestionarios', cuestionarios_routes_1.default);
 router.use('/plan', planseguridad_routes_1.default);
 router.use('/recurso', recursos_routes_1.default);
 router.use('/evento', eventocalendario_routes_1.default);
+router.use('/chat', chatprivado_routes_1.default);
 exports.default = router;
 //# sourceMappingURL=index.routes.js.map

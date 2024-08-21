@@ -11,8 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatPrivado = void 0;
 var typeorm_1 = require("typeorm");
-var Profesional_1 = require("./Profesional");
-var Pacientes_1 = require("./Pacientes");
 var ChatPrivado = /** @class */ (function () {
     function ChatPrivado() {
     }
@@ -21,35 +19,21 @@ var ChatPrivado = /** @class */ (function () {
         __metadata("design:type", Number)
     ], ChatPrivado.prototype, "id", void 0);
     __decorate([
-        (0, typeorm_1.Column)({ type: 'int', nullable: true }),
+        (0, typeorm_1.Column)(),
         __metadata("design:type", Number)
-    ], ChatPrivado.prototype, "id_profesional", void 0);
+    ], ChatPrivado.prototype, "id_emisor", void 0);
     __decorate([
-        (0, typeorm_1.Column)({ type: 'int', nullable: true }),
+        (0, typeorm_1.Column)(),
         __metadata("design:type", Number)
-    ], ChatPrivado.prototype, "id_paciente", void 0);
+    ], ChatPrivado.prototype, "id_receptor", void 0);
     __decorate([
-        (0, typeorm_1.Column)({ type: 'double', nullable: true }),
-        __metadata("design:type", Number)
-    ], ChatPrivado.prototype, "duracion", void 0);
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", String)
+    ], ChatPrivado.prototype, "mensaje", void 0);
     __decorate([
-        (0, typeorm_1.Column)({ type: 'datetime', nullable: true }),
+        (0, typeorm_1.Column)(),
         __metadata("design:type", Date)
-    ], ChatPrivado.prototype, "fecha_hora_inicio", void 0);
-    __decorate([
-        (0, typeorm_1.Column)({ type: 'datetime', nullable: true }),
-        __metadata("design:type", Date)
-    ], ChatPrivado.prototype, "fecha_hora_fin", void 0);
-    __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return Profesional_1.Profesionales; }, function (profesional) { return profesional.id; }),
-        (0, typeorm_1.JoinColumn)({ name: 'id_profesional' }),
-        __metadata("design:type", Profesional_1.Profesionales)
-    ], ChatPrivado.prototype, "profesional", void 0);
-    __decorate([
-        (0, typeorm_1.ManyToOne)(function () { return Pacientes_1.Pacientes; }, function (paciente) { return paciente.id; }),
-        (0, typeorm_1.JoinColumn)({ name: 'id_paciente' }),
-        __metadata("design:type", Pacientes_1.Pacientes)
-    ], ChatPrivado.prototype, "paciente", void 0);
+    ], ChatPrivado.prototype, "fecha_hora", void 0);
     ChatPrivado = __decorate([
         (0, typeorm_1.Entity)({ name: 'chat_privado' })
     ], ChatPrivado);

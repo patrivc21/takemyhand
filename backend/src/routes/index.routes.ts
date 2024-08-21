@@ -7,6 +7,7 @@ import cuestionarioRoutes from './cuestionarios.routes';
 import planRoutes from './planseguridad.routes';
 import recursoRoutes from './recursos.routes';
 import eventoRoutes from './eventocalendario.routes';
+import chatRoutes from './chatprivado.routes';
 
 const router = Router();
 
@@ -18,5 +19,6 @@ router.use('/cuestionarios', cuestionarioRoutes);
 router.use('/plan', planRoutes);
 router.use('/recurso', recursoRoutes);
 router.use('/evento', eventoRoutes);
+router.use('/chat', chatRoutes);
 
 export default router;

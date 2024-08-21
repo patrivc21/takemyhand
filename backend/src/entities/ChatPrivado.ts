@@ -7,26 +7,16 @@ export class ChatPrivado {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ type: 'int', nullable: true })
-  id_profesional!: number;
+  @Column()
+  id_emisor!: number;
 
-  @Column({ type: 'int', nullable: true })
-  id_paciente!: number;
+  @Column()
+  id_receptor!: number;
 
-  @Column({ type: 'double', nullable: true })
-  duracion!: number;
+  @Column()
+  mensaje!: string;
 
-  @Column({ type: 'datetime', nullable: true })
-  fecha_hora_inicio!: Date;
+  @Column()
+  fecha_hora!: Date;
 
-  @Column({ type: 'datetime', nullable: true })
-  fecha_hora_fin!: Date;
-
-  @ManyToOne(() => Profesionales, profesional => profesional.id)
-  @JoinColumn({ name: 'id_profesional' })
-  profesional!: Profesionales;
-
-  @ManyToOne(() => Pacientes, paciente => paciente.id)
-  @JoinColumn({ name: 'id_paciente' })
-  paciente!: Pacientes;
 }
