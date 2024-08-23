@@ -1,4 +1,3 @@
-
 .fondo {
     position: relative;               /* Necesario para el pseudo-elemento */
     overflow: hidden;                 /* Evita desbordes */
@@ -13,14 +12,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url(https://images.pexels.com/photos/19670/pexels-photo.jpg);
+    background-image: url('../../../../../assets/bg.gif');
     background-size: cover;         
     background-position: center;     
     background-repeat: no-repeat;    
     filter: blur(8px);               /* Aplica el efecto de desenfoque */
     z-index: -1;                      /* Asegura que esté detrás del contenido */
 }
-
 
 .texto {
     font-family: "Monserrat";
@@ -29,7 +27,7 @@
 
 .imagen-completa{
     width: 100%;
-    background-color: #167496;
+    /* background-color: #167496; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -94,4 +92,46 @@ h3 {
     max-height: 200px;
     max-width: 90%;
     object-fit: contain;
+}
+
+.svg-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.svg-1, .svg-2 {
+    position: absolute;
+    width: 100px; /* Puedes ajustar el tamaño del SVG */
+    height: 100px;
+    z-index: -1;
+}
+
+/* Animación para el primer SVG */
+.svg-1 {
+    top: 20%;
+    left: 0;
+    animation: moveSvg1 10s linear infinite;
+    z-index: -1;
+}
+
+/* Animación para el segundo SVG */
+.svg-2 {
+    bottom: 20%;
+    right: 0;
+    animation: moveSvg2 8s linear infinite;
+    z-index: -1;
+}
+
+@keyframes moveSvg1 {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(80vw); }
+    100% { transform: translateX(0); }
+}
+
+@keyframes moveSvg2 {
+    0% { transform: translateX(0); }
+    50% { transform: translateX(-80vw); }
+    100% { transform: translateX(0); }
 }

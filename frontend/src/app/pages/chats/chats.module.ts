@@ -56,6 +56,7 @@ const routes: Routes = [{ path: '', component: ChatsComponent }
     CardModule,
     CalendarModule,
     ChatComponent
-  ]
+  ],
+  exports:[ ChatsComponent]
 })
 export class ChatsModule { }

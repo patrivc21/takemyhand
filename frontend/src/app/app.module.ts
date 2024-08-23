@@ -17,7 +17,9 @@ import { registerLocaleData } from '@angular/common';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { MessageService } from 'primeng/api';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { ChatComponent } from './components/chat/chat.component';
+import { ChatsModule } from './pages/chats/chats.module';
+import { DialogModule } from 'primeng/dialog';
+import { FooterComponent } from './components/footer/footer.component';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -32,11 +34,14 @@ export function HttpLoaderFactory (http: HttpClient): TranslateHttpLoader {
     BrowserModule,
     FormsModule,
     NavigationComponent,
+    FooterComponent,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     HttpClientModule,
     ReactiveFormsModule,
+    DialogModule,
+    ChatsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -63,6 +68,6 @@ export function HttpLoaderFactory (http: HttpClient): TranslateHttpLoader {
     },
     DatePipe
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

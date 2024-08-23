@@ -6,7 +6,7 @@
     <a routerLink="/login" class="texto ml-2">Volver al inicio de sesión</a>
   </div>
 
-  <div class="registro mx-auto mt-4 p-4">
+  <div class="registro mx-auto mt-2 p-2 mb-4">
     <form [formGroup]="form" (ngSubmit)="crear()" class="mx-5">
       <h2 class="text-center mb-4 mt-4 titulo-login">Registro de Usuarios</h2>
       <div class="text-center mb-4">
@@ -89,7 +89,7 @@
         <small>¡Consúltala en google si tienes dudas!</small>
       </div>   
 
-      <div class="button-save-form d-flex justify-content-center align-items-center mt-4">
+      <div class="button-save-form d-flex justify-content-center align-items-center mt-4 mb-2">
         <button pButton pRipple type="button" [disabled]="!form.valid" [loading]="loading" class="button-save-form" label="Registrarse" type="submit"></button>
       </div>
     </form>

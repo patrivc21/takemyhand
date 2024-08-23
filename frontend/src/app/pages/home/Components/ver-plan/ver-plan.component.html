@@ -1,9 +1,9 @@
 <ng-container>
     <div class="imagen-completa">
         <div class="menu-item-left">
-          <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+          <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso2 ml-2">Volver</p-button>
         </div>
-          <img src="../../../assets/logos/LOGO-3.png" alt="Foto de perfil" height="100">
+          <img src="../../../assets/logos/LOGO-2.png" alt="Foto de perfil" height="100">
       </div>
 </ng-container>
 
@@ -25,7 +25,6 @@
   <div *ngIf="verPlan">
     <app-crear-plan [id_usuario]="id_usuario" (res)="cerrar()"></app-crear-plan>
   </div>
-
 
   <ng-container *ngIf="plan" class="mt-6">
     <div class="content-container">

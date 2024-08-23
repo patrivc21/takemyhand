@@ -45,7 +45,7 @@ const routes: Routes = [
   { 
     path: 'formulario', 
     title: 'TMH • Formulario',
-    // canActivate: [AuthGuard], 
+    canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/formulario/formulario.module').then(m => m.FormularioModule) 
   },
   { 

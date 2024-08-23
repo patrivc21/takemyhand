@@ -22,13 +22,15 @@ export class ChatComponent {
   @Input() id_receptor!: number;
   @Output() res: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public allChat$: Observable<ChatPrivado[]>;
+  public allChat$: Observable<{ [fecha: string]: ChatPrivado[] }>;
   public nuevoMensaje: string = "";
   public usuario: any;
   public mostrarChat: boolean = false;
 
   private readonly authState = inject(AuthState);
   private readonly chatState = inject(ChatState);
+
+  Object = Object;
 
   constructor(private cdr: ChangeDetectorRef, private readonly router: Router) {
     this.setStateSelector();
@@ -45,14 +47,18 @@ export class ChatComponent {
     }
   }
 
+  ngAfterViewChecked(): void {
+    this.scrollToTheLastElementByClassName();
+  }
+
   private setStateSelector() {
     this.allChat$ = this.chatState.allChat$;
   }
 
   private cargarMensajes(): void {
-    console.log(this.usuario.id, this.id_receptor)
     this.chatState.getChatPrivado(this.usuario.id, this.id_receptor).pipe(take(1)).subscribe(dat => {
       console.log(dat);
+      this.scrollToTheLastElementByClassName();
     });
   }
 
@@ -69,21 +75,17 @@ export class ChatComponent {
 
     this.chatState.addChat(mensaje);
     this.nuevoMensaje = "";
-
     this.cdr.detectChanges();
-    setTimeout(() => {
-      this.scrollToTheLastElementByClassName();
-    }, 0);
   }
 
-  public scrollToTheLastElementByClassName() {
-    let elements = document.getElementsByClassName('msj');
-    let ultimo: any = elements[(elements.length - 1)];
-    let toppos = ultimo.offsetTop;
-    document.getElementById('contenedorMensajes').scrollTop = toppos;
+  private scrollToTheLastElementByClassName() {
+    const contenedor = document.getElementById('contenedorMensajes');
+    if (contenedor) {
+      contenedor.scrollTop = contenedor.scrollHeight;
+    }
   }
 
-  public volver(){
+  public volver() {
     this.router.navigate(['/home']);
   }
 

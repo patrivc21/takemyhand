@@ -1,6 +1,14 @@
-.prueba {
-    background-color: rgba(230, 230, 230, 0.82);
-}
+.fondo{
+    /* background-color: white; */
+    /* height: 100vh; */
+    overflow: hidden;
+    background-image: url('../../../assets/bg2.gif');
+    background-size: cover;         
+    background-position: center;     
+    background-repeat: no-repeat;   
+  }
+  
+  
 
 .organizacion {
     display: flex;
@@ -16,7 +24,7 @@
 }
 
 .barra {
-    background-color: rgba(230, 230, 230, 0.82);
+    /* background-color: rgba(230, 230, 230, 0.82); */
     padding: 2% 0;
     margin: 0;
 }
@@ -93,7 +101,7 @@ ul.timeline > li:before {
 }
 
 .menu-container {
-    background-color: #167496;
+    /* background-color: #167496; */
     padding: 1rem 0;
     color: white;
     display: flex;

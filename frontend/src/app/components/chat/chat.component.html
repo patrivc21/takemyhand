@@ -9,18 +9,34 @@
 
 <div class="card text-center chatContainer" *ngIf="usuario">
 
-    <div class="card-header">
+    <div class="card-header p-4">
         CHAT
     </div>
 
-    <div class="card-body" *ngIf="(allChat$ | async) as mensajes">
+    <div class="card-body" *ngIf="(allChat$ | async) as mensajesAgrupados">
         <div id="contenedorMensajes" class="contenedorMensajes h-100">
-            <p *ngFor="let mensaje of mensajes" class="msj p-2" [ngClass]="(usuario.id === mensaje.id_emisor)? 'enviado' : 'recibido'">
-                {{mensaje.mensaje}}
-                <span class="fecha-hora">{{mensaje.fecha_hora | date:'dd-MM-yyyy HH:mm'}}</span>
-            </p>
+          <div *ngFor="let fecha of Object.keys(mensajesAgrupados)" class="grupo-mensajes">
+            <!-- Encabezado de la fecha -->
+            <div class="grupo-mensajes">
+                <div class="fecha-encabezado">
+                  <hr>
+                  <span>{{ fecha }}</span>
+                  <hr>
+            </div>
+            <!-- Mensajes de esa fecha -->
+             <div class="d-flex flex-column">
+                <p *ngFor="let mensaje of mensajesAgrupados[fecha]" 
+                class="msj p-2" 
+                [ngClass]="(usuario.id === mensaje.id_emisor)? 'enviado' : 'recibido'">
+                {{ mensaje.mensaje }}
+                    <span class="fecha-hora">{{ mensaje.fecha_hora | date:'HH:mm' }}</span>
+                </p>
+             </div>
+            
+          </div>
         </div>
-    </div>
+      </div>
+      
 
     <form class="card-footer text-muted input-group" (ngSubmit)="enviarMensaje()">
         <input type="text" class="form-control" placeholder="Ingrese su mensaje" [(ngModel)]="nuevoMensaje"

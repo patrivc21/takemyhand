@@ -9,8 +9,8 @@ import { DialogModule } from 'primeng/dialog'
   standalone: true,
   template: `
   <p-dialog header="Mapa" [(visible)]="display" [modal]="true" [style]="{ width: '60vw' }" [draggable]="false" [resizable]="false" (onHide)="cerrarMapa()">
-    <div class="text-center h-1rem">
-      <p><i>{{ this.address }}</i></p>
+    <div class="text-center h-1rem" style="font-family: 'Monserrat';">
+      <p>{{ this.address }}</p>
     </div>
     <br>
     <div class="map-frame">

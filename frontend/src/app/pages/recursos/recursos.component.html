@@ -1,32 +1,41 @@
 <div class="recursos-container">
-    <div *ngIf="allRecursos$ | async as recursos; else loading">
-      <div *ngFor="let recurso of recursos" class="recurso-card">
-        <h2 class="recurso-titulo">{{ recurso.titulo }}</h2>
-        <div class="recurso-contenido" [innerHTML]="recurso.contenido"></div>
-        
-        <!-- Mostrar video si url_video no es null -->
-        <div *ngIf="recurso.url_video">
-          <iframe width="1000" height="500" [src]="getVideoIframe(recurso.url_video)" title="Video de YouTube" frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen></iframe>
-        </div>
-  
-        <div class="recurso-archivos" *ngIf="recurso.archivos.length > 0">
-          <h3>Archivos:</h3>
-          <ul>
-            <li *ngFor="let archivo of recurso.archivos">
-              <ng-container [ngSwitch]="getFileType(archivo.nombre_archivo)">
-                <img *ngSwitchCase="'image'" [src]="getFileUrl(archivo.nombre_archivo)" alt="{{ archivo.nombre_archivo }}" class="recurso-imagen" />
-                <video *ngSwitchCase="'video'" [src]="getFileUrl(archivo.nombre_archivo)" controls class="recurso-video"></video>
-                <a *ngSwitchDefault [href]="getFileUrl(archivo.nombre_archivo)" target="_blank">{{ archivo.nombre_archivo }}</a>
-              </ng-container>
-            </li>
-          </ul>
-        </div>
-      </div>
+
+  <div class="menu-container">
+    <div class="menu-item-left">
+        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso2 ml-2">Volver</p-button>
     </div>
-    <ng-template #loading>
-      <p>Cargando recursos...</p>
-    </ng-template>
+    <div class="menu-item-center">
+        <h1 style="color: #167496; font-family: 'Monserrat';">Recursos disponibles</h1>
+    </div>
+  </div>
+<!-- 
+    <div *ngIf="allRecursos$ | async as recursos; else loading">
+      <div *ngFor="let recurso of recursos">
+        <p-card class="card">
+          <h2 class="recurso-titulo">{{ recurso.titulo }}</h2>
+          <div class="recurso-contenido" [innerHTML]="recurso.contenido"></div>
+          
+          <div *ngIf="recurso.url_video">
+            <iframe width="1000" height="500" [src]="getVideoIframe(recurso.url_video)" title="Video de YouTube" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+          </div>
+    
+          <div class="recurso-archivos" *ngIf="recurso.archivos.length > 0">
+            <h3>Archivos:</h3>
+            <ul>
+              <li *ngFor="let archivo of recurso.archivos">
+                <ng-container [ngSwitch]="getFileType(archivo.nombre_archivo)">
+                  <img *ngSwitchCase="'image'" [src]="getFileUrl(archivo.nombre_archivo)" alt="{{ archivo.nombre_archivo }}" class="recurso-imagen" />
+                  <video *ngSwitchCase="'video'" [src]="getFileUrl(archivo.nombre_archivo)" controls class="recurso-video"></video>
+                  <a *ngSwitchDefault [href]="getFileUrl(archivo.nombre_archivo)" target="_blank">{{ archivo.nombre_archivo }}</a>
+                </ng-container>
+              </li>
+            </ul>
+          </div>
+        </p-card>
+        
+      </div>
+    </div> -->
   </div>
   

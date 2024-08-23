@@ -46,9 +46,10 @@
     float: right;
     background-color: teal;
     color: white;
-    min-width: 50.01%;
+    max-width: 80%;
     border-radius: 10px;
     text-align: left;
+    align-self: flex-end;
 }
 
 .recibido {
@@ -56,9 +57,10 @@
     float: left;
     background-color: gray;
     color: white;
-    min-width: 50.01%;
+    max-width: 80%;
     border-radius: 10px;
     text-align: left;
+    align-self: flex-start;
 }
 
 .imgEnviar:active {
@@ -72,3 +74,18 @@
     text-align: right; /* Alineado a la derecha */
     margin-top: 5px;   /* Espaciado superior para separarlo del mensaje */
 }
+
+.fecha-encabezado {
+    text-align: center;
+    margin: 20px 0;
+    color: rgb(0, 0, 0);
+  }
+  
+  .fecha-encabezado hr {
+    border: 1px solid #000000;
+    margin: 10px 0;
+  }
+  
+  .grupo-mensajes {
+    margin-bottom: 25px;
+  }

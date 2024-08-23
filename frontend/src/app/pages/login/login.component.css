@@ -1,19 +1,39 @@
+
 .imagen-completa{
   height: 100%;
   overflow: hidden; 
   position: relative;
-  background-color: #167496;
+  /* background-color: #167496; */
 }
 
 .parte-logo{
   width: 50%;
+  z-index: 1;
 }
 
-.fondo{
-  background-color: white;
+.fondo {
+  position: relative;
   height: 100vh;
+  width: 100%;
   overflow: hidden;
+  display: flex;
 }
+
+.fondo::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../../assets/bg-login2.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px); /* Controla el nivel de desenfoque */
+  z-index: -1;
+}
+
 
 .texto {
   color: #167496;

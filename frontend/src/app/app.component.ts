@@ -8,6 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AppComponent {
   public showNav: boolean = false
+  public mostrarChat: boolean = false
 
   title = 'frontend';
 

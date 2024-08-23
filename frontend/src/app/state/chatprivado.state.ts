@@ -13,7 +13,7 @@ import { ChatPrivado } from '../interfaces/ChatPrivado';
 import { ChatService } from '../services/chatprivado.service';
 
 interface IChatPrivadoState {
-  allChat?: ChatPrivado[]
+  allChat?: { [fecha: string]: ChatPrivado[] }
 }
 
 @Injectable({
@@ -27,7 +27,7 @@ export class ChatState {
         this.initialState
     );
 
-    public readonly allChat$: Observable<ChatPrivado[]> = this._state
+    public readonly allChat$: Observable<{ [fecha: string]: ChatPrivado[] }> = this._state
         .asObservable()
         .pipe(map((state) => state && state.allChat));
 
@@ -52,29 +52,37 @@ export class ChatState {
       return data;
     }
 
-    public getChatPrivado(id_emisor:number, id_receptor): Observable<any[]> {
-      const data = this.service.getChatPrivado(id_emisor, id_receptor)
+
+    public getChatPrivado(id_emisor: number, id_receptor: number): Observable<any[]> {
+      const data = this.service.getChatPrivado(id_emisor, id_receptor);
+      
       data.pipe(take(1)).subscribe((response) => {
-        console.log(response)
-        if (response.cod == 200) {
-        
-           let mensajes = response.data.map((msg: any) => {
-                return {
-                    id_emisor: msg.id_emisor,
-                    id_receptor: msg.id_receptor,
-                    mensaje: msg.mensaje,
-                    fecha_hora: msg.fecha_hora
-                };
+        console.log(response);
+        if (response.cod === 200) {
+          // Agrupar mensajes por fecha
+          const mensajesAgrupados = response.data.reduce((acc: any, msg: any) => {
+            const fecha = new Date(msg.fecha_hora).toLocaleDateString(); // Formatear la fecha
+            if (!acc[fecha]) {
+              acc[fecha] = [];
+            }
+            acc[fecha].push({
+              id_emisor: msg.id_emisor,
+              id_receptor: msg.id_receptor,
+              mensaje: msg.mensaje,
+              fecha_hora: msg.fecha_hora
             });
-
-            this._state.next({
-                ...this.state,
-                allChat: mensajes
-            });
+            return acc;
+          }, {});
+    
+          this._state.next({
+            ...this.state,
+            allChat: mensajesAgrupados
+          });
         }
-      })
-      return data
+      });
+      
+      return data;
     }
-
+    
 
 }

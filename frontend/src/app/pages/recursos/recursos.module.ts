@@ -23,6 +23,8 @@ import { MenuModule } from 'primeng/menu';
 import { CarouselModule } from 'primeng/carousel';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { FileUploadModule } from 'primeng/fileupload';
+import {CardModule} from 'primeng/card';
+
 
 const routes: Routes = [{ path: '', component: RecursosComponent }
 ];
@@ -55,7 +57,8 @@ const routes: Routes = [{ path: '', component: RecursosComponent }
     MenubarModule,
     CarouselModule,
     CKEditorModule,
-    FileUploadModule
+    FileUploadModule,
+    CardModule
   ]
 })
 export class RecursosModule { }

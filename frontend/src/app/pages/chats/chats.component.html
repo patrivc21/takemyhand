@@ -1,21 +1,24 @@
-<div class="menu-container mb-2">
-  <div class="menu-item-left">
-      <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
+<div class="fondo">
+  <div class="menu-container mb-2" >
+    <div class="menu-item-left">
+        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso2 ml-2">Volver</p-button>
+    </div>
   </div>
+  
+  <div class="container">
+      <div class="users-list" *ngIf="(users$ | async) as users">
+          <h2 class="ml-3 mt-2">Chats</h2>
+        <ul>
+          <li *ngFor="let user of users" (click)="selectUser(user)">
+            {{ user.nombre }} {{ user.apellidos }}
+          </li>
+        </ul>
+      </div>
+    
+      
+      <div class="chat-area" *ngIf="selectedUser">
+          <app-chat [id_receptor]="selectedUser" ></app-chat>
+    </div>
 </div>
 
-<div class="container">
-    <div class="users-list" *ngIf="(users$ | async) as users">
-        <h2 class="ml-3 mt-2">Chats</h2>
-      <ul>
-        <li *ngFor="let user of users" (click)="selectUser(user)">
-          {{ user.nombre }} {{ user.apellidos }}
-        </li>
-      </ul>
-    </div>
-  
-    <!-- Columna derecha: Chat -->
-    <div class="chat-area" *ngIf="selectedUser">
-        <app-chat [id_receptor]="selectedUser" ></app-chat>
-  </div>
   

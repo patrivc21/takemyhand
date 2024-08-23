@@ -61,4 +61,9 @@ export class RecursosComponent {
 
     return this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/' + video);
   }
+
+  public volver(){
+    this.router.navigate(['/home']);
+  }
+
 }

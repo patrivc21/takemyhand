@@ -1,0 +1,68 @@
+.chatIconContainer{
+    position: fixed;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    background-color: rgba(155, 155, 155, 0.687);
+    border-radius: 100%;
+    box-shadow: 0 0 10px 2px rgb(56, 56, 56);
+}
+
+.chatIcon{
+ width: 40px;
+ height: 40px;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .custom-footer {
+    background-color: #b3b3b399; /* Color de fondo similar al de la imagen */
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer-logo {
+    width: 150px; /* Ajusta el tamaño del logo */
+    height: auto;
+    margin-bottom: 10px; /* Espacio entre el logo y el texto */
+  }
+  
+  .footer-text {
+    font-size: 16px;
+    color: #4a4a4a; /* Color del texto */
+    margin: 0;
+    padding: 0 20px; /* Ajusta el padding si es necesario */
+  }
+  
+  .footer-credits {
+    font-size: 14px;
+    color: #6c757d; /* Color del texto de los créditos */
+    margin-top: 20px;
+  }
+  
+  
+  

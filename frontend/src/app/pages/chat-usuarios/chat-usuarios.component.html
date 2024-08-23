@@ -2,81 +2,81 @@
   <app-crear-publicacion (res)="cerrar()"></app-crear-publicacion>
 </div>
 
-<div>
-  <h1 class="tituloG">Comunicación</h1>
-</div>
 
-<div class="menu-container">
-  <div class="menu-item-left">
-      <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
-  </div>
-  <div class="menu-item-center">
-      <h4>Foro Usuarios</h4>
-  </div>
-</div>
-
-<div class="barra">
-  <h3 class="tituloG2">Filtre su búsqueda</h3>
-  <div class="organizacion">
-      <p-calendar dateFormat="dd-mm-yy" class="calendario-rango" [(ngModel)]="rangeDates" selectionMode="range" placeholder="Filtrar por fecha" [readonlyInput]="true" [showIcon]="true"></p-calendar>
-      <p-button class="leer-mas" (click)="search()">Filtrar búsqueda</p-button>
-      <p-button class="leer-mas" (click)="limpiar()">Limpiar búsqueda</p-button>
-  </div>
-</div>
-
-<div class="timeline-container">
-
-  <div class="crear-publicacion-btn mt-4 ml-4">
-    <p-button class="leer-mas2" icon="pi pi-plus" iconPos="right" (onClick)="crearPubli = true" label="Crear publicación"/>
+<div class="fondo">
+  <div class="menu-container">
+    <div class="menu-item-left">
+        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso2 ml-2">Volver</p-button>
+    </div>
+    <div class="menu-item-center">
+        <h1 style="color: #167496; font-family: 'Monserrat';">Foro Usuarios</h1>
+    </div>
   </div>
 
-  <ul class="timeline">
-      <li *ngFor="let comment of allPublis$ | async">
-          <p-card class="card">
-              <div>
-                  <h4>{{ comment.usuario.nombre }} {{ comment.usuario.apellidos }} ha comentado:</h4>
-                  <p>{{ comment.titulo }}</p>
-                  <p [innerHTML]="comment.mensaje"></p>
-                  <div *ngFor="let archivo of comment.archivos" class="d-flex justify-content-center">
-                      <img *ngIf="archivo.id_respuesta === null"  [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
-                  </div>
-                  <div>
-                      <small>{{ comment.fecha_hora | date }}</small>
-                  </div>
-              </div>
-              <p-button label="Leer más" (click)="readMore(comment.id)" class="leer-mas"></p-button>
-              <div class="d-flex flex-column justify-content-center">
-                <p-button label="Responder" (click)="responder(comment.id)" class="respuesta d-flex justify-content-end"></p-button>
-                <p-button 
-                [label]="respuestasVisibles[comment.id] ? 'Cerrar respuestas' : 'Ver respuestas'" 
-                (click)="verRespuestas(comment.id)" 
-                class="respuesta d-flex justify-content-end">
-              </p-button>        
-              </div>
+  <div class="barra">
+    <h3 class="tituloG2">Filtre su búsqueda</h3>
+    <div class="organizacion">
+        <p-calendar dateFormat="dd-mm-yy" class="calendario-rango" [(ngModel)]="rangeDates" selectionMode="range" placeholder="Filtrar por fecha" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+        <p-button class="leer-mas" (click)="search()">Filtrar búsqueda</p-button>
+        <p-button class="leer-mas" (click)="limpiar()">Limpiar búsqueda</p-button>
+    </div>
+  </div>
 
-              <div *ngIf="selectedCommentId === comment.id && respuestasVisibles[comment.id]">
-                <ul class="respuesta-lista">
-                  <li *ngFor="let respuesta of respuestasFiltradas" class="respuesta-item">
-                    <p-card class="card respuesta-card">
-                      <div>
-                        <h4>{{ respuesta.nombre }} {{ respuesta.apellidos }} ha respondido:</h4>
-                        <p class="respuesta-titulo">{{ respuesta.titulo }}</p>
-                        <p class="respuesta-mensaje" [innerHTML]="respuesta.mensaje"></p>
-                        <div *ngFor="let archivo of respuesta.archivos" class="respuesta-archivo">
-                          <img [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
+  <div class="timeline-container">
+
+    <div class="crear-publicacion-btn mt-4 ml-4">
+      <p-button class="leer-mas2" icon="pi pi-plus" iconPos="right" (onClick)="crearPubli = true" label="Crear publicación"/>
+    </div>
+
+    <ul class="timeline">
+        <li *ngFor="let comment of allPublis$ | async">
+            <p-card class="card">
+                <div>
+                    <h4>{{ comment.usuario.nombre }} {{ comment.usuario.apellidos }} ha comentado:</h4>
+                    <p>{{ comment.titulo }}</p>
+                    <p [innerHTML]="comment.mensaje"></p>
+                    <div *ngFor="let archivo of comment.archivos" class="d-flex justify-content-center">
+                        <img *ngIf="archivo.id_respuesta === null"  [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
+                    </div>
+                    <div>
+                        <small>{{ comment.fecha_hora | date }}</small>
+                    </div>
+                </div>
+                <p-button label="Leer más" (click)="readMore(comment.id)" class="leer-mas"></p-button>
+                <div class="d-flex flex-column justify-content-center">
+                  <p-button label="Responder" (click)="responder(comment.id)" class="respuesta d-flex justify-content-end"></p-button>
+                  <p-button 
+                  [label]="respuestasVisibles[comment.id] ? 'Cerrar respuestas' : 'Ver respuestas'" 
+                  (click)="verRespuestas(comment.id)" 
+                  class="respuesta d-flex justify-content-end">
+                </p-button>        
+                </div>
+
+                <div *ngIf="selectedCommentId === comment.id && respuestasVisibles[comment.id]">
+                  <ul class="respuesta-lista">
+                    <li *ngFor="let respuesta of respuestasFiltradas" class="respuesta-item">
+                      <p-card class="card respuesta-card">
+                        <div>
+                          <h4>{{ respuesta.nombre }} {{ respuesta.apellidos }} ha respondido:</h4>
+                          <p class="respuesta-titulo">{{ respuesta.titulo }}</p>
+                          <p class="respuesta-mensaje" [innerHTML]="respuesta.mensaje"></p>
+                          <div *ngFor="let archivo of respuesta.archivos" class="respuesta-archivo">
+                            <img [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
+                          </div>
+                          <div class="respuesta-fecha">
+                            <small>{{ respuesta.fecha_hora | date }}</small>
+                          </div>
                         </div>
-                        <div class="respuesta-fecha">
-                          <small>{{ respuesta.fecha_hora | date }}</small>
-                        </div>
-                      </div>
-                    </p-card>
-                  </li>
-                </ul>
-              </div>
-          </p-card>
-      </li>
-  </ul>
+                      </p-card>
+                    </li>
+                  </ul>
+                </div>
+            </p-card>
+        </li>
+    </ul>
+  </div>
 </div>
+ 
 
 <p-dialog header="Detalles del comentario" [(visible)]="show" [style]="{ width: '500px' }">
   <div *ngIf="selectedComment">

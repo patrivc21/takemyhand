@@ -1,6 +1,19 @@
-<div *ngIf="showNav">
-    <app-navigation></app-navigation>
-</div>
-
-<router-outlet></router-outlet>
-
+<div class="app-container">
+    <div *ngIf="showNav">
+      <app-navigation></app-navigation>
+    </div>
+  
+    <router-outlet></router-outlet>
+  
+    <footer class="custom-footer">
+        <div class="footer-content">
+          <img src="../assets/logos/logosinfondo.png" alt="Take My Hand Logo" class="footer-logo">
+          <p class="footer-text">
+            El uso de Take My Hand complementará la ayuda con los profesionales, pero en ningún caso la reemplazará.
+          </p>
+        </div>
+        <p class="footer-credits">Aplicación creada por: Patricia Villalba Crucelaegui</p>
+      </footer>
+      
+  </div>
+  
