@@ -66,6 +66,7 @@ export class RegistroComponent {
         ...data,
         activo: true,
         rolpaciente: 1,
+        resultado_formulario: 0
       };
     } else {
       data = { ...data }; 

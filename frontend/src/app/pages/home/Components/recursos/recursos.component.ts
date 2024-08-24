@@ -1,13 +1,14 @@
-import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService } from 'primeng/api';
 import { AuthState } from 'src/app/state/auth.state';
 import * as CKEditor from '@ckeditor/ckeditor5-build-classic';
 import { FileUpload } from 'primeng/fileupload';
 import { ProfesionalesState } from 'src/app/state/profesionales.state';
+import { RecursosState } from 'src/app/state/recurso.state';
 
 @Component({
-  selector: 'app-recursos',
+  selector: 'app-recursos-home',
   templateUrl: './recursos.component.html',
   styleUrls: ['./recursos.component.css']
 })
@@ -21,8 +22,8 @@ export class RecursosComponent {
   
   private readonly authState = inject(AuthState);
   private readonly fb = inject(FormBuilder)
-  private readonly confirmationService = inject(ConfirmationService)  
   private readonly profesionalState = inject(ProfesionalesState);
+  private readonly state = inject(RecursosState);
 
   
   public form!: FormGroup;
@@ -33,6 +34,8 @@ export class RecursosComponent {
   public img_urls: string[] = [];
   public img_files: File[] = [];
   public crearView = true
+
+  @Output() res: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   constructor(private cdr: ChangeDetectorRef) {
     this.setStateSelector();
@@ -84,6 +87,11 @@ export class RecursosComponent {
       const { titulo, contenido, url_video } = this.form.value;
       console.log(this.img_files, titulo, contenido)
       this.profesionalState.addRecurso(this.img_files, titulo, contenido, 'image', url_video)
+      this.cerrar()
+  }
+
+  public cerrar(): void {
+    this.res.emit()
   }
 
 

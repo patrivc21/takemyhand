@@ -1,6 +1,4 @@
 .fondo{
-    /* background-color: white; */
-    /* height: 100vh; */
     overflow: hidden;
     background-image: url('../../../assets/bg2.gif');
     background-size: cover;         
@@ -9,7 +7,6 @@
   }
   
   
-
 .organizacion {
     display: flex;
     justify-content: center;
@@ -30,7 +27,7 @@
 }
 
 .crear-publicacion-btn {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     width: fit-content;
     margin-bottom: 1rem;
 }
@@ -40,7 +37,6 @@
     font-family: 'Montserrat', sans-serif;
     color: #167496;
     padding: 1rem 0;
-    background-color: white;
 }
 
 .tituloG2 {

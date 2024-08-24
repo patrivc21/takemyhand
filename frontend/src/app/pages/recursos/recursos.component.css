@@ -1,35 +1,44 @@
 
-.recursos-container{
-  overflow: hidden;
-  background-image: url('../../../assets/bg-home.gif');  
+.recursos-container {
+  position: relative;               /* Necesario para el pseudo-elemento */
+  overflow: hidden;                 /* Evita desbordes */
+  height: 100vh;                    /* Ocupa toda la altura de la ventana */
+  width: 100%;                      /* Ocupa todo el ancho */
+  overflow-y: scroll;
+}
+
+.recursos-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../../assets/bg-home.gif');
   background-size: cover;         
   background-position: center;     
-  background-repeat: no-repeat;   
+  background-repeat: no-repeat;    
+  filter: blur(5px);               /* Aplica el efecto de desenfoque */
+  z-index: -1;                      /* Asegura que esté detrás del contenido */
 }
 
-.card {
+.recurso-tarjeta {
+  margin-bottom: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent; 
+  margin-left: 50px;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  justify-content: baseline;
+  align-items: baseline;
 }
 
-  .recurso-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    width: 30%;
-  }
-  
-  .recurso-titulo {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-  
-  .recurso-contenido {
-    margin-bottom: 15px;
-  }
+.recurso-contenido {
+  margin-top: 15px;
+}
   
   .recurso-archivos {
     margin-top: 10px;
@@ -60,7 +69,6 @@
   
 
 .menu-container {
-  /* background-color: #167496; */
   padding: 1rem 0;
   color: white;
   display: flex;
@@ -80,4 +88,25 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+}
+
+.contenedor{
+  width: 32%;
+  display: flex;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 25px;
+}
+
+.texto{
+  font-family: 'Montserrat';
+  font-size: 50px;
+  font-weight: 700;
+  text-align: start;
+}
+
+.texto2{
+  font-family: 'Montserrat';
+ 
+  text-align: start;
 }

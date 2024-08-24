@@ -21,6 +21,15 @@ ol, ul {
     padding-left: 0;
 }
 
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link{
+  background-color: transparent;
+}
+
+.p-tabmenu .p-tabmenu-nav {
+  background-color: transparent;
+  border: none;
+}
+
 .field .p-inputtext{
   border-color: #F7CAC9 1px;
   background-color: #ffffff;
@@ -98,6 +107,15 @@ ol, ul {
 .boton-tabla-inverso .p-button .pi {
   color: white;
   margin-left: 10%;
+}
+
+.boton-recurso .p-button {
+  background-color: transparent;
+  color: #167496;
+  border: none;
+  font-family: "Monserrat";
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .boton-tabla-inverso2 .p-button{

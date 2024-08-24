@@ -1,41 +1,55 @@
+
 <div class="recursos-container">
 
-  <div class="menu-container">
+  <div class="menu-container p-4 mt-4">
     <div class="menu-item-left">
         <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso2 ml-2">Volver</p-button>
     </div>
     <div class="menu-item-center">
-        <h1 style="color: #167496; font-family: 'Monserrat';">Recursos disponibles</h1>
+        <h1 style="color: white; font-family: 'Monserrat'; font-weight: 800;">Recursos disponibles</h1>
     </div>
   </div>
-<!-- 
-    <div *ngIf="allRecursos$ | async as recursos; else loading">
-      <div *ngFor="let recurso of recursos">
-        <p-card class="card">
-          <h2 class="recurso-titulo">{{ recurso.titulo }}</h2>
-          <div class="recurso-contenido" [innerHTML]="recurso.contenido"></div>
-          
-          <div *ngIf="recurso.url_video">
-            <iframe width="1000" height="500" [src]="getVideoIframe(recurso.url_video)" title="Video de YouTube" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-          </div>
-    
-          <div class="recurso-archivos" *ngIf="recurso.archivos.length > 0">
-            <h3>Archivos:</h3>
-            <ul>
-              <li *ngFor="let archivo of recurso.archivos">
-                <ng-container [ngSwitch]="getFileType(archivo.nombre_archivo)">
-                  <img *ngSwitchCase="'image'" [src]="getFileUrl(archivo.nombre_archivo)" alt="{{ archivo.nombre_archivo }}" class="recurso-imagen" />
-                  <video *ngSwitchCase="'video'" [src]="getFileUrl(archivo.nombre_archivo)" controls class="recurso-video"></video>
-                  <a *ngSwitchDefault [href]="getFileUrl(archivo.nombre_archivo)" target="_blank">{{ archivo.nombre_archivo }}</a>
-                </ng-container>
-              </li>
-            </ul>
-          </div>
-        </p-card>
-        
+
+  <div class="d-flex justify-content-start ml-8 mt-4">
+    <div class="contenedor">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h1 class="texto">Aprende con TakeMyHand</h1>
+            <p class="texto2">En esta sección compartimos nuestro conocimiento sobre las emociones, cómo nos afectan, y cómo podemos aprender a controlarlas a ellas para que no nos controlen a nosotros.</p>
+        </div>
+    </div>
+  </div>
+
+  <div *ngIf="allRecursos$ | async as recursos; else loading">
+    <div *ngFor="let recurso of recursos; let i = index" class="recurso-tarjeta d-flex flex-column justify-content-baseline">
+      <p-button (click)="toggleText(i)" class="boton-recurso">{{ recurso.titulo }}</p-button>
+  
+      <div *ngIf="isTextVisible[i]" class="recurso-contenido">
+        <div [innerHTML]="recurso.contenido" class="ml-4"></div>
+  
+        <div *ngIf="recurso.url_video">
+          <iframe width="560" height="315" [src]="getVideoIframe(recurso.url_video)" title="Video de YouTube" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
+        </div>
+  
+        <div class="recurso-archivos" *ngIf="recurso.archivos.length > 0">
+          <h3>Archivos:</h3>
+          <ul>
+            <li *ngFor="let archivo of recurso.archivos">
+              <ng-container [ngSwitch]="getFileType(archivo.nombre_archivo)">
+                <img *ngSwitchCase="'image'" [src]="getFileUrl(archivo.nombre_archivo)" alt="{{ archivo.nombre_archivo }}" class="recurso-imagen" />
+                <video *ngSwitchCase="'video'" [src]="getFileUrl(archivo.nombre_archivo)" controls class="recurso-video"></video>
+                <a *ngSwitchDefault [href]="getFileUrl(archivo.nombre_archivo)" target="_blank">{{ archivo.nombre_archivo }}</a>
+              </ng-container>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div> -->
+    </div>
+  </div>
+  <ng-template #loading>
+    <p style="color: black;">Cargando recursos...</p>
+  </ng-template>
+
   </div>
   

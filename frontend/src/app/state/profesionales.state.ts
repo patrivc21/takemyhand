@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GenericResponse } from '../interfaces/GenericResponse';
 import { Profesionales } from '../interfaces/Profesionales';
 import { ProfesionalesService } from '../services/profesionales.service';
+import { RecursosState } from './recurso.state';
 
 interface IProfesionalesState {
     allProfesionales?: Profesionales[];
@@ -48,7 +49,7 @@ export class ProfesionalesState {
         return this._state.getValue();
     }
 
-    constructor(private service: ProfesionalesService, private router: Router) { }
+    constructor(private service: ProfesionalesService, private router: Router, private recursoState: RecursosState,) { }
 
     public reset(): void {
         this._state.next(this.initialState);
@@ -148,7 +149,7 @@ export class ProfesionalesState {
       const data = this.service.addRecursos(archivo_adjunto, titulo, contenido, tipo, url_video);
       data.pipe(take(1)).subscribe((response) => {
         if (response.cod == 200) {
-          // this.getAllComentarios()
+          this.recursoState.getAllRecursos()
         }
       });
       return data;

@@ -1,118 +1,116 @@
 <!-- <p-dialog header="Editar Perfil" [(visible)]="editarPerfil" [modal]="true" [style]="{width: '100vw'}" [maximizable]="true" [draggable]="false" [resizable]="false" (onHide)="cerrar()"> -->
   <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
 
-  <div>
-  <h1 class="tituloG">Perfil usuario {{usuario.nombre}}</h1>
-  </div>
-
-  <div class="menu-container mb-4">
-    <div class="menu-item-left">
-        <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso ml-2">Volver</p-button>
-    </div>
-    <div class="menu-item-center">
-        <h4>Edición del perfil</h4>
-    </div>
-  </div>
-  
-    <form [formGroup]="form" (ngSubmit)="updatePerfil()" class="mx-auto mb-6">
-      <div class="d-flex justify-content-center align-items-center">
-          <div class="profile-image-section text-center mr-6">
-              <img [src]="imageSrc" alt="Profile Image" class="rounded-circle" width="170" height="170" *ngIf="imageSrc; else defaultImage">
-              <ng-template #defaultImage>
-                  <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" alt="Default Image" class="rounded-circle" width="170" height="170">
+  <div class="fondo">
+      <div class="menu-container mb-4">
+        <div class="menu-item-left">
+            <p-button icon="pi pi-home" (onClick)="volver()" class="boton-tabla-inverso2 ml-2">Volver</p-button>
+        </div>
+        <div class="menu-item-center">
+          <h1 class="tituloG">Perfil usuario {{usuario.nombre}}</h1>      
+        </div>
+      </div>
+      
+        <form [formGroup]="form" (ngSubmit)="updatePerfil()" class="mx-auto mb-6">
+          <div class="d-flex justify-content-center align-items-center">
+              <div class="profile-image-section text-center mr-6">
+                  <img [src]="imageSrc" alt="Profile Image" class="rounded-circle" width="170" height="170" *ngIf="imageSrc; else defaultImage">
+                  <ng-template #defaultImage>
+                      <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" alt="Default Image" class="rounded-circle" width="170" height="170">
+                  </ng-template>
+              </div>
+    
+              <div class="w-50 ml-6">
+                  <div class="field mt-5 mb-4">
+                      <span class="p-float-label">
+                        <input class="w-full" type="text" pInputText formControlName="nombre" />
+                        <label for="nombre">Nombre *</label>
+                      </span>
+                      <small class="ml-2 p-error block" *ngIf="nombre?.invalid && (nombre?.dirty||nombre?.touched)">Nombre es requerido</small>
+                  </div>
+                  
+                  <div class="field mt-5 mb-4">
+                      <span class="p-float-label">
+                        <input class="w-full" type="text" pInputText formControlName="apellidos" />
+                        <label for="apellidos">Apellidos *</label>
+                      </span>
+                      <small class="ml-2 p-error block" *ngIf="apellidos?.invalid && (apellidos?.dirty||apellidos?.touched)">Apellidos es requerido</small>
+                  </div>
+                  
+                  <div class="field mt-5 mb-4">
+                      <span class="p-float-label">
+                        <input id="email" type="email" pInputText formControlName="email" class="w-full"/>
+                        <label for="email">Email *</label>
+                      </span>
+                      <small class="ml-2 p-error block" *ngIf="email?.invalid && (email?.dirty||email?.touched)">Email es requerido y debe ser válido</small>
+                  </div>
+                  
+                  <div class="field mt-5 mb-4">
+                      <span class="p-float-label">
+                        <input id="username" type="text" pInputText formControlName="username" class="w-full" />
+                        <label for="username">Username *</label>
+                      </span>
+                      <small class="ml-2 p-error block" *ngIf="username?.invalid && (username?.dirty||username?.touched)">Campo requerido</small>
+                  </div>
+              </div>
+          </div>
+    
+          <div class="d-flex justify-content-center button-save-form">
+            <p-button [loading]="loading" class="button-save-form" label="Editar" type="submit"></p-button>
+          </div>
+      </form>
+    
+    
+      <div class="m-4">
+        <h1>Eventos programados</h1>
+        <div class="flex flex-wrap gap-3 mb-3 mt-2">
+          <div class="flex align-items-center">
+            <p-radioButton value="calendario" [(ngModel)]="vistaDisp" inputId="calendario"></p-radioButton>
+            <label for="calendario" class="ml-2">Calendario</label>
+          </div>
+        
+          <div class="flex align-items-center">
+              <p-radioButton value="tabla" [(ngModel)]="vistaDisp" inputId="tabla"></p-radioButton>
+              <label for="tabla" class="ml-2">Tabla</label>
+          </div>
+        </div>
+      
+          <div *ngIf="vistaDisp=='calendario'" class="m-6">
+            <app-calendario></app-calendario>
+          </div>
+        
+          <div *ngIf="vistaDisp=='tabla'" class="m-2">
+            <p-table
+              #dt3
+              [value]="eventoUser$ | async"
+              [tableStyle]="{'min-width': '60rem'}"
+              [paginator]="true"
+              [rows]="10"
+              [showCurrentPageReport]="true"
+              styleClass="p-datatable-sm"
+              >
+                <ng-template pTemplate="caption">
+                  <div class="flex">
+                      <p-button class="leer-mas2" icon="pi pi-plus" (onClick)="add()" label="Añadir evento"></p-button>
+                  </div>
               </ng-template>
-          </div>
-
-          <div class="w-50 ml-6">
-              <div class="field mt-5 mb-4">
-                  <span class="p-float-label">
-                    <input class="w-full" type="text" pInputText formControlName="nombre" />
-                    <label for="nombre">Nombre *</label>
-                  </span>
-                  <small class="ml-2 p-error block" *ngIf="nombre?.invalid && (nombre?.dirty||nombre?.touched)">Nombre es requerido</small>
-              </div>
-              
-              <div class="field mt-5 mb-4">
-                  <span class="p-float-label">
-                    <input class="w-full" type="text" pInputText formControlName="apellidos" />
-                    <label for="apellidos">Apellidos *</label>
-                  </span>
-                  <small class="ml-2 p-error block" *ngIf="apellidos?.invalid && (apellidos?.dirty||apellidos?.touched)">Apellidos es requerido</small>
-              </div>
-              
-              <div class="field mt-5 mb-4">
-                  <span class="p-float-label">
-                    <input id="email" type="email" pInputText formControlName="email" class="w-full"/>
-                    <label for="email">Email *</label>
-                  </span>
-                  <small class="ml-2 p-error block" *ngIf="email?.invalid && (email?.dirty||email?.touched)">Email es requerido y debe ser válido</small>
-              </div>
-              
-              <div class="field mt-5 mb-4">
-                  <span class="p-float-label">
-                    <input id="username" type="text" pInputText formControlName="username" class="w-full" />
-                    <label for="username">Username *</label>
-                  </span>
-                  <small class="ml-2 p-error block" *ngIf="username?.invalid && (username?.dirty||username?.touched)">Campo requerido</small>
-              </div>
-          </div>
-      </div>
-
-      <div class="d-flex justify-content-center button-save-form">
-        <p-button [loading]="loading" class="button-save-form" label="Editar" type="submit"></p-button>
-      </div>
-  </form>
-
-
-  <ng-container class="mt-6">
-    <h1>Eventos programados</h1>
-    <div class="flex flex-wrap gap-3 mb-3 mt-2">
-      <div class="flex align-items-center">
-        <p-radioButton value="calendario" [(ngModel)]="vistaDisp" inputId="calendario"></p-radioButton>
-        <label for="calendario" class="ml-2">Calendario</label>
-      </div>
-    
-      <div class="flex align-items-center">
-          <p-radioButton value="tabla" [(ngModel)]="vistaDisp" inputId="tabla"></p-radioButton>
-          <label for="tabla" class="ml-2">Tabla</label>
-      </div>
-    </div>
-  
-      <ng-container *ngIf="vistaDisp=='calendario'" class="m-2">
-        <app-calendario></app-calendario>
-      </ng-container>
-    
-      <ng-container *ngIf="vistaDisp=='tabla'" class="m-2">
-        <p-table
-          #dt3
-          [value]="eventoUser$ | async"
-          [tableStyle]="{'min-width': '60rem'}"
-          [paginator]="true"
-          [rows]="10"
-          [showCurrentPageReport]="true"
-          styleClass="p-datatable-sm"
-          >
-            <ng-template pTemplate="caption">
-              <div class="flex">
-                  <p-button class="leer-mas2" icon="pi pi-plus" (onClick)="add()" label="Añadir evento"></p-button>
-              </div>
-          </ng-template>
-            <ng-template pTemplate="header">
-              <tr>
-                <th class="text-center">Titulo evento</th>
-                <th class="text-center">Fecha y hora</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-disp>
-              <tr>
-                <td class="text-center">{{ disp.nombre_evento }}</td>
-                <td class="text-center">{{ disp.fecha_hora | date:'dd-MM-yyyy HH:mm'}}</td>
-              </tr>
-            </ng-template>
-          </p-table>
-      </ng-container>
-  </ng-container>
-
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th class="text-center">Titulo evento</th>
+                    <th class="text-center">Fecha y hora</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-disp>
+                  <tr>
+                    <td class="text-center">{{ disp.nombre_evento }}</td>
+                    <td class="text-center">{{ disp.fecha_hora | date:'dd-MM-yyyy HH:mm'}}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+        </div>
+  </div>
+ 
   <p-dialog header="Añadir evento" [(visible)]="abrirAddEvento" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false" (onHide)="cerrarEvento()">
     
     <form [formGroup]="formEvento" (ngSubmit)="addEvento()" class="mx-auto mb-6">

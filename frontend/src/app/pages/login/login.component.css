@@ -26,11 +26,12 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('../../../assets/bg-login2.png');
+  background-image: url('../../../assets/bg-login3.png');
+  /* background-image: url('../../../assets/bg.gif'); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(3px); /* Controla el nivel de desenfoque */
+  filter: blur(8px); 
   z-index: -1;
 }
 

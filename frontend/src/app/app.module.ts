@@ -33,7 +33,7 @@ export function HttpLoaderFactory (http: HttpClient): TranslateHttpLoader {
   imports: [
     BrowserModule,
     FormsModule,
-    NavigationComponent,
+    // NavigationComponent,
     FooterComponent,
     AppRoutingModule,
     BrowserAnimationsModule,

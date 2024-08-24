@@ -66,4 +66,11 @@ export class RecursosComponent {
     this.router.navigate(['/home']);
   }
 
+  isTextVisible: boolean[] = [false, false, false];
+
+  toggleText(index: number) {
+    // Alterna la visibilidad del texto específico
+    this.isTextVisible[index] = !this.isTextVisible[index];
+  }
+
 }

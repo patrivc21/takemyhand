@@ -103,6 +103,9 @@
     cursor: pointer;
 }
 
+.separar{
+    margin-left: 110px;
+}
 
 .texto {
     color: #167496;

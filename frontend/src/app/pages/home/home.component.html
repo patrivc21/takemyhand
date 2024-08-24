@@ -2,7 +2,7 @@
     <div class="imagen-completa">
         <div class="d-flex mt-2 justify-content-center align-items-baseline">
             <img src="../../../assets/logos/LOGO-2png azul.png" alt="Foto de perfil" height="120" >
-            <img src="../../../assets/logos/LOGO-2png2.png" alt="Foto de perfil" height="120" >
+            <img src="../../../assets/logos/sinblanco.png" alt="Foto de perfil" height="120" class="separar">
             
         </div>
        
@@ -21,8 +21,8 @@
             <a href="#" [routerLink]="'/foroprofesionales'" style="color: #185b9a; font-family: 'Monserrat'">Foro Profesionales</a>
             <a href="#" [routerLink]="'/forousuarios'" class="ml-3" style="color: #185b9a; font-family: 'Monserrat'">Foro Usuarios</a>
             <a href="#" [routerLink]="'/home/listadoprof'" class="ml-3" style="color: #185b9a; font-family: 'Monserrat'">Listado profesionales por ciudades</a>
-            <a href="#" [routerLink]="'/chats'" class="ml-3" style="color: #fdfdfdba; font-family: 'Monserrat'">Chats</a>
-            <a href="#" [routerLink]="'/recursos'" class="ml-3" style="color: #fdfdfdba; font-family: 'Monserrat'">Aprende con TMH</a>
+            <a href="#" [routerLink]="'/chats'" class="ml-3" style="color: #185b9a; font-family: 'Monserrat'">Chats</a>
+            <a href="#" [routerLink]="'/recursos'" class="ml-3" style="color: #185b9a; font-family: 'Monserrat'">Aprende con TMH</a>
         </div>
 
         <div class="menu-item-left mb-4 mr-4">
@@ -61,10 +61,13 @@
       
     
     <ng-container *ngIf="usuario.rol == 3">
-        <div class="homepage-container mt-4">
-            <div class="homepage-item" [routerLink]="'/home/recurso'">
-                <div class="homepage-background" style="background-image: url('https://i.blogs.es/5c3d68/forms/1366_2000.jpg')"></div>
-                <div class="homepage-text">Añadir recursos</div>
+        <div class="d-flex justify-content-start mt-4">
+            <div class="w-50">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h1 class="texto-home text-align-center">Añadir recursos</h1>
+                    <p class="texto-home-small">TakeMyHand es tu nuevo lugar seguro. Aquí podrás expresar tus emociones con total privacidad y estarás acompañado siempre de los mejores profesionales. Para ello realizamos de forma completamente gratuita un formulario que evaluará tu estado actual. ¡Comienza rellenado el formulario ahora!</p>
+                    <p-button class="boton-form" label="Rellena el formulario" icon="pi pi-receipt" iconPos="right" (click)="displayRecurso = true" ></p-button>
+                </div>
             </div>
         </div>
     </ng-container>
@@ -73,9 +76,9 @@
 </div>
 
 
-<!-- <div *ngIf="viewPerfil">
-    <app-editar-perfil (res)="cerrar()" [usuario]="usuario"></app-editar-perfil>
-</div> -->
+<div *ngIf="displayRecurso">
+    <app-recursos-home (res)="cerrar()" ></app-recursos-home>
+</div>
 
 <p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '100%', height: '100%'}" [draggable]="false" [maximizable]="true" [resizable]="false" (onHide)="cerrarBusqueda()">
     <div *ngIf="selectedPerfil" class="d-flex flex-column justify-content-center align-items-start p-4">
@@ -130,7 +133,7 @@
 </ng-container>
 
 <ng-container *ngIf="(showEstado$ | async)">
-    <p-dialog header="Valora tu estado de animo" [visible]="(showEstado$ | async)" modal="true" [closable]="false">
+    <p-dialog header="Valora tu estado de ánimo" [visible]="(showEstado$ | async)" modal="true" [closable]="false">
         <h2>¿Cómo te encuentras hoy?</h2>
 
         <p-rating [(ngModel)]="value" stars="5">

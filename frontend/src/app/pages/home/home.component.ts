@@ -34,6 +34,7 @@ export class HomeComponent {
   public displayDialog: boolean = false
   public cerrarEstado: boolean = false
   public displayChat: boolean = false
+  public displayRecurso: boolean = false
 
   public BACKEND_FILES = environment.BACKEND_FILES
   public datos: any
@@ -75,7 +76,7 @@ export class HomeComponent {
   }
 
   public cerrar(): void {
-    this.viewPerfil = false;
+    this.displayRecurso = false;
   }
 
   public verPerfil(){

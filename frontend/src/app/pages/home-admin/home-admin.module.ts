@@ -21,6 +21,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { RippleModule } from 'primeng/ripple';
 import { MenuModule } from 'primeng/menu';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { NavigationComponent } from '../../components/navigation/navigation.component';
 
 const routes: Routes = [{ path: '', component: HomeAdminComponent }];
 
@@ -29,6 +30,7 @@ const routes: Routes = [{ path: '', component: HomeAdminComponent }];
     HomeAdminComponent
   ],
   imports: [
+    NavigationComponent,
     CommonModule,
     BadgeModule,
     MenuModule,

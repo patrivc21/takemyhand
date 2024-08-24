@@ -1,5 +1,6 @@
-<ng-container *ngIf="(allProfesionales$ | async) as profesionales">
-    <div class="card p-5">
+<div class="fondo">
+  <ng-container *ngIf="(allProfesionales$ | async) as profesionales">
+    <div class="mt-6">
       <div class="flex flex-row mb-3">
         <p-button icon="pi pi-arrow-left" class="boton-tabla mr-4" (onClick)="volver()"></p-button>
         <h2>Total Profesionales de la Aplicación</h2>
@@ -59,6 +60,7 @@
     
     </div>
   </ng-container>
+</div>
   
   <div *ngIf="mapView">
     <app-map-view [address]="map.direccion" [latitud]="map.latitud" [longitud]="map.longitud" (res)="cerrarMapa()"></app-map-view>
