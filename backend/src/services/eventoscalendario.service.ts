@@ -37,3 +37,12 @@ export const getEventoUsuario = async (id: number): Promise<any[]> => {
 
     return res;
 }
+
+export const getOneEvento = async (id: number): Promise<any[]> => {
+    let res = await DB.getRepository(EventosCalendario).find({
+        where: [
+            { id: id }]
+    });
+
+    return res;
+}

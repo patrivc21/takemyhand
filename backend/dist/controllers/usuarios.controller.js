@@ -50,7 +50,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRespuestasC = exports.addRespuesta = exports.buscarC = exports.deletePublicacionesController = exports.getAllPublicacionesControllers = exports.getOnePublicacionController = exports.addPublicacionC = exports.getAllUsersExceptMeC = exports.getUserByEmailC = exports.updateUsuarios = exports.getAllRolesC = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
+exports.deletePublicaciones = exports.updatePublicaciones = exports.getAllPublisUser = exports.getRespuestasC = exports.addRespuesta = exports.buscarC = exports.getAllPublicacionesControllers = exports.getOnePublicacionController = exports.addPublicacionC = exports.getAllUsersExceptMeC = exports.getUserByEmailC = exports.updateUsuarios = exports.getAllRolesC = exports.getAllUsersControllers = exports.getOneUserController = exports.addNewUser = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var usuarios_service_1 = require("../services/usuarios.service");
 var auth_helper_1 = __importDefault(require("../helpers/auth.helper"));
@@ -152,7 +152,7 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 13, , 14]);
-                console.log(user);
+                console.log('1', user);
                 return [4 /*yield*/, (0, usuarios_service_1.getUserByEmail)(user.email)];
             case 2:
                 exist_user = _a.sent();
@@ -179,7 +179,7 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [3 /*break*/, 10];
             case 6:
                 if (!(user.rol == 2)) return [3 /*break*/, 8];
-                return [4 /*yield*/, (0, pacientes_service_1.addPaciente)(__assign(__assign({}, user), { id_usuario: result.id }))];
+                return [4 /*yield*/, (0, pacientes_service_1.addPaciente)(__assign(__assign({}, user), { id_usuario: result.id, resultado_formulario: 0 }))];
             case 7:
                 _a.sent();
                 return [3 /*break*/, 10];
@@ -413,7 +413,7 @@ var addPublicacionC = function (req, res) { return __awaiter(void 0, void 0, voi
             case 5:
                 error_1 = _a.sent();
                 console.log(error_1);
-                resp.msg = error_1;
+                resp.msg = error_1.message || 'Error inesperado';
                 resp.cod = 500;
                 return [3 /*break*/, 6];
             case 6: return [2 /*return*/, res.json(resp)];
@@ -476,39 +476,8 @@ var getAllPublicacionesControllers = function (_req, res) { return __awaiter(voi
     });
 }); };
 exports.getAllPublicacionesControllers = getAllPublicacionesControllers;
-var deletePublicacionesController = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, ids, result, e_12;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                resp = new RespGeneric_1.default();
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                ids = req.body.ids;
-                if (!ids || !Array.isArray(ids)) {
-                    return [2 /*return*/, res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' })];
-                }
-                return [4 /*yield*/, (0, usuarios_service_1.deletePublicacion)(ids)];
-            case 2:
-                result = _a.sent();
-                resp.cod = result ? 200 : 400;
-                resp.data = { result: result };
-                resp.msg = "Publicaciones de profesionales eliminados con exito.";
-                return [3 /*break*/, 4];
-            case 3:
-                e_12 = _a.sent();
-                resp.msg = e_12;
-                resp.cod = 500;
-                resp.msg = "Error al eliminar publicaciones de profesionales ";
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); };
-exports.deletePublicacionesController = deletePublicacionesController;
 var buscarC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, body, result, e_13;
+    var resp, body, result, e_12;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -524,8 +493,8 @@ var buscarC = function (req, res) { return __awaiter(void 0, void 0, void 0, fun
                 resp.cod = 200;
                 return [3 /*break*/, 4];
             case 3:
-                e_13 = _a.sent();
-                resp.msg = e_13;
+                e_12 = _a.sent();
+                resp.msg = e_12;
                 resp.cod = 500;
                 return [3 /*break*/, 4];
             case 4:
@@ -574,7 +543,7 @@ var addRespuesta = function (req, res) { return __awaiter(void 0, void 0, void 0
 }); };
 exports.addRespuesta = addRespuesta;
 var getRespuestasC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, body, result, e_14;
+    var resp, body, result, e_13;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -590,6 +559,34 @@ var getRespuestasC = function (req, res) { return __awaiter(void 0, void 0, void
                 resp.cod = 200;
                 return [3 /*break*/, 4];
             case 3:
+                e_13 = _a.sent();
+                resp.msg = e_13;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getRespuestasC = getRespuestasC;
+var getAllPublisUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, publis, e_14;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body.id_usuario;
+                return [4 /*yield*/, (0, usuarios_service_1.getAllPublicacionesUser)(body)];
+            case 2:
+                publis = _a.sent();
+                resp.data = { publis: publis };
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
                 e_14 = _a.sent();
                 resp.msg = e_14;
                 resp.cod = 500;
@@ -600,7 +597,66 @@ var getRespuestasC = function (req, res) { return __awaiter(void 0, void 0, void
         }
     });
 }); };
-exports.getRespuestasC = getRespuestasC;
-exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, login: login, register: register, getAllRolesC: exports.getAllRolesC, updateUsuarios: exports.updateUsuarios, getUserByEmailC: exports.getUserByEmailC, getAllUsersExceptMeC: exports.getAllUsersExceptMeC, addPublicacionC: exports.addPublicacionC, getOnePublicacionController: exports.getOnePublicacionController, getAllPublicacionesControllers: exports.getAllPublicacionesControllers, deletePublicacionesController: exports.deletePublicacionesController, buscarC: exports.buscarC, addRespuesta: exports.addRespuesta, getRespuestasC: exports.getRespuestasC
+exports.getAllPublisUser = getAllPublisUser;
+var updatePublicaciones = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, publis, result, e_15;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                publis = req.body;
+                return [4 /*yield*/, (0, usuarios_service_1.updatePublicacion)(publis)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                resp.data = { evento: result };
+                return [3 /*break*/, 4];
+            case 3:
+                e_15 = _a.sent();
+                resp.msg = e_15;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.updatePublicaciones = updatePublicaciones;
+var deletePublicaciones = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, ids, result, e_16;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                ids = req.body.ids;
+                if (!ids || !Array.isArray(ids)) {
+                    return [2 /*return*/, res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' })];
+                }
+                return [4 /*yield*/, (0, usuarios_service_1.deletePublicacion)(ids)];
+            case 2:
+                result = _a.sent();
+                resp.cod = result ? 200 : 400;
+                resp.data = { result: result };
+                resp.msg = "Publicaciones eliminadas con exito.";
+                return [3 /*break*/, 4];
+            case 3:
+                e_16 = _a.sent();
+                resp.msg = e_16;
+                resp.cod = 500;
+                resp.msg = "Error al eliminar publicaciones";
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deletePublicaciones = deletePublicaciones;
+exports.default = { addNewUser: exports.addNewUser, getAllUsersControllers: exports.getAllUsersControllers, getOneUserController: exports.getOneUserController, login: login, register: register, getAllRolesC: exports.getAllRolesC, updateUsuarios: exports.updateUsuarios, getUserByEmailC: exports.getUserByEmailC, getAllUsersExceptMeC: exports.getAllUsersExceptMeC, addPublicacionC: exports.addPublicacionC, getOnePublicacionController: exports.getOnePublicacionController, getAllPublicacionesControllers: exports.getAllPublicacionesControllers, buscarC: exports.buscarC, addRespuesta: exports.addRespuesta, getRespuestasC: exports.getRespuestasC, getAllPublisUser: exports.getAllPublisUser, updatePublicaciones: exports.updatePublicaciones, deletePublicaciones: exports.deletePublicaciones
 };
 //# sourceMappingURL=usuarios.controller.js.map

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getEventoUsuario = exports.deleteEvento = exports.updateEvento = exports.addEvento = void 0;
+exports.getOneEvento = exports.getEventoUsuario = exports.deleteEvento = exports.updateEvento = exports.addEvento = void 0;
 var typeorm_1 = require("../config/typeorm");
 var EventosCalendario_1 = require("../entities/EventosCalendario");
 var addEvento = function (evento) { return __awaiter(void 0, void 0, void 0, function () {
@@ -105,4 +105,20 @@ var getEventoUsuario = function (id) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.getEventoUsuario = getEventoUsuario;
+var getOneEvento = function (id) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(EventosCalendario_1.EventosCalendario).find({
+                    where: [
+                        { id: id }
+                    ]
+                })];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getOneEvento = getOneEvento;
 //# sourceMappingURL=eventoscalendario.service.js.map

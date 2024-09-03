@@ -26,7 +26,11 @@ var EventosCalendario = /** @class */ (function () {
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", Date)
-    ], EventosCalendario.prototype, "fecha_hora", void 0);
+    ], EventosCalendario.prototype, "fecha_hora_inicio", void 0);
+    __decorate([
+        (0, typeorm_1.Column)(),
+        __metadata("design:type", Date)
+    ], EventosCalendario.prototype, "fecha_hora_fin", void 0);
     __decorate([
         (0, typeorm_1.Column)(),
         __metadata("design:type", Number)

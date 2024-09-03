@@ -10,7 +10,10 @@ export class EventosCalendario {
   nombre_evento!: string;
 
   @Column()
-  fecha_hora!: Date;
+  fecha_hora_inicio!: Date;
+
+  @Column()
+  fecha_hora_fin!: Date;
 
   @Column()
   id_usuario!: number;

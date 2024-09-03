@@ -39,11 +39,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.decodeToken = exports.validateToken = exports.generateToken = exports.validatePassword = exports.hashPassword = exports.ADMIN_CIF = void 0;
+exports.decodeToken = exports.validateToken = exports.generateToken = exports.validatePassword = exports.hashPassword = void 0;
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var config_1 = __importDefault(require("../config/config"));
-exports.ADMIN_CIF = "B29484821";
 var hashPassword = function (password) { return __awaiter(void 0, void 0, void 0, function () {
     var salt;
     return __generator(this, function (_a) {

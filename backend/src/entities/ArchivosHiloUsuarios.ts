@@ -11,7 +11,7 @@ export class ArchivosHiloUsuario {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({type: 'longtext'})
   archivo_adjunto!: string;
 
   @Column()

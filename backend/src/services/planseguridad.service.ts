@@ -4,9 +4,15 @@ import { SelectQueryBuilder } from "typeorm";
 import { PlanSeguridad } from "../entities/PlanSeguridad";
 import path from "path";
 import { ArchivosPlan } from "../entities/ArchivosPlan";
+import { validarContenido } from "../helpers/validatorcontenido.helper";
   
 
 export const addPlanSeguridad = async (plan: any): Promise<any> => {
+  // Validar el contenido del plan
+  if (!validarContenido(plan.hobbies) || !validarContenido(plan.lugares) || !validarContenido(plan.personas)) {
+    throw new Error('El mensaje contiene contenido inapropiado.');
+}
+
   let datos = {
     id_usuario: plan.id_usuario,
     lugares: plan.lugares,
@@ -44,10 +50,10 @@ export const getOnePlan = async (id_usuario: number): Promise<any> => {
   let res = await DB.getRepository(PlanSeguridad)
     .createQueryBuilder('p')
     .leftJoin('archivos_plan', 'a', 'a.id_plan = p.id')
-    .where('a.id_usuario = :id_usuario', { id_usuario })
+    .where('p.id_usuario = :id_usuario', { id_usuario })
     .groupBy('p.id')
     .addSelect('GROUP_CONCAT(a.nombre_archivo)', 'archivos') 
-    .getRawOne();
+    .getRawMany();
 
   return res;
 }

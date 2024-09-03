@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PlanSeguridad = void 0;
 var typeorm_1 = require("typeorm");
 var Usuarios_1 = require("./Usuarios");
+var ArchivosPlan_1 = require("./ArchivosPlan");
 var PlanSeguridad = /** @class */ (function () {
     function PlanSeguridad() {
     }
@@ -44,6 +45,10 @@ var PlanSeguridad = /** @class */ (function () {
         (0, typeorm_1.JoinColumn)({ name: 'id_usuario' }),
         __metadata("design:type", Usuarios_1.Usuarios)
     ], PlanSeguridad.prototype, "usuario", void 0);
+    __decorate([
+        (0, typeorm_1.OneToMany)(function () { return ArchivosPlan_1.ArchivosPlan; }, function (archivo) { return archivo.plan; }),
+        __metadata("design:type", Array)
+    ], PlanSeguridad.prototype, "archivos", void 0);
     PlanSeguridad = __decorate([
         (0, typeorm_1.Entity)({ name: 'plan_seguridad' })
     ], PlanSeguridad);

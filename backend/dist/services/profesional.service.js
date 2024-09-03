@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.getProfByCiudad = exports.getCiudades = exports.addArchivosRecursos = exports.addRecursos = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
+exports.updatePublicacion = exports.getAllPublicacionesUser = exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.getProfByCiudad = exports.getCiudades = exports.addArchivosRecursos = exports.addRecursos = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.deleteProfesionalesService = exports.deleteOneProfesionalesService = exports.updateProfesionalesService = exports.getAllProfesionales = exports.getOneProfesional = exports.addProfesional = void 0;
 var Profesional_1 = require("../entities/Profesional");
 var typeorm_1 = require("../config/typeorm");
 var path_1 = __importDefault(require("path"));
@@ -48,6 +48,7 @@ var ArchivosHiloProf_1 = require("../entities/ArchivosHiloProf");
 var Recursos_1 = require("../entities/Recursos");
 var ArchivosRecursos_1 = require("../entities/ArchivosRecursos");
 var RespuestaProfesionales_1 = require("../entities/RespuestaProfesionales");
+var validatorcontenido_helper_1 = require("../helpers/validatorcontenido.helper");
 var addProfesional = function (admin) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -149,6 +150,10 @@ var addPublicacion = function (publicacion) { return __awaiter(void 0, void 0, v
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                // Validar el contenido del mensaje
+                if (!(0, validatorcontenido_helper_1.validarContenido)(publicacion.mensaje)) {
+                    throw new Error('El mensaje contiene contenido inapropiado.');
+                }
                 datos = {
                     fecha_hora: new Date(),
                     titulo: publicacion.titulo,
@@ -374,6 +379,10 @@ var addRespuestaPublicacion = function (publicacion) { return __awaiter(void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                // Validar el contenido del mensaje
+                if (!(0, validatorcontenido_helper_1.validarContenido)(publicacion.mensaje)) {
+                    throw new Error('El mensaje contiene contenido inapropiado.');
+                }
                 datos = {
                     fecha_hora: new Date(),
                     titulo: publicacion.titulo,
@@ -444,4 +453,40 @@ var getRespuestas = function (id) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.getRespuestas = getRespuestas;
+var getAllPublicacionesUser = function (id_profesional) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.profesional', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')
+                    .where('h.id_profesional = :id_profesional', { id_profesional: id_profesional })
+                    .getMany()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getAllPublicacionesUser = getAllPublicacionesUser;
+var updatePublicacion = function (publicacion) { return __awaiter(void 0, void 0, void 0, function () {
+    var publicacionToUpdate, resp;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).findOneBy({ id: publicacion.id })];
+            case 1:
+                publicacionToUpdate = _a.sent();
+                resp = null;
+                if (!publicacionToUpdate) return [3 /*break*/, 3];
+                Object.assign(publicacionToUpdate, publicacion);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloProfesionales_1.HiloProfesionales).save(publicacionToUpdate)];
+            case 2:
+                resp = _a.sent();
+                _a.label = 3;
+            case 3: return [2 /*return*/, resp != null];
+        }
+    });
+}); };
+exports.updatePublicacion = updatePublicacion;
 //# sourceMappingURL=profesional.service.js.map

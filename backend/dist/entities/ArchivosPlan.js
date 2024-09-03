@@ -21,7 +21,7 @@ var ArchivosPlan = /** @class */ (function () {
         __metadata("design:type", Number)
     ], ArchivosPlan.prototype, "id", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'longtext' }),
         __metadata("design:type", String)
     ], ArchivosPlan.prototype, "nombre_archivo", void 0);
     __decorate([

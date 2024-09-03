@@ -24,9 +24,11 @@ router.post('/getAllUsersExceptMe', auth_guard_1.AuthGuard, [usuarios_controller
 router.post('/addPublicacion', auth_guard_1.AuthGuard, multipartMiddleware, [usuarios_controller_1.default.addPublicacionC]);
 router.post('/getOnePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getOnePublicacionController]);
 router.get('/getAllPublis', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getAllPublicacionesControllers]);
-router.post('/deletePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.deletePublicacionesController]);
+router.post('/deletePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.deletePublicaciones]);
 router.post('/buscar', auth_guard_1.AuthGuard, [usuarios_controller_1.default.buscarC]);
-router.post('/addRespuesta', multipartMiddleware, [usuarios_controller_1.default.addRespuesta]);
-router.post('/getRespuestas', [usuarios_controller_1.default.getRespuestasC]);
+router.post('/getPublisUser', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getAllPublisUser]);
+router.post('/updatePubli', auth_guard_1.AuthGuard, [usuarios_controller_1.default.updatePublicaciones]);
+router.post('/addRespuesta', auth_guard_1.AuthGuard, multipartMiddleware, [usuarios_controller_1.default.addRespuesta]);
+router.post('/getRespuestas', auth_guard_1.AuthGuard, [usuarios_controller_1.default.getRespuestasC]);
 exports.default = router;
 //# sourceMappingURL=usuarios.routes.js.map

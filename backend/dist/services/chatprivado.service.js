@@ -35,10 +35,20 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneChat = exports.addChat = void 0;
+exports.prueba = exports.buscadorUsuarios = exports.getOneChat = exports.addChat = void 0;
+var openai_1 = __importDefault(require("openai"));
+var config_1 = __importDefault(require("../config/config"));
 var typeorm_1 = require("../config/typeorm");
 var ChatPrivado_1 = require("../entities/ChatPrivado");
+var Usuarios_1 = require("../entities/Usuarios");
+var openai = new openai_1.default({
+    apiKey: config_1.default.API_KEY,
+    organization: config_1.default.ORGANIZATION
+});
 var addChat = function (chat) { return __awaiter(void 0, void 0, void 0, function () {
     var datos, res;
     return __generator(this, function (_a) {
@@ -67,9 +77,6 @@ var getOneChat = function (id_emisor, id_receptor) { return __awaiter(void 0, vo
                         { id_emisor: id_emisor, id_receptor: id_receptor },
                         { id_emisor: id_receptor, id_receptor: id_emisor }
                     ],
-                    // order: {
-                    //     fecha_hora: "ASC" // Opcional: para ordenar los mensajes por fecha/hora
-                    // }
                 })];
             case 1:
                 res = _a.sent();
@@ -78,4 +85,39 @@ var getOneChat = function (id_emisor, id_receptor) { return __awaiter(void 0, vo
     });
 }); };
 exports.getOneChat = getOneChat;
+var buscadorUsuarios = function (texto) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).find({
+                    where: [
+                        { nombre: texto }, // Busca por nombre
+                        { apellidos: texto }, // O busca por apellidos
+                        { nombre: texto, apellidos: texto } // O busca por ambos
+                    ],
+                })];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.buscadorUsuarios = buscadorUsuarios;
+var prueba = function (texto) { return __awaiter(void 0, void 0, void 0, function () {
+    var chatCompletion, data;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, openai.chat.completions.create({
+                    messages: [{ role: 'user',
+                            content: '¿Este texto es aceptable en una página para la prevención del suicido?' + texto + '"' }],
+                    model: "gpt-3.5-turbo"
+                })];
+            case 1:
+                chatCompletion = _a.sent();
+                data = chatCompletion.choices[0].message.content;
+                return [2 /*return*/, data];
+        }
+    });
+}); };
+exports.prueba = prueba;
 //# sourceMappingURL=chatprivado.service.js.map

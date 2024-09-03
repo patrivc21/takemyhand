@@ -14,10 +14,11 @@ var userSchema = joi_1.default.object({
     username: joi_1.default.string().required(),
     activo: joi_1.default.boolean().default(true),
     rolpaciente: joi_1.default.number(),
-    ciudad: joi_1.default.string(),
-    direccion: joi_1.default.string(),
-    latitud: joi_1.default.number(),
-    longitud: joi_1.default.number()
+    ciudad: joi_1.default.string().optional().allow('').empty('').default(null),
+    direccion: joi_1.default.string().optional().allow('').empty('').default(null),
+    latitud: joi_1.default.number().optional().allow(null).default(null),
+    longitud: joi_1.default.number().optional().allow(null).default(null),
+    resultado_formulario: joi_1.default.number().optional().allow(null).default(null),
 });
 var UserValidator = function (req, res, next) {
     var error = userSchema.validate(req.body).error;

@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
+exports.getAllPublicacionesUser = exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.updatePublicacion = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
 var Usuarios_1 = require("../entities/Usuarios");
 var typeorm_1 = require("../config/typeorm");
 var typeorm_2 = require("typeorm");
@@ -48,6 +48,7 @@ var HiloUsuarios_1 = require("../entities/HiloUsuarios");
 var ArchivosHiloUsuarios_1 = require("../entities/ArchivosHiloUsuarios");
 var path_1 = __importDefault(require("path"));
 var RespuestaUsuarios_1 = require("../entities/RespuestaUsuarios");
+var validatorcontenido_helper_1 = require("../helpers/validatorcontenido.helper");
 var addUsuarios = function (usuarios) { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -92,11 +93,12 @@ var getUserByEmail = function (email) { return __awaiter(void 0, void 0, void 0,
     var user;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
-                    where: [
-                        { email: email }
-                    ]
-                })];
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios)
+                    .createQueryBuilder('u')
+                    .leftJoinAndSelect('profesionales', 'p', 'p.id_usuario = u.id')
+                    .leftJoinAndSelect('pacientes', 'pa', 'pa.id_usuario = u.id')
+                    .where('u.email = :email', { email: email })
+                    .getOne()];
             case 1:
                 user = _a.sent();
                 return [2 /*return*/, user];
@@ -156,6 +158,10 @@ var addPublicacion = function (publicacion) { return __awaiter(void 0, void 0, v
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                // Validar el contenido del mensaje
+                if (!(0, validatorcontenido_helper_1.validarContenido)(publicacion.mensaje)) {
+                    throw new Error('El mensaje contiene contenido inapropiado.');
+                }
                 datos = {
                     fecha_hora: new Date(),
                     titulo: publicacion.titulo,
@@ -163,7 +169,6 @@ var addPublicacion = function (publicacion) { return __awaiter(void 0, void 0, v
                     id_usuario: publicacion.id_usuario,
                     archivo_adjunto: ''
                 };
-                console.log('datos1', datos);
                 return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).save(datos)];
             case 1:
                 res = _a.sent();
@@ -172,12 +177,12 @@ var addPublicacion = function (publicacion) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.addPublicacion = addPublicacion;
-var addArchivoPublicacion = function (plan, id) { return __awaiter(void 0, void 0, void 0, function () {
+var addArchivoPublicacion = function (publi, id) { return __awaiter(void 0, void 0, void 0, function () {
     var filesSaved, _a, _b, _c, _i, key, file, archivo_com;
     return __generator(this, function (_d) {
         switch (_d.label) {
             case 0:
-                _a = plan;
+                _a = publi;
                 _b = [];
                 for (_c in _a)
                     _b.push(_c);
@@ -188,8 +193,8 @@ var addArchivoPublicacion = function (plan, id) { return __awaiter(void 0, void 
                 _c = _b[_i];
                 if (!(_c in _a)) return [3 /*break*/, 3];
                 key = _c;
-                if (!plan.hasOwnProperty(key)) return [3 /*break*/, 3];
-                file = plan[key];
+                if (!publi.hasOwnProperty(key)) return [3 /*break*/, 3];
+                file = publi[key];
                 archivo_com = {
                     id_hilo: id,
                     archivo_adjunto: file ? path_1.default.basename(file.path) : '',
@@ -225,6 +230,25 @@ var deletePublicacion = function (ids) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.deletePublicacion = deletePublicacion;
+var updatePublicacion = function (publicacion) { return __awaiter(void 0, void 0, void 0, function () {
+    var publicacionToUpdate, resp;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).findOneBy({ id: publicacion.id })];
+            case 1:
+                publicacionToUpdate = _a.sent();
+                resp = null;
+                if (!publicacionToUpdate) return [3 /*break*/, 3];
+                Object.assign(publicacionToUpdate, publicacion);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).save(publicacionToUpdate)];
+            case 2:
+                resp = _a.sent();
+                _a.label = 3;
+            case 3: return [2 /*return*/, resp != null];
+        }
+    });
+}); };
+exports.updatePublicacion = updatePublicacion;
 var getAllPublicaciones = function () { return __awaiter(void 0, void 0, void 0, function () {
     var res;
     return __generator(this, function (_a) {
@@ -291,6 +315,10 @@ var addRespuestaPublicacion = function (publicacion) { return __awaiter(void 0, 
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
+                // Validar el contenido del mensaje
+                if (!(0, validatorcontenido_helper_1.validarContenido)(publicacion.mensaje)) {
+                    throw new Error('El mensaje contiene contenido inapropiado.');
+                }
                 datos = {
                     fecha_hora: new Date(),
                     titulo: publicacion.titulo,
@@ -361,4 +389,22 @@ var getRespuestas = function (id) { return __awaiter(void 0, void 0, void 0, fun
     });
 }); };
 exports.getRespuestas = getRespuestas;
+var getAllPublicacionesUser = function (id_usuario) { return __awaiter(void 0, void 0, void 0, function () {
+    var res;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios)
+                    .createQueryBuilder('h')
+                    .leftJoinAndSelect('h.usuario', 'p')
+                    .leftJoinAndSelect('h.archivos', 'a')
+                    .where('h.id_usuario = :id_usuario', { id_usuario: id_usuario })
+                    .orderBy('h.fecha_hora', 'DESC')
+                    .getMany()];
+            case 1:
+                res = _a.sent();
+                return [2 /*return*/, res];
+        }
+    });
+}); };
+exports.getAllPublicacionesUser = getAllPublicacionesUser;
 //# sourceMappingURL=usuarios.service.js.map

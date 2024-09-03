@@ -20,7 +20,7 @@ var Recursos = /** @class */ (function () {
         __metadata("design:type", Number)
     ], Recursos.prototype, "id", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'text' }),
         __metadata("design:type", String)
     ], Recursos.prototype, "contenido", void 0);
     __decorate([
@@ -28,7 +28,7 @@ var Recursos = /** @class */ (function () {
         __metadata("design:type", String)
     ], Recursos.prototype, "titulo", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'longtext' }),
         __metadata("design:type", String)
     ], Recursos.prototype, "url_video", void 0);
     __decorate([

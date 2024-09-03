@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Profesionales } from '../entities/Profesional';
-import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService, addPublicacion, addArchivoPublicacion, getOnePublicacion, getAllPublicaciones, deletePublicacion, buscarPublis, addRecursos, addArchivosRecursos, getCiudades, getProfByCiudad, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas} from '../services/profesional.service'
+import { addProfesional, getAllProfesionales, getOneProfesional, updateProfesionalesService, deleteProfesionalesService, addPublicacion, addArchivoPublicacion, getOnePublicacion, getAllPublicaciones, deletePublicacion, buscarPublis, addRecursos, addArchivosRecursos, getCiudades, getProfByCiudad, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas, getAllPublicacionesUser, updatePublicacion} from '../services/profesional.service'
+import { HiloProfesionales } from '../entities/HiloProfesionales';
 
 export const addNewProfesional = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
@@ -275,6 +276,38 @@ export const getRespuestasC = async (req:Request, res:Response) => {
     res.json(resp);
 }
 
+
+export const getAllPublisUser = async (req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let body = req.body.id_profesional;
+        let publis = await getAllPublicacionesUser(body);
+        resp.data = {publis};
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
+
+export const updatePublicaciones = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        let publis : HiloProfesionales = req.body as HiloProfesionales;
+        let result = await updatePublicacion(publis);
+        resp.cod = result ? 200 : 400;
+        resp.data = {evento: result};
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp)
+}
+
+
+
 export default { addNewProfesional, getOneProfesionalController, getAllProfesionalesControllers, updateProfesional, deleteProfesionalesController, 
     addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC, addRecursosC,
-    getAllCiudades, getProfByCiudadC, addRespuesta, getRespuestasC};
+    getAllCiudades, getProfByCiudadC, addRespuesta, getRespuestasC, getAllPublisUser, updatePublicaciones};

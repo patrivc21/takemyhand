@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { RolPaciente } from './RolPacientes';
 import { Usuarios } from './Usuarios';
+import { Profesionales } from './Profesional';
 
 @Entity({ name: 'pacientes' })
 export class Pacientes {
@@ -39,6 +40,13 @@ export class Pacientes {
   @JoinColumn({ name: 'id_usuario' })
   usuario!: Usuarios;
 
-  @Column()
+  @Column({type: 'double'})
   resultado_formulario!: number;
+
+  @Column({nullable: true })
+  id_profesional_asociado!: number;
+
+  @ManyToOne(() => Profesionales, prof => prof.id)
+  @JoinColumn({ name: 'id_profesional_asociado' })
+  profesional_asociado!: Profesionales;
 }

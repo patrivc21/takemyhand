@@ -13,6 +13,7 @@ exports.Pacientes = void 0;
 var typeorm_1 = require("typeorm");
 var RolPacientes_1 = require("./RolPacientes");
 var Usuarios_1 = require("./Usuarios");
+var Profesional_1 = require("./Profesional");
 var Pacientes = /** @class */ (function () {
     function Pacientes() {
     }
@@ -63,9 +64,18 @@ var Pacientes = /** @class */ (function () {
         __metadata("design:type", Usuarios_1.Usuarios)
     ], Pacientes.prototype, "usuario", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'double' }),
         __metadata("design:type", Number)
     ], Pacientes.prototype, "resultado_formulario", void 0);
+    __decorate([
+        (0, typeorm_1.Column)({ nullable: true }),
+        __metadata("design:type", Number)
+    ], Pacientes.prototype, "id_profesional_asociado", void 0);
+    __decorate([
+        (0, typeorm_1.ManyToOne)(function () { return Profesional_1.Profesionales; }, function (prof) { return prof.id; }),
+        (0, typeorm_1.JoinColumn)({ name: 'id_profesional_asociado' }),
+        __metadata("design:type", Profesional_1.Profesionales)
+    ], Pacientes.prototype, "profesional_asociado", void 0);
     Pacientes = __decorate([
         (0, typeorm_1.Entity)({ name: 'pacientes' })
     ], Pacientes);

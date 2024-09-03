@@ -9,6 +9,6 @@ const upload = multer({ dest: "assets/" });
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({ uploadDir: 'assets' })
 
-router.get('/getAllRecursos', [recursosController.getAllRecursos]);  //AuthGuard,
+router.get('/getAllRecursos', AuthGuard, [recursosController.getAllRecursos]);  //AuthGuard,
 
 export default router;

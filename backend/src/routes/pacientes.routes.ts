@@ -10,12 +10,12 @@ const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({ uploadDir: 'assets' })
 
 router.post('/addPaciente', [pacientesController.addNewPaciente]);
-router.get('/getOnePaciente', AuthGuard, [pacientesController.getOnePacienteController]);
+router.post('/getOnePaciente', AuthGuard, [pacientesController.getOnePacienteController]);
 router.get('/getAllPacientes', AuthGuard, [pacientesController.getAllPacientesControllers]);
 router.get('/getAllRoles', AuthGuard, [pacientesController.getAllRolesC]);
 router.put('/updatePaciente', AuthGuard, [pacientesController.updatePaciente]);
 router.post('/deletePacientes', AuthGuard, [pacientesController.deletePacientesController]);
-router.post('/addEstadoAnimo',AuthGuard, [pacientesController.addEstadoAnimoC]);
+router.post('/addEstadoAnimo', AuthGuard, [pacientesController.addEstadoAnimoC]);
 router.post('/verificarEstadoAnimo',  [pacientesController.verificarEstadoAnimoC]);
 
 export default router;

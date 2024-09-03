@@ -8,7 +8,7 @@ export class ArchivosPlan {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({type: 'longtext'})
   nombre_archivo!: string;
 
   @Column()

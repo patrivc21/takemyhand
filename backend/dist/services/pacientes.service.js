@@ -199,9 +199,10 @@ var addEstadoAnimo = function (estado) { return __awaiter(void 0, void 0, void 0
 }); };
 exports.addEstadoAnimo = addEstadoAnimo;
 var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void 0, void 0, function () {
-    var fechaActual, fechaHaceCincoDias, registros, planSeguridad, emails, _i, emails_1, email;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var fechaActual, fechaHaceCincoDias, registros, usuario, planSeguridad, emails, _i, emails_1, email, paciente;
+    var _a;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 fechaActual = new Date();
                 fechaHaceCincoDias = new Date();
@@ -216,33 +217,61 @@ var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void
                         },
                     })];
             case 1:
-                registros = _a.sent();
-                console.log(registros);
-                if (!(registros.length >= 5 && registros.every(function (registro) { return registro.estado <= 3; }))) return [3 /*break*/, 6];
+                registros = _b.sent();
+                return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
+                        where: {
+                            id: id_usuario
+                        },
+                        select: ['nombre', 'apellidos']
+                    })];
+            case 2:
+                usuario = _b.sent();
+                if (!(registros.length >= 5 && registros.every(function (registro) { return registro.estado <= 3; }))) return [3 /*break*/, 11];
                 return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).findOne({
                         where: { id_usuario: id_usuario }
                     })];
-            case 2:
-                planSeguridad = _a.sent();
-                console.log(planSeguridad);
-                if (!(planSeguridad && planSeguridad.emails)) return [3 /*break*/, 6];
+            case 3:
+                planSeguridad = _b.sent();
+                if (!(planSeguridad && planSeguridad.emails)) return [3 /*break*/, 8];
                 emails = planSeguridad.emails.includes(',')
                     ? planSeguridad.emails.split(',').map(function (email) { return email.trim(); }) // Si hay comas, separar los emails y eliminarlas
                     : [planSeguridad.emails.trim()];
-                console.log(emails);
                 _i = 0, emails_1 = emails;
-                _a.label = 3;
-            case 3:
-                if (!(_i < emails_1.length)) return [3 /*break*/, 6];
-                email = emails_1[_i];
-                return [4 /*yield*/, (0, mail_helper_1.sendEmail)(email.trim(), "Alerta: Estado de ánimo bajo", "El usuario ha reportado un estado de ánimo bajo durante 5 días consecutivos.")];
+                _b.label = 4;
             case 4:
-                _a.sent();
-                _a.label = 5;
+                if (!(_i < emails_1.length)) return [3 /*break*/, 7];
+                email = emails_1[_i];
+                return [4 /*yield*/, (0, mail_helper_1.sendEmail)(email.trim(), "Alerta: Estado de ánimo bajo", "Estimado/a familiar/amigo/conocido,\n\n" +
+                        "Le informamos que ".concat(usuario === null || usuario === void 0 ? void 0 : usuario.nombre, " ").concat(usuario === null || usuario === void 0 ? void 0 : usuario.apellidos, " ha reportado un estado de \u00E1nimo bajo durante 5 d\u00EDas consecutivos en nuestra aplicaci\u00F3n de salud mental.\n\n") +
+                        "Dado que el bienestar de nuestros usuarios es nuestra m\u00E1xima prioridad, consideramos importante que est\u00E9 al tanto de esta situaci\u00F3n para que pueda brindarle el apoyo necesario. Le recomendamos que se comunique con ".concat(usuario === null || usuario === void 0 ? void 0 : usuario.nombre, " ").concat(usuario === null || usuario === void 0 ? void 0 : usuario.apellidos, " para ofrecerle su ayuda y, si lo considera oportuno, consultar con un profesional de la salud mental.\n\n") +
+                        "Si necesita m\u00E1s informaci\u00F3n o apoyo, no dude en ponerse en contacto con nosotros.\n\n" +
+                        "Atentamente,\n" +
+                        "El equipo de Take My Hand.")];
             case 5:
+                _b.sent();
+                _b.label = 6;
+            case 6:
                 _i++;
-                return [3 /*break*/, 3];
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 7: return [3 /*break*/, 11];
+            case 8: return [4 /*yield*/, typeorm_1.DB.getRepository(Pacientes_1.Pacientes).findOne({
+                    where: { id_usuario: id_usuario },
+                    relations: ['profesional_asociado']
+                })];
+            case 9:
+                paciente = _b.sent();
+                if (!((_a = paciente === null || paciente === void 0 ? void 0 : paciente.profesional_asociado) === null || _a === void 0 ? void 0 : _a.email)) return [3 /*break*/, 11];
+                // 8. Enviar un correo al profesional asignado
+                return [4 /*yield*/, (0, mail_helper_1.sendEmail)(paciente.profesional_asociado.email, "Alerta: Estado de ánimo bajo", "Estimado/a profesional,\n\n" +
+                        "Le informamos que su paciente ".concat(usuario === null || usuario === void 0 ? void 0 : usuario.nombre, " ").concat(usuario === null || usuario === void 0 ? void 0 : usuario.apellidos, " ha reportado un estado de \u00E1nimo bajo durante 5 d\u00EDas consecutivos en nuestra aplicaci\u00F3n de salud mental.\n\n") +
+                        "Consideramos importante que est\u00E9 al tanto de esta situaci\u00F3n para que pueda tomar las medidas necesarias para ofrecerle apoyo y asistencia.\n\n" +
+                        "Atentamente,\n" +
+                        "El equipo de Take My Hand.")];
+            case 10:
+                // 8. Enviar un correo al profesional asignado
+                _b.sent();
+                _b.label = 11;
+            case 11: return [2 /*return*/];
         }
     });
 }); };

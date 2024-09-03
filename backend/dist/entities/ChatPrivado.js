@@ -27,7 +27,7 @@ var ChatPrivado = /** @class */ (function () {
         __metadata("design:type", Number)
     ], ChatPrivado.prototype, "id_receptor", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'longtext' }),
         __metadata("design:type", String)
     ], ChatPrivado.prototype, "mensaje", void 0);
     __decorate([

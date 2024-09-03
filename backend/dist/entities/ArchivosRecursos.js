@@ -20,7 +20,7 @@ var ArchivosRecursos = /** @class */ (function () {
         __metadata("design:type", Number)
     ], ArchivosRecursos.prototype, "id", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'longtext' }),
         __metadata("design:type", String)
     ], ArchivosRecursos.prototype, "nombre_archivo", void 0);
     __decorate([

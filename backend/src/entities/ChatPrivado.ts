@@ -13,7 +13,7 @@ export class ChatPrivado {
   @Column()
   id_receptor!: number;
 
-  @Column()
+  @Column({type: 'longtext'})
   mensaje!: string;
 
   @Column()

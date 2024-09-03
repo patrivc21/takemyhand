@@ -12,6 +12,7 @@ const multipartMiddleware = multipart({ uploadDir: 'assets' })
 router.post('/addEventoCalendario', [eventoController.addEventoCalendario]); //AuthGuard,
 router.post('/updateEventoCalendario', [eventoController.updateEventoCalendario]); //AuthGuard,
 router.post('/deleteEventoCalendario', [eventoController.deleteEventoCalendario]); //AuthGuard,
-router.post('/getEventosUsuario', [eventoController.getEventosUsuario]);
+router.post('/getEventosUsuario', AuthGuard, [eventoController.getEventosUsuario]);
+router.post('/getOneEvento', AuthGuard, [eventoController.getOneEventoC]);
 
 export default router;

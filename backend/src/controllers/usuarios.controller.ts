@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Usuarios } from '../entities/Usuarios';
-import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion, buscarPublis, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas} from '../services/usuarios.service';
+import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion, buscarPublis, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas, getAllPublicacionesUser, updatePublicacion} from '../services/usuarios.service';
 import authHelper from '../helpers/auth.helper';
 import { sendLoginEmail } from '../helpers/mail.helper';
 
 import { addPaciente, updatePacientesService} from '../services/pacientes.service';
 import { addProfesional, updateProfesionalesService} from '../services/profesional.service';
 import { addAdmin} from '../services/administradores.service';
+import { HiloUsuarios } from '../entities/HiloUsuarios';
 
 
 
@@ -61,7 +62,7 @@ const register = async (req: Request, res: Response) => {
     let user = req.body;
 
     try {
-        console.log(user)
+        console.log('1', user)
         let exist_user = await getUserByEmail(user.email);
 
         if (exist_user) {
@@ -81,7 +82,7 @@ const register = async (req: Request, res: Response) => {
         if(user.rol == 1){
             await addAdmin({ ...user, id_usuario: result.id })
         }else if(user.rol == 2){
-            await addPaciente({ ...user, id_usuario: result.id })
+            await addPaciente({ ...user, id_usuario: result.id, resultado_formulario: 0 })
         }else if(user.rol == 3){
             await addProfesional({ ...user, id_usuario: result.id })
         }
@@ -225,7 +226,7 @@ export const addPublicacionC = async (req: Request, res: Response) => {
         resp.cod = 200;
     } catch (error) {
         console.log(error as string);
-        resp.msg = error as string;
+        resp.msg = (error as Error).message || 'Error inesperado';
         resp.cod = 500;
     }
     return res.json(resp);
@@ -260,28 +261,6 @@ export const getAllPublicacionesControllers = async (_req:Request, res:Response)
     res.json(resp); 
 }
 
-
-
-export const deletePublicacionesController = async (req: Request, res: Response) => {
-    let resp = new RespGeneric();
-    try {
-        const ids: number[] = req.body.ids;
-
-        if (!ids || !Array.isArray(ids)) {
-            return res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' });
-        }
-
-        let result = await deletePublicacion(ids);
-        resp.cod = result ? 200 : 400;
-        resp.data = {result};
-        resp.msg = "Publicaciones de profesionales eliminados con exito."
-
-    } catch (e) {
-        resp.msg = e as string;
-        resp.cod = 500;
-        resp.msg = "Error al eliminar publicaciones de profesionales "
-    }
-};
 
 
 export const buscarC = async (req:Request, res:Response) => {
@@ -338,9 +317,58 @@ export const getRespuestasC = async (req:Request, res:Response) => {
     res.json(resp);
 }
 
+export const getAllPublisUser = async (req:Request, res:Response) => {
+    let resp = new RespGeneric();
+    try {
+        let body = req.body.id_usuario;
+        let publis = await getAllPublicacionesUser(body);
+        resp.data = {publis};
+        resp.cod = 200;
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp);
+}
+
+export const updatePublicaciones = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        let publis : HiloUsuarios = req.body as HiloUsuarios;
+        let result = await updatePublicacion(publis);
+        resp.cod = result ? 200 : 400;
+        resp.data = {evento: result};
+    }
+    catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+    }
+    res.json(resp)
+}
+
+export const deletePublicaciones = async (req: Request, res: Response) => {
+    let resp = new RespGeneric();
+    try {
+        const ids: number[] = req.body.ids;
+
+        if (!ids || !Array.isArray(ids)) {
+            return res.status(400).json({ message: 'Invalid request. Please provide an array of IDs.' });
+        }
+
+        let result = await deletePublicacion(ids);
+        resp.cod = result ? 200 : 400;
+        resp.data = {result};
+        resp.msg = "Publicaciones eliminadas con exito."
+
+    } catch (e) {
+        resp.msg = e as string;
+        resp.cod = 500;
+        resp.msg = "Error al eliminar publicaciones"
+    }
+};
 
 
 export default { addNewUser, getAllUsersControllers, getOneUserController, login, register, getAllRolesC, updateUsuarios, getUserByEmailC, getAllUsersExceptMeC,
-    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, deletePublicacionesController, buscarC,
-    addRespuesta, getRespuestasC
+    addPublicacionC, getOnePublicacionController, getAllPublicacionesControllers, buscarC,
+    addRespuesta, getRespuestasC, getAllPublisUser, updatePublicaciones, deletePublicaciones
 };

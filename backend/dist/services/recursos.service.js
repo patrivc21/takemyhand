@@ -40,7 +40,7 @@ exports.getRecursos = void 0;
 var typeorm_1 = require("../config/typeorm");
 var Recursos_1 = require("../entities/Recursos");
 var getRecursos = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var incentivos;
+    var recursos;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(Recursos_1.Recursos)
@@ -49,8 +49,8 @@ var getRecursos = function () { return __awaiter(void 0, void 0, void 0, functio
                     .orderBy('r.id', 'DESC')
                     .getMany()];
             case 1:
-                incentivos = _a.sent();
-                return [2 /*return*/, incentivos];
+                recursos = _a.sent();
+                return [2 /*return*/, recursos];
         }
     });
 }); };

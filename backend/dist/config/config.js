@@ -19,6 +19,8 @@ var envSchema = Joi.object({
     SECRET_KEY: Joi.string().required(),
     SECRET_KEY_EMAIL: Joi.string().required(),
     EMAIL_USER: Joi.string().required(),
+    API_KEY: Joi.string().required(),
+    ORGANIZATION: Joi.string().required(),
 }).unknown().required();
 var _a = envSchema.validate(process.env), error = _a.error, value = _a.value;
 if (error) {
@@ -36,7 +38,9 @@ var configEnv = {
     FRONTEND_URL: value.FRONTEND_URL,
     SECRET_KEY: value.SECRET_KEY,
     SECRET_KEY_EMAIL: value.SECRET_KEY_EMAIL,
-    EMAIL_USER: value.EMAIL_USER
+    EMAIL_USER: value.EMAIL_USER,
+    API_KEY: value.API_KEY,
+    ORGANIZATION: value.ORGANIZATION
 };
 exports.default = configEnv;
 //# sourceMappingURL=config.js.map

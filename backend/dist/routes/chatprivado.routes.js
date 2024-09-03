@@ -5,12 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var chatprivado_controller_1 = __importDefault(require("../controllers/chatprivado.controller"));
+var auth_guard_1 = require("../guards/auth.guard");
 var router = express_1.default.Router();
 var multer = require('multer');
 var upload = multer({ dest: "assets/" });
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: 'assets' });
-router.post('/addChatPrivado', [chatprivado_controller_1.default.addChatPrivado]); //AuthGuard,
-router.post('/getOneChatPrivado', [chatprivado_controller_1.default.getOneChatPrivado]);
+router.post('/addChatPrivado', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.addChatPrivado]); //AuthGuard,
+router.post('/getOneChatPrivado', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.getOneChatPrivado]);
+router.post('/buscador', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.buscadorC]);
+router.post('/prueba', [chatprivado_controller_1.default.pruebaC]);
 exports.default = router;
 //# sourceMappingURL=chatprivado.routes.js.map

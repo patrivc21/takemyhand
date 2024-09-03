@@ -220,20 +220,23 @@ var addEstadoAnimoC = function (req, res) { return __awaiter(void 0, void 0, voi
                 resp = new RespGeneric_1.default();
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
+                _a.trys.push([1, 4, , 5]);
                 estado = req.body;
                 return [4 /*yield*/, (0, pacientes_service_1.addEstadoAnimo)(estado)];
             case 2:
                 result = _a.sent();
+                return [4 /*yield*/, (0, pacientes_service_1.verificarEstadoAnimo)(estado.id_usuario)];
+            case 3:
+                _a.sent();
                 resp.msg = "Estado paciente añadido con exito";
                 resp.cod = result ? 200 : 400;
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 5];
+            case 4:
                 e_7 = _a.sent();
                 resp.msg = e_7;
                 resp.cod = 500;
-                return [3 /*break*/, 4];
-            case 4:
+                return [3 /*break*/, 5];
+            case 5:
                 res.json(resp);
                 return [2 /*return*/];
         }

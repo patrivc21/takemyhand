@@ -6,6 +6,7 @@ import { HiloUsuarios } from "../entities/HiloUsuarios";
 import { ArchivosHiloUsuario } from "../entities/ArchivosHiloUsuarios";
 import path from "path";
 import { RespuestaHiloUsuarios } from "../entities/RespuestaUsuarios";
+import { validarContenido } from "../helpers/validatorcontenido.helper";
 
 export const addUsuarios = async (usuarios: Usuarios): Promise<Usuarios> => {
     let res = await DB.getRepository(Usuarios).save(usuarios);
@@ -27,12 +28,15 @@ export const getAllUsers = async ():Promise<Usuarios[]> => {
 }
 
 export const getUserByEmail = async (email: string): Promise<Usuarios | null> => {
-    let user = await DB.getRepository(Usuarios).findOne({
-        where: [
-            { email: email }]
-    });
+    const user = await DB.getRepository(Usuarios)
+      .createQueryBuilder('u')
+      .leftJoinAndSelect('profesionales', 'p', 'p.id_usuario = u.id')
+      .leftJoinAndSelect('pacientes', 'pa', 'pa.id_usuario = u.id')
+      .where('u.email = :email', { email })
+      .getOne();
+  
     return user;
-}
+  }
 
 export const getAllRoles = async ():Promise<RolUsuarios[]> => {
     let roles = await DB.getRepository(RolUsuarios).find();
@@ -59,28 +63,33 @@ export const getAllUsersExceptMe = async (id: number): Promise<Usuarios[]> => {
     return users;
 }
 
+  
 
 export const addPublicacion = async (publicacion: any): Promise<any> => {
-    let datos = {
-      fecha_hora: new Date(),
-      titulo: publicacion.titulo,
-      mensaje: publicacion.mensaje,
-      id_usuario: publicacion.id_usuario,
-      archivo_adjunto: ''
-    };
+    // Validar el contenido del mensaje
+    if (!validarContenido(publicacion.mensaje)) {
+        throw new Error('El mensaje contiene contenido inapropiado.');
+    }
 
-    console.log('datos1', datos)
+    let datos = {
+        fecha_hora: new Date(),
+        titulo: publicacion.titulo,
+        mensaje: publicacion.mensaje,
+        id_usuario: publicacion.id_usuario,
+        archivo_adjunto: ''
+    };
 
     let res = await DB.getRepository(HiloUsuarios).save(datos);
     return res;
 }
 
-export const addArchivoPublicacion = async (plan: any, id: number): Promise<boolean> => {
+
+export const addArchivoPublicacion = async (publi: any, id: number): Promise<boolean> => {
     let filesSaved;
     
-      for (const key in plan) {
-          if (plan.hasOwnProperty(key)) {
-              const file = plan[key];
+      for (const key in publi) {
+          if (publi.hasOwnProperty(key)) {
+              const file = publi[key];
               let archivo_com = {
                   id_hilo: id,
                   archivo_adjunto: file ? path.basename(file.path) : '',
@@ -101,6 +110,16 @@ export const deletePublicacion = async(ids: number[]): Promise<boolean> => {
         console.error('Error al borrar las publicaciones:', error);
         return false;
     }
+}
+
+export const updatePublicacion = async(publicacion: any): Promise<boolean> => {
+    let publicacionToUpdate = await DB.getRepository(HiloUsuarios).findOneBy({id: publicacion.id});
+    let resp = null;
+    if(publicacionToUpdate){
+        Object.assign(publicacionToUpdate, publicacion);
+        resp = await DB.getRepository(HiloUsuarios).save(publicacionToUpdate);
+    }
+    return resp != null;
 }
 
 export const getAllPublicaciones = async ():Promise<HiloUsuarios[]> => {
@@ -150,6 +169,11 @@ export const buscarPublis = async (fechaInicio?: string, fechaFin?: string): Pro
     
 
   export const addRespuestaPublicacion = async (publicacion: any): Promise<any> => {
+     // Validar el contenido del mensaje
+     if (!validarContenido(publicacion.mensaje)) {
+        throw new Error('El mensaje contiene contenido inapropiado.');
+    }
+    
     let datos = {
       fecha_hora: new Date(),
       titulo: publicacion.titulo,
@@ -193,6 +217,18 @@ export const getRespuestas = async (id: number): Promise<any[]> => {
         .getMany();
 
     return respuestas;
+}
+
+export const getAllPublicacionesUser = async (id_usuario: number):Promise<HiloUsuarios[]> => {
+    let res = await DB.getRepository(HiloUsuarios)
+    .createQueryBuilder('h')
+    .leftJoinAndSelect('h.usuario', 'p')
+    .leftJoinAndSelect('h.archivos', 'a')
+    .where('h.id_usuario = :id_usuario', { id_usuario })
+    .orderBy('h.fecha_hora', 'DESC')
+    .getMany();
+
+    return res;
 }
 
 

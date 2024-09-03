@@ -10,10 +10,11 @@ const userSchema = Joi.object({
     username: Joi.string().required(),
     activo: Joi.boolean().default(true),
     rolpaciente: Joi.number(),
-    ciudad: Joi.string(),
-    direccion: Joi.string(),
-    latitud: Joi.number(),
-    longitud: Joi.number()
+    ciudad: Joi.string().optional().allow('').empty('').default(null),
+    direccion: Joi.string().optional().allow('').empty('').default(null),
+    latitud: Joi.number().optional().allow(null).default(null),
+    longitud: Joi.number().optional().allow(null).default(null),
+    resultado_formulario: Joi.number().optional().allow(null).default(null),
   });
   
 export const UserValidator = (req: Request, res: Response, next: NextFunction) => {

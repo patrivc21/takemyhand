@@ -105,6 +105,7 @@ export const addEstadoAnimoC = async (req: Request, res: Response) => {
     try {
         let estado : LoginRegister = req.body as LoginRegister;
         let result = await addEstadoAnimo(estado);
+        await verificarEstadoAnimo(estado.id_usuario); 
         resp.msg = "Estado paciente añadido con exito";
         resp.cod = result ? 200 : 400;
     }
@@ -119,7 +120,7 @@ export const addEstadoAnimoC = async (req: Request, res: Response) => {
 export const verificarEstadoAnimoC = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
     try {
-        const { id_usuario } = req.body;  // Suponiendo que el id_usuario se pasa en el cuerpo de la solicitud
+        const { id_usuario } = req.body; 
         
         if (!id_usuario) {
             resp.msg = "El ID del usuario es requerido";

@@ -23,10 +23,13 @@ router.post('/getAllUsersExceptMe', AuthGuard,  [usuariosController.getAllUsersE
 router.post('/addPublicacion', AuthGuard, multipartMiddleware, [usuariosController.addPublicacionC]);
 router.post('/getOnePubli', AuthGuard, [usuariosController.getOnePublicacionController]);
 router.get('/getAllPublis', AuthGuard, [usuariosController.getAllPublicacionesControllers]);
-router.post('/deletePubli', AuthGuard, [usuariosController.deletePublicacionesController]);
+router.post('/deletePubli', AuthGuard, [usuariosController.deletePublicaciones]);
 router.post('/buscar', AuthGuard, [usuariosController.buscarC]);
+router.post('/getPublisUser', AuthGuard,  [usuariosController.getAllPublisUser]);
+router.post('/updatePubli', AuthGuard, [usuariosController.updatePublicaciones]);
 
-router.post('/addRespuesta', multipartMiddleware, [usuariosController.addRespuesta]);
-router.post('/getRespuestas', [usuariosController.getRespuestasC]);
+
+router.post('/addRespuesta', AuthGuard, multipartMiddleware, [usuariosController.addRespuesta]);
+router.post('/getRespuestas', AuthGuard, [usuariosController.getRespuestasC]);
 
 export default router;

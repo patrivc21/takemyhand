@@ -12,7 +12,7 @@ var upload = multer({ dest: "assets/" });
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: 'assets' });
 router.post('/addPaciente', [pacientes_controller_1.default.addNewPaciente]);
-router.get('/getOnePaciente', auth_guard_1.AuthGuard, [pacientes_controller_1.default.getOnePacienteController]);
+router.post('/getOnePaciente', auth_guard_1.AuthGuard, [pacientes_controller_1.default.getOnePacienteController]);
 router.get('/getAllPacientes', auth_guard_1.AuthGuard, [pacientes_controller_1.default.getAllPacientesControllers]);
 router.get('/getAllRoles', auth_guard_1.AuthGuard, [pacientes_controller_1.default.getAllRolesC]);
 router.put('/updatePaciente', auth_guard_1.AuthGuard, [pacientes_controller_1.default.updatePaciente]);

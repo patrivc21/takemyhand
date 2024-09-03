@@ -3,8 +3,6 @@ import { Usuarios } from '../entities/Usuarios';
 import jwt from 'jsonwebtoken'
 import configEnv from '../config/config';
 
-export const ADMIN_CIF = "B29484821"
-
 export const hashPassword = async (password: string): Promise<string> => {
     const salt = await bcrypt.genSalt(10);
     return await bcrypt.hash(password, salt);

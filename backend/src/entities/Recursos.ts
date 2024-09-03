@@ -6,13 +6,13 @@ export class Recursos {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column()
+  @Column({type: 'text'})
   contenido!: string;
 
   @Column()
   titulo!: string;
 
-  @Column()
+  @Column({type: 'longtext'})
   url_video!: string;
 
   @OneToMany(() => ArchivosRecursos, archivo => archivo.recurso)

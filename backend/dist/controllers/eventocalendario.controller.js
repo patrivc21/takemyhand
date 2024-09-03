@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getEventosUsuario = exports.deleteEventoCalendario = exports.updateEventoCalendario = exports.addEventoCalendario = void 0;
+exports.getOneEventoC = exports.getEventosUsuario = exports.deleteEventoCalendario = exports.updateEventoCalendario = exports.addEventoCalendario = void 0;
 var RespGeneric_1 = __importDefault(require("../models/RespGeneric"));
 var eventoscalendario_service_1 = require("../services/eventoscalendario.service");
 var addEventoCalendario = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
@@ -157,5 +157,33 @@ var getEventosUsuario = function (req, res) { return __awaiter(void 0, void 0, v
     });
 }); };
 exports.getEventosUsuario = getEventosUsuario;
-exports.default = { addEventoCalendario: exports.addEventoCalendario, updateEventoCalendario: exports.updateEventoCalendario, deleteEventoCalendario: exports.deleteEventoCalendario, getEventosUsuario: exports.getEventosUsuario };
+var getOneEventoC = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var resp, body, result, e_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                resp = new RespGeneric_1.default();
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                body = req.body;
+                return [4 /*yield*/, (0, eventoscalendario_service_1.getOneEvento)(body.id)];
+            case 2:
+                result = _a.sent();
+                resp.data = result;
+                resp.cod = 200;
+                return [3 /*break*/, 4];
+            case 3:
+                e_5 = _a.sent();
+                resp.msg = e_5;
+                resp.cod = 500;
+                return [3 /*break*/, 4];
+            case 4:
+                res.json(resp);
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.getOneEventoC = getOneEventoC;
+exports.default = { addEventoCalendario: exports.addEventoCalendario, updateEventoCalendario: exports.updateEventoCalendario, deleteEventoCalendario: exports.deleteEventoCalendario, getEventosUsuario: exports.getEventosUsuario, getOneEventoC: exports.getOneEventoC };
 //# sourceMappingURL=eventocalendario.controller.js.map

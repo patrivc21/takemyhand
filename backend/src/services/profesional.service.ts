@@ -7,6 +7,7 @@ import { ArchivosHiloProf } from "../entities/ArchivosHiloProf";
 import { Recursos } from "../entities/Recursos";
 import { ArchivosRecursos } from "../entities/ArchivosRecursos";
 import { RespuestaHiloProfesionales } from "../entities/RespuestaProfesionales";
+import { validarContenido } from "../helpers/validatorcontenido.helper";
 
 export const addProfesional = async (admin: Profesionales): Promise<boolean> => {
     let res = await DB.getRepository(Profesionales).save(admin);
@@ -57,6 +58,11 @@ export const deleteProfesionalesService = async(ids: number[]): Promise<boolean>
 }
 
 export const addPublicacion = async (publicacion: any): Promise<any> => {
+     // Validar el contenido del mensaje
+     if (!validarContenido(publicacion.mensaje)) {
+        throw new Error('El mensaje contiene contenido inapropiado.');
+    }
+    
     let datos = {
       fecha_hora: new Date(),
       titulo: publicacion.titulo,
@@ -140,7 +146,7 @@ export const buscarPublis = async (fechaInicio?: string, fechaFin?: string): Pro
   
     let res = await query.getMany();
     return res;
-  };
+};
 
   
 
@@ -202,6 +208,11 @@ export const getProfByCiudad = async (ciudad: string): Promise<Profesionales[]> 
 
 
 export const addRespuestaPublicacion = async (publicacion: any): Promise<any> => {
+     // Validar el contenido del mensaje
+     if (!validarContenido(publicacion.mensaje)) {
+        throw new Error('El mensaje contiene contenido inapropiado.');
+    }
+
     let datos = {
       fecha_hora: new Date(),
       titulo: publicacion.titulo,
@@ -247,3 +258,23 @@ export const getRespuestas = async (id: number): Promise<any[]> => {
     return respuestas;
 }
 
+export const getAllPublicacionesUser = async (id_profesional: number):Promise<HiloProfesionales[]> => {
+    let res = await DB.getRepository(HiloProfesionales)
+        .createQueryBuilder('h')
+        .leftJoinAndSelect('h.profesional', 'p')
+        .leftJoinAndSelect('h.archivos', 'a')
+        .where('h.id_profesional = :id_profesional', { id_profesional })
+        .getMany();
+
+    return res;
+}
+
+export const updatePublicacion = async(publicacion: any): Promise<boolean> => {
+    let publicacionToUpdate = await DB.getRepository(HiloProfesionales).findOneBy({id: publicacion.id});
+    let resp = null;
+    if(publicacionToUpdate){
+        Object.assign(publicacionToUpdate, publicacion);
+        resp = await DB.getRepository(HiloProfesionales).save(publicacionToUpdate);
+    }
+    return resp != null;
+}

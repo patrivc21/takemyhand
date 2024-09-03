@@ -21,7 +21,7 @@ var ArchivosHiloUsuario = /** @class */ (function () {
         __metadata("design:type", Number)
     ], ArchivosHiloUsuario.prototype, "id", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'longtext' }),
         __metadata("design:type", String)
     ], ArchivosHiloUsuario.prototype, "archivo_adjunto", void 0);
     __decorate([
