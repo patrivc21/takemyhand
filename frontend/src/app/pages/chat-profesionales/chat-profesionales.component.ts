@@ -126,6 +126,10 @@ export class ChatProfesionalesComponent {
     this.router.navigate(['/home']);
   }
 
+  public verListado(){
+    this.router.navigate(['/foroprofesionales/listado']);
+  }
+
   public responder(id: number) {
     this.showResponder = true
     this.responderSelect = id

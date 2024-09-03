@@ -10,19 +10,23 @@
     <div class="menu-item-center">
         <h1 style="color: #167496; font-family: 'Monserrat';">Foro Profesionales</h1>
     </div>
+    <div class="menu-item-right" *ngIf="usuario.rol === 3">
+      <p-button (onClick)="verListado()" class="boton-tabla-inverso2 ml-2">Mis publicaciones</p-button>
+  </div>
   </div>
 
   <div class="barra">
     <h3 class="tituloG2">Filtre su búsqueda</h3>
     <div class="organizacion">
-        <p-calendar dateFormat="dd-mm-yy" class="calendario-rango" [(ngModel)]="rangeDates" selectionMode="range" placeholder="Filtrar por fecha" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+        <p-calendar dateFormat="dd-mm-yy" class="calendario-rango" [(ngModel)]="rangeDates" selectionMode="range" placeholder="Filtrar por fecha" 
+        [readonlyInput]="true" [showIcon]="true"></p-calendar>
         <p-button class="leer-mas" (click)="search()">Filtrar búsqueda</p-button>
         <p-button class="leer-mas" (click)="limpiar()">Limpiar búsqueda</p-button>
     </div>
   </div>
 
   <div class="timeline-container">
-    <div class="crear-publicacion-btn mt-4 ml-4">
+    <div class="crear-publicacion-btn mt-4 ml-4" *ngIf="usuario.rol == 3">
       <p-button class="leer-mas2" icon="pi pi-plus" iconPos="right" (onClick)="crearPubli = true" label="Crear publicación"/>
     </div>
 
@@ -41,8 +45,8 @@
             </div>
           </div>
           <p-button label="Leer más" (click)="readMore(comment.id)" class="leer-mas"></p-button>
-          <div class="d-flex flex-column justify-content-center">
-            <p-button label="Responder" (click)="responder(comment.id)" class="respuesta d-flex justify-content-end"></p-button>
+          <div class="d-flex flex-column justify-content-center mt-4">
+            <p-button label="Responder" (click)="responder(comment.id)" class="respuesta d-flex justify-content-end mt-4"></p-button>
             <p-button 
             [label]="respuestasVisibles[comment.id] ? 'Cerrar respuestas' : 'Ver respuestas'" 
             (click)="verRespuestas(comment.id)" 
@@ -91,6 +95,6 @@
   </div>
 </p-dialog>
 
-<div *ngIf="showResponder">
+<div *ngIf="showResponder" class="mt-4">
     <app-respuesta (res)="cerrarResponder()" [id]="responderSelect"></app-respuesta>
 </div>

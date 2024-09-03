@@ -1,3 +1,4 @@
+
 <div class="fondo">
   <div class="menu-container mb-2" >
     <div class="menu-item-left">
@@ -8,6 +9,16 @@
   <div class="container">
       <div class="users-list" *ngIf="(users$ | async) as users">
           <h2 class="ml-3 mt-2">Chats</h2>
+          <p-dropdown class="d-flex flex-align-center ml-2" [style]="{'width': '23rem'}" placeholder="Buscar perfiles..." 
+                [options]="users$ | async" [filter]="true" filterBy="nombre" appendTo="body" optionLabel="nombre" 
+                [(ngModel)]="selectedUser" (onChange)="selectUser(selectedUser)">
+                <ng-template let-user pTemplate="item">
+                    <div class="flex align-items-center gap-2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" style="width: 18px" />
+                    <div>{{ user.nombre }} {{user.apellidos}}</div>
+                    </div>
+                </ng-template>
+            </p-dropdown>
         <ul>
           <li *ngFor="let user of users" (click)="selectUser(user)">
             {{ user.nombre }} {{ user.apellidos }}

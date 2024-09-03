@@ -1,13 +1,14 @@
 .fondo {
-    position: relative;               /* Necesario para el pseudo-elemento */
-    overflow: hidden;                 /* Evita desbordes */
-    height: 100vh;                    /* Ocupa toda la altura de la ventana */
-    width: 100%;                      /* Ocupa todo el ancho */
+    position: relative;              
+    overflow: hidden;                 
+    height: 100vh;                   
+    width: 100%;     
+    overflow-y: scroll;                
 }
 
 .fondo::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -16,8 +17,8 @@
     background-size: cover;         
     background-position: center;     
     background-repeat: no-repeat;    
-    filter: blur(8px);               /* Aplica el efecto de desenfoque */
-    z-index: -1;                      /* Asegura que esté detrás del contenido */
+    filter: blur(8px);              
+    z-index: -1;                     
 }
 
 .texto {
@@ -43,11 +44,11 @@
 .content-container {
     width: 60%;
     margin: 0 auto;
-    background-color: #f9f9f9;
+    background-color: #f9f9f985;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 50%;
+    height: auto;
 }
 
 .section {
@@ -84,7 +85,7 @@ h3 {
     justify-content: center;
     align-items: center;
     height: 90%;
-    background-color: #f9f9f9;
+    background-color: transparent;
     border-radius: 10px;
 }
 

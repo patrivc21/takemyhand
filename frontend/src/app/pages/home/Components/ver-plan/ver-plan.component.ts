@@ -39,22 +39,32 @@ export class VerPlanComponent {
 
   public iniciar(){
     this.planState.getOnePlan(this.usuario.id).pipe(take(1)).subscribe(dat => {
-      console.log(dat)
-      this.plan = dat.data.plan
-      this.plan.lugares = this.convertToArray(this.plan.p_lugares);
-      this.plan.personas = this.convertToArray(this.plan.p_personas);
-      this.plan.hobbies = this.convertToArray(this.plan.p_hobbies);
-      this.plan.nombre_archivo = this.convertToArrayImage(this.plan.archivos);
-    })
+      if (dat.data && dat.data.plan && dat.data.plan.length > 0) {
+        const planData = dat.data.plan[0]; // Accede al primer elemento del array
+        console.log(planData);
+        
+        this.plan = {
+          lugares: this.convertToArray(planData.p_lugares),
+          personas: this.convertToArray(planData.p_personas),
+          hobbies: this.convertToArray(planData.p_hobbies),
+          nombre_archivo: this.convertToArrayImage(planData.archivos)
+        };
+      }else {
+        this.plan = null; // Si no hay plan, asegúrate de que 'plan' sea null
+      }
+    });
+  
+    console.log(this.plan);
   }
-
+  
   public convertToArray(data: string): string[] {
     return data ? data.split(';').map(item => item.trim()) : [];
   }
-
+  
   public convertToArrayImage(data: string): string[] {
     return data ? data.split(',').map(item => item.trim()) : [];
   }
+  
 
   public volver(){
     this.router.navigate(['/home']);

@@ -89,6 +89,13 @@ ol, ul {
   font-family: "Monserrat";
 }
 
+.button-remove .p-button{
+  background-color: #167496;
+  color: white;
+  border: none;
+  font-family: "Monserrat";
+}
+
 .boton-borrar .p-button{
   background-color: #de4c4c;
   color: white;
@@ -119,7 +126,7 @@ ol, ul {
 }
 
 .boton-tabla-inverso2 .p-button{
-  background-color: white;
+  background-color: transparent;
   color: #167496;
   border: none;
   font-family: "Monserrat";
@@ -237,5 +244,9 @@ a {
 .fc .fc-timegrid-slot {
   border-bottom: 0px;
   height: 2.5rem;
+}
+
+.carousel-item .p-carousel #pn_id_1 .p-carousel-item{
+background-color: transparent;
 }
 

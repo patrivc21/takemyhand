@@ -37,5 +37,15 @@ export class EventoCalendarioService {
     )
   }
 
+  public getOneEvento(id:number): Observable<any> {
+    return this.http.post<any>(`${BACKEND_API}/getOneEvento`, {id}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener el evento'))
+      })
+    )
+  }
 
 }

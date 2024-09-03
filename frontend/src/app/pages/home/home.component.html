@@ -29,10 +29,10 @@
             <p-dropdown class="d-flex flex-align-center" [style]="{'width': '22rem'}" placeholder="Buscar perfiles..." 
                 [options]="users$ | async" [filter]="true" filterBy="nombre" appendTo="body" optionLabel="nombre" 
                 [(ngModel)]="selectedPerfil" (onChange)="buscar()">
-                <ng-template let-country pTemplate="item">
+                <ng-template let-user pTemplate="item">
                     <div class="flex align-items-center gap-2">
                     <img src="https://cdn-icons-png.flaticon.com/512/20/20079.png" style="width: 18px" />
-                    <div>{{ country.nombre }} {{country.apellidos}}</div>
+                    <div>{{ user.nombre }} {{user.apellidos}}</div>
                     </div>
                 </ng-template>
             </p-dropdown>
@@ -57,6 +57,16 @@
                 </div>
             </div>
         </div>
+
+        <div class="d-flex justify-content-center mt-4 mb-4" *ngIf="paciente.rolpaciente == 2">
+            <div class="w-50">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h1 class="texto-home text-align-center">Ayuda a los demás contando tu historia de superación</h1>
+                    <p class="texto-home-small">Como paciente recuperado, nos gustaría que ayudases a los demás contando tu historia de superación. ¡Es sólo un momento!</p>
+                    <p-button class="boton-form" label="Historia de superación" icon="pi pi-receipt" iconPos="right" (click)="displayRecurso = true"></p-button>
+                </div>
+            </div>
+        </div>
     </ng-container>
       
     
@@ -65,8 +75,8 @@
             <div class="w-50">
                 <div class="d-flex flex-column justify-content-center align-items-center">
                     <h1 class="texto-home text-align-center">Añadir recursos</h1>
-                    <p class="texto-home-small">TakeMyHand es tu nuevo lugar seguro. Aquí podrás expresar tus emociones con total privacidad y estarás acompañado siempre de los mejores profesionales. Para ello realizamos de forma completamente gratuita un formulario que evaluará tu estado actual. ¡Comienza rellenado el formulario ahora!</p>
-                    <p-button class="boton-form" label="Rellena el formulario" icon="pi pi-receipt" iconPos="right" (click)="displayRecurso = true" ></p-button>
+                    <p class="texto-home-small">Construyamos un espacio seguro donde los usuarios puedan aprender y descubrir nuevas herramientas para gestionar sus crisis. Ayúdanos añadiendo recursos</p>
+                    <p-button class="boton-form" label="Añadir recursos" icon="pi pi-receipt" iconPos="right" (click)="displayRecurso = true" ></p-button>
                 </div>
             </div>
         </div>
@@ -80,7 +90,7 @@
     <app-recursos-home (res)="cerrar()" ></app-recursos-home>
 </div>
 
-<p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '100%', height: '100%'}" [draggable]="false" [maximizable]="true" [resizable]="false" (onHide)="cerrarBusqueda()">
+<p-dialog header="Ver Perfil" [(visible)]="perfilBusqueda" [modal]="true" [style]="{width: '40%', height: '60%'}" [draggable]="false" [maximizable]="true" [resizable]="false" (onHide)="cerrarBusqueda()">
     <div *ngIf="selectedPerfil" class="d-flex flex-column justify-content-center align-items-start p-4">
         <table class="table table-borderless w-100">
             <tr>
@@ -110,15 +120,8 @@
         </table>
     </div>
 
-    <div *ngIf="selectedPerfil?.id" class="d-flex justify-content-start mb-4 mr-4">
-        <!-- <button pButton type="button" label="Iniciar chat" icon="pi pi-comments" class="p-button-rounded p-button-success" 
-                (click)="abrirChat()">
-        </button> -->
-        <app-chat *ngIf="perfilBusqueda" [id_receptor]="selectedPerfil.id" (res)="cerrarBusqueda()"></app-chat>
-    </div>
-
-    <div class="d-flex justify-content-start align-items-center mt-4">
-      <p-button label="Cancelar" icon="pi pi-times" class="p-button-rounded p-button-secondary" (onClick)="cerrarBusqueda()"></p-button>
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <p-button label="Cancelar" icon="pi pi-times" class="boton-form" (onClick)="cerrarBusqueda()"></p-button>
     </div>
 </p-dialog>
 
@@ -132,7 +135,7 @@
       </p-dialog>
 </ng-container>
 
-<ng-container *ngIf="(showEstado$ | async)">
+<ng-container *ngIf="(showEstado$ | async) && paciente.rolpaciente != 2">
     <p-dialog header="Valora tu estado de ánimo" [visible]="(showEstado$ | async)" modal="true" [closable]="false">
         <h2>¿Cómo te encuentras hoy?</h2>
 

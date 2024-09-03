@@ -8,6 +8,9 @@ import { DialogModule } from 'primeng/dialog'
   selector: 'app-map-view',
   standalone: true,
   template: `
+  <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
+  <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
+
   <p-dialog header="Mapa" [(visible)]="display" [modal]="true" [style]="{ width: '60vw' }" [draggable]="false" [resizable]="false" (onHide)="cerrarMapa()">
     <div class="text-center h-1rem" style="font-family: 'Monserrat';">
       <p>{{ this.address }}</p>
@@ -47,10 +50,10 @@ export class MapaViewComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     const center: [number, number] = [this.longitud, this.latitud];
-
+    
     this.map = new Map({
       container: this.mapContainer.nativeElement,
-      style: 'https://maptiler.tdconsulting.es/styles/basic-preview/style.json',
+      style: 'https://api.maptiler.com/maps/streets/style.json?key=OS4MXVIthuJBVtK8RSRf',
       center,
       zoom: 17
     });

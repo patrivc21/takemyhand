@@ -19,8 +19,8 @@ export class FormularioService {
     return this.http.post<GenericResponse>(`${BACKEND_API}/cuestionarioPlutchik`, { id_usuario, cuestionario }).pipe(shareReplay());
   }
 
-  public getOnePlan(id: number): Observable<GenericResponse> {
-    return this.http.post<GenericResponse>(`${BACKEND_API}/getOnePlan`, { id }).pipe(shareReplay());
-  }
+  // public getOnePlan(id: number): Observable<GenericResponse> {
+  //   return this.http.post<GenericResponse>(`${BACKEND_API}/getOnePlan`, { id }).pipe(shareReplay());
+  // }
 
 }

@@ -37,4 +37,15 @@ export class PacientesService {
     return this.http.post<GenericResponse>(`${BACKEND_API}/addEstadoAnimo`, estado).pipe(shareReplay());
   } 
 
+  public getOnePaciente(id: number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getOnePaciente`, {id}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener los pacientes'))
+      })
+    )
+  }
+
 }

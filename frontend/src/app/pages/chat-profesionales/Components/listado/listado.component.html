@@ -1,0 +1,58 @@
+<div class="fondo">
+    <ng-container *ngIf="(allPublisUser$ | async) as publis">
+      <div class="mt-6">
+        <div class="flex flex-row mb-3">
+          <p-button icon="pi pi-arrow-left" class="boton-tabla mr-4" (onClick)="volver()"></p-button>
+          <h2>Total Publicaciones de {{usuario.nombre}} {{usuario.villalba}}</h2>
+        </div>
+  
+        <div class="d-flex justify-content-end align-items-end mb-3 ml-4">
+          <div class="d-flex align-items-end">
+            <p-button icon="pi pi-download" class="boton-tabla-inverso2 mr-4" (onClick)="descargarExcel()"></p-button>
+          </div>
+        </div>
+       
+        <p-table
+          #dt1
+          [value]="publis"
+          [paginator]="true"
+          [rows]="10"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Página {currentPage} de {totalPages}"
+          styleClass="p-datatable-sm"
+          [(selection)]="publisSeleccionados"
+        >
+          <ng-template pTemplate="header">
+            <tr>
+              <th *ngIf="publisSeleccionados.length > 0"><p-button icon="pi pi-trash" class="boton-borrar" (onClick)="borrarPublicaciones()"></p-button></th>
+              <th></th>
+              <th class="text-header-table">Nombre</th>
+              <th class="text-header-table">Título publicación</th>
+              <th class="text-header-table">Fecha</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-pro>
+            <tr>
+              <td>
+                <p-tableCheckbox [value]="pro.id"></p-tableCheckbox>
+              </td>
+              <td *ngIf="publisSeleccionados.length > 0"></td>
+              <td class="text-center">{{ pro.profesional.nombre }}</td>
+              <td class="text-center">{{ pro.titulo }}</td>
+              <td class="text-center">{{ pro.fecha_hora | date:'dd-MM-yyyy HH:mm'}} </td>
+              <td class="text-center">
+                <p-button icon="pi pi-pencil" class="boton-tabla" (onClick)="editarPubli(pro.id)"></p-button>
+             </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      
+      
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="viewEditar">
+    <app-editar [id_publi]="idSelec"></app-editar>
+</div>

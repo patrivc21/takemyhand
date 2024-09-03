@@ -34,7 +34,10 @@
           <input id="email" type="email" pInputText formControlName="email" class="w-full" />
           <label for="email">Email *</label>
         </span>
-        <small class="ml-2 p-error block" *ngIf="email?.invalid && (email?.dirty||email?.touched)">Email es requerido y debe ser válido</small>
+        <small class="ml-2 p-error block" *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          <span *ngIf="email?.errors?.['required']">Email es requerido</span>
+          <span *ngIf="email?.errors?.['email']">Debe introducir un email válido</span>
+        </small>      
       </div>
 
       <div class="field mt-5 mb-4">
@@ -72,6 +75,13 @@
           <label for="direccion">Dirección consulta</label>
         </span>
       </div> 
+
+      <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
+        <span class="p-float-label">
+          <input id="ciudad" type="text" pInputText formControlName="ciudad" class="w-full" />
+          <label for="ciudad">Ciudad dirección consulta</label>
+        </span>
+      </div>  
       
       <div class="field mt-5 mb-4" *ngIf="rol?.value === 3">
         <span class="p-float-label">

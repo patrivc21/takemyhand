@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GenericResponse } from '../interfaces/GenericResponse';
 import { PlanService } from '../services/planseguridad.service';
 import { PlanSeguridad } from '../interfaces/PlanSeguridad';
+import { ToastrService } from 'ngx-toastr';
 
 interface IPlanState {
     onePlan?: any;
@@ -28,7 +29,7 @@ export class PlanState {
         return this._state.getValue();
     }
 
-    constructor(private service: PlanService, private router: Router) { }
+    constructor(private service: PlanService, private readonly toastr: ToastrService) { }
 
     public reset(): void {
         this._state.next(this.initialState);
@@ -41,8 +42,9 @@ export class PlanState {
 		data.pipe(take(1)).subscribe((response) => {
 			if (response.cod == 200) {
 				this.getOnePlan(id_usuario)
-			}
-			else console.log(response);
+			}else{
+                this.toastr.error('El contenido de esta publicación no cumple con las políticas de la aplicación', 'Error')
+              }
 		});
         this.getOnePlan(id_usuario)
 		return data;

@@ -1,18 +1,19 @@
-import { ChangeDetectorRef, Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService } from 'primeng/api';
-import { AuthState } from 'src/app/state/auth.state';
-import { ProfesionalesState } from 'src/app/state/profesionales.state';
-import * as CKEditor from '@ckeditor/ckeditor5-build-classic';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FileUpload } from 'primeng/fileupload';
+import { AuthState } from 'src/app/state/auth.state';
+import * as CKEditor from '@ckeditor/ckeditor5-build-classic';
+import { take } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { ProfesionalesState } from 'src/app/state/profesionales.state';
 
 @Component({
-  selector: 'app-crear-publicacion',
-  templateUrl: './crear-publicacion.component.html',
-  styleUrls: ['./crear-publicacion.component.css']
+  selector: 'app-editar',
+  templateUrl: './editar.component.html',
+  styleUrls: ['./editar.component.css']
 })
-export class CrearPublicacionComponent {
+export class EditarComponent {
+  @Input() id_publi !: any
   @Output() res: EventEmitter<boolean> = new EventEmitter<boolean>()
   public Editor = CKEditor.default;  
   public editorConfig = {
@@ -20,10 +21,8 @@ export class CrearPublicacionComponent {
   };
   @ViewChild('fileUpload') fileUpload: FileUpload;
   private readonly authState = inject(AuthState);
-  private readonly fb = inject(FormBuilder)
-  private readonly confirmationService = inject(ConfirmationService)
   private readonly profState = inject(ProfesionalesState);
-  
+  private readonly fb = inject(FormBuilder)
   public form!: FormGroup;
   public enviado: boolean = false;
 
@@ -31,14 +30,29 @@ export class CrearPublicacionComponent {
   public img: File  
   public img_url: string | ArrayBuffer = null;
   public crearView = true
+  public BACKEND_FILES = environment.BACKEND_FILES
 
-  ngOnInit(): void {
-    this.generateLoginForm();
-    this.usuario = this.authState.getUser()
-  }
 
   constructor(private cdr: ChangeDetectorRef) {
     this.setStateSelector();
+  }
+
+  ngOnInit(): void {
+    this.generateLoginForm();
+    this.profState.getOnePubli(this.id_publi).pipe(take(1)).subscribe(dat => {
+      this.form.patchValue({
+        titulo: dat.data.result[0].titulo,
+        mensaje: dat.data.result[0].mensaje,
+        archivo_adjunto: dat.data.result[0].archivos[0]?.archivo_adjunto || ''
+      });
+
+      if (dat.data.result[0].archivos[0]?.archivo_adjunto) {
+        this.img_url = this.BACKEND_FILES + '/' + dat.data.result[0].archivos[0].archivo_adjunto;
+      } else {
+        this.img_url = null; 
+      }
+
+    })
   }
 
   private generateLoginForm(): void {
@@ -76,13 +90,9 @@ export class CrearPublicacionComponent {
 
   public crear(): void {
     let data = this.form.value
-    console.log(data)
-    console.log(this.img)
 
-  
-      this.profState.addPublicacion(this.img, this.usuario.id, data.titulo, data.mensaje)
-      this.cerrar()
-    
+    this.authState.addPublicacion(this.img, this.usuario.id, data.titulo, data.mensaje)
+    this.cerrar()
   }
 
   public cerrar(): void {
@@ -92,4 +102,5 @@ export class CrearPublicacionComponent {
   get titulo(): AbstractControl | null { return this.form.get('titulo'); }
   get mensaje(): AbstractControl | null { return this.form.get('mensaje'); }  
   get archivo_adjunto(): AbstractControl | null { return this.form.get('archivo_adjunto') }
+  
 }

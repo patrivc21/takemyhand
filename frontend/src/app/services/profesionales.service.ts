@@ -136,5 +136,40 @@ export class ProfesionalesService {
     )
   }
 
+  public updateProfesional(profesional: any):  Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/updateProfesional`, profesional).pipe(shareReplay());
+  } 
+
+  public getOneProfesional(id: number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getOneProfesional`, {id}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener los profesionales'))
+      })
+    )
+  }
+
+
+  public getPublisUser(id_profesional:number): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/getPublisUser`, {id_profesional}).pipe(
+      map((data) => {
+        return data
+      }),
+      catchError(() => {
+        return throwError(() => new Error('Error al obtener las publicaciones del usuario'))
+      })
+    )
+  }
+
+  public updateEvento(publis: any):  Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/updatePubli`, publis).pipe(shareReplay());
+  } 
+
+  public deletePublis(ids: number[]): Observable<GenericResponse> {
+    return this.http.post<GenericResponse>(`${BACKEND_API}/deletePubli`, { ids }).pipe(shareReplay());
+  }
+
 
 }

@@ -1,0 +1,30 @@
+
+.imagen-escuela {
+    border-radius: 5%;
+    width: 4rem;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+
+  .quitar-imagen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #f04848;
+    border: none;
+    outline: none;
+  }
+  
+  .quitar-imagen:before {
+    content: "x";
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  

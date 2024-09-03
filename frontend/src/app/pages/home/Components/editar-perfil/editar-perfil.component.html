@@ -57,6 +57,7 @@
     
           <div class="d-flex justify-content-center button-save-form">
             <p-button [loading]="loading" class="button-save-form" label="Editar" type="submit"></p-button>
+            <p-button *ngIf="usuario.rol===3" (onClick)="editarClinica = true" class="button-save-form ml-4" label="Editar ubicación clínica"></p-button>
           </div>
       </form>
     
@@ -88,6 +89,7 @@
               [rows]="10"
               [showCurrentPageReport]="true"
               styleClass="p-datatable-sm"
+              [(selection)]="evntosSeleccionados"
               >
                 <ng-template pTemplate="caption">
                   <div class="flex">
@@ -96,14 +98,26 @@
               </ng-template>
                 <ng-template pTemplate="header">
                   <tr>
+                    <th *ngIf="evntosSeleccionados.length > 0"><p-button icon="pi pi-trash" class="boton-borrar" (onClick)="borrarEventos()"></p-button></th>
+                    <th></th>
                     <th class="text-center">Titulo evento</th>
-                    <th class="text-center">Fecha y hora</th>
+                    <th class="text-center">Fecha y hora Inicio</th>
+                    <th class="text-center">Fecha y hora Fin</th>
+                    <th></th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-disp>
                   <tr>
+                    <td>
+                      <p-tableCheckbox [value]="disp.id"></p-tableCheckbox>
+                    </td>
+                    <td *ngIf="evntosSeleccionados.length > 0"></td>
                     <td class="text-center">{{ disp.nombre_evento }}</td>
-                    <td class="text-center">{{ disp.fecha_hora | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td class="text-center">{{ disp.fecha_hora_inicio | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td class="text-center">{{ disp.fecha_hora_fin | date:'dd-MM-yyyy HH:mm'}}</td>
+                    <td class="text-center">
+                       <p-button icon="pi pi-pencil" class="boton-tabla" (onClick)="editarEvento(disp.id)"></p-button>
+                    </td>
                   </tr>
                 </ng-template>
               </p-table>
@@ -125,22 +139,70 @@
               </div>
               
               <div class="field mt-5 mb-4">
-                  <span class="p-float-label">
                     <div class="d-flex flex-row justify-content-between">
-                      <div class="d-flex flex-column">
-                        <label class="label-horas">Fecha *</label>
-                        <p-calendar [firstDayOfWeek]="1" [style]="{'width': '95%'}" formControlName="fecha_hora" dateFormat="dd-mm-yy" appendTo="body"> </p-calendar>
+                      <div class="d-flex flex-column mr-6">
+                        <label class="label-horas">Fecha y hora de inicio *</label>
+                        <p-calendar [showTime]="true" hourFormat="24" [style]="{'width': '100%'}" formControlName="fecha_hora_inicio" dateFormat="dd-mm-yy" appendTo="body"></p-calendar>
+                        </div>
+                        <div class="d-flex flex-column">
+                          <label class="label-horas">Fecha y hora de fin *</label>
+                          <p-calendar [showTime]="true" hourFormat="24" [style]="{'width': '100%'}" formControlName="fecha_hora_fin" dateFormat="dd-mm-yy" appendTo="body"></p-calendar>
+                        </div>
                       </div>
-                      <div class="d-flex flex-column">
-                        <label class="label-horas">Hora *</label>
-                        <p-calendar [firstDayOfWeek]="1" [style]="{'width': '95%'}" formControlName="fecha_hora" [timeOnly]="true" appendTo="body"> </p-calendar>
-                      </div>
-                    </div>
-                    <label for="apellidos">Fecha y hora *</label>
-                  </span>
-                  <small class="ml-2 p-error block" *ngIf="fecha_hora.invalid && (fecha_hora?.dirty||fecha_hora?.touched)">Fecha es requerido</small>
-              </div>
+                    <small class="ml-2 p-error block" *ngIf="fecha_hora_inicio.invalid && (fecha_hora_inicio?.dirty || fecha_hora_inicio?.touched)">
+                      Fecha y hora de inicio son requeridos
+                    </small>
+                    <small class="ml-2 p-error block" *ngIf="fecha_hora_fin.invalid && (fecha_hora_fin?.dirty || fecha_hora_fin?.touched)">
+                      Fecha y hora de fin son requeridos
+                    </small>
+                </div>
           </div>
+      </div>
+
+      <div class="d-flex justify-content-center button-save-form">
+        <p-button [loading]="loading" class="button-save-form" label="Guardar" type="submit"></p-button>
+      </div>
+    </form>
+  </p-dialog>
+
+
+  <p-dialog header="Editar la ubicación de la clínica" [(visible)]="editarClinica" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false">
+    
+    <form [formGroup]="formUbicacion" (ngSubmit)="editarUbicacion()" class="mx-auto mb-6">
+      <div class="d-flex justify-content-center align-items-center">
+          <div class="w-50 ml-6">
+               <div class="field mt-5 mb-4" *ngIf="usuario.rol===3">
+                    <span class="p-float-label">
+                      <input id="username" type="text" pInputText formControlName="ciudad" class="w-full" />
+                      <label for="username">Ciudad *</label>
+                    </span>
+                    <small class="ml-2 p-error block" *ngIf="ciudad?.invalid && (ciudad?.dirty||ciudad?.touched)">Campo requerido</small>
+                  </div>
+
+                  <div class="field mt-5 mb-4" *ngIf="usuario.rol===3">
+                    <span class="p-float-label">
+                      <input id="username" type="text" pInputText formControlName="direccion" class="w-full" />
+                      <label for="username">Direccion *</label>
+                    </span>
+                    <small class="ml-2 p-error block" *ngIf="direccion?.invalid && (direccion?.dirty||direccion?.touched)">Campo requerido</small>
+                </div>
+
+                <div class="field mt-5 mb-4" *ngIf="usuario.rol===3">
+                  <span class="p-float-label">
+                    <input id="username" type="text" pInputText formControlName="longitud" class="w-full" />
+                    <label for="username">Longitud *</label>
+                  </span>
+                  <small class="ml-2 p-error block" *ngIf="longitud?.invalid && (longitud?.dirty||longitud?.touched)">Campo requerido</small>
+                  </div>
+
+                  <div class="field mt-5 mb-4" *ngIf="usuario.rol===3">
+                    <span class="p-float-label">
+                      <input id="username" type="text" pInputText formControlName="latitud" class="w-full" />
+                      <label for="username">Latitud *</label>
+                    </span>
+                    <small class="ml-2 p-error block" *ngIf="latitud?.invalid && (latitud?.dirty||latitud?.touched)">Campo requerido</small>
+                </div>
+              </div>
       </div>
 
       <div class="d-flex justify-content-center button-save-form">
@@ -149,7 +211,46 @@
   </form>
   </p-dialog>
 
-<!-- </p-dialog> -->
+
+  <p-dialog header="Editar evento" [(visible)]="abrirEditEvento" [modal]="true" [style]="{width: '50vw'}" [draggable]="false" [resizable]="false" (onHide)="cerrarEditEvento()">
+    <form [formGroup]="formEditEvento" (ngSubmit)="editEvento()" class="mx-auto mb-6">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="w-50 ml-6">
+                <div class="field mt-5 mb-4">
+                    <span class="p-float-label">
+                        <input class="w-full" type="text" pInputText formControlName="nombre_evento" />
+                        <label for="nombre">Nombre Evento*</label>
+                    </span>
+                    <small class="ml-2 p-error block" *ngIf="nombre_evento?.invalid && (nombre_evento?.dirty||nombre_evento?.touched)">Nombre evento es requerido</small>
+                </div>
+
+                <div class="field mt-5 mb-4">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="d-flex flex-column mr-6">
+                            <label class="label-horas">Fecha y hora de inicio *</label>
+                            <p-calendar [showTime]="true" hourFormat="24" [style]="{'width': '100%'}" formControlName="fecha_hora_inicio" dateFormat="dd-mm-yy" appendTo="body"></p-calendar>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label class="label-horas">Fecha y hora de fin *</label>
+                            <p-calendar [showTime]="true" hourFormat="24" [style]="{'width': '100%'}" formControlName="fecha_hora_fin" dateFormat="dd-mm-yy" appendTo="body"></p-calendar>
+                        </div>
+                    </div>
+                    <small class="ml-2 p-error block" *ngIf="fecha_hora_inicio.invalid && (fecha_hora_inicio?.dirty || fecha_hora_inicio?.touched)">
+                      Fecha y hora de inicio son requeridos
+                    </small>
+                    <small class="ml-2 p-error block" *ngIf="fecha_hora_fin.invalid && (fecha_hora_fin?.dirty || fecha_hora_fin?.touched)">
+                      Fecha y hora de fin son requeridos
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center button-save-form">
+            <p-button [loading]="loading" class="button-save-form" label="Guardar" type="submit"></p-button>
+        </div>
+    </form>
+</p-dialog>
+
 
 
 

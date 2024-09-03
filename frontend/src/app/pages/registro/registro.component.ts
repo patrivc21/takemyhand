@@ -35,12 +35,13 @@ export class RegistroComponent {
 
   private generateLoginForm(): void {
     this.form = this.fb.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
       username: ['', Validators.required],
       rol: [null, Validators.required],
+      ciudad: [''],
       direccion: [''],
       latitud: [0],
       longitud: [0],
@@ -102,4 +103,5 @@ export class RegistroComponent {
   get direccion(): AbstractControl | null { return this.form.get('direccion'); }
   get latitud(): AbstractControl | null { return this.form.get('latitud'); }
   get longitud(): AbstractControl | null { return this.form.get('longitud'); }
+  get ciudad(): AbstractControl | null { return this.form.get('ciudad'); }
 }

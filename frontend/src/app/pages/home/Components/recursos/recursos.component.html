@@ -1,8 +1,8 @@
-<p-dialog header="Añadir Recursos" [(visible)]="crearView" [modal]="true" [style]="{width: '55%'}" [draggable]="false" [resizable]="false" (onHide)="cerrar()">
+<p-dialog header="Añadir Recursos o Historia superación" [(visible)]="crearView" [modal]="true" [style]="{width: '55%'}" [draggable]="false" [resizable]="false" (onHide)="cerrar()">
 
 <div class="fondo">
     <div style="width: 100%;" class="mt-4">
-      <h2 class="d-flex justify-content-center align-items-center mt-2 mb-4">Añadir recurso</h2>
+      <!-- <h2 class="d-flex justify-content-center align-items-center mt-2 mb-4">Añadir recurso</h2> -->
         <form [formGroup]="form" (ngSubmit)="crear()" class="mx-5">
             <div class="fondo-form">
                 <div class="d-flex align-items-baseline field mt-5 mb-2">
@@ -13,7 +13,7 @@
                     <small class="ml-2 p-error block" *ngIf="titulo?.invalid && (titulo?.dirty||titulo?.touched)">Campo requerido</small>
                 </div>
                 <div class="d-flex flex-column align-items-end">
-                    <small class="contador mr-4">{{ titulo.value.length }} / 30</small>
+                    <small class="contador mr-4">{{ titulo.value.length }} / 50</small>
                 </div>
             </div>
             

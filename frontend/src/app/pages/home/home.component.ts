@@ -8,6 +8,7 @@ import { IEstadoAnimo } from 'src/app/interfaces/Pacientes';
 import { User } from 'src/app/interfaces/Usuarios';
 import { FormularioService } from 'src/app/services/formulario.service';
 import { PacientesService } from 'src/app/services/pacientes.service';
+import { PlanService } from 'src/app/services/planseguridad.service';
 import { AuthState } from 'src/app/state/auth.state';
 import { FormularioState } from 'src/app/state/formulario.state';
 import { environment } from 'src/environments/environment';
@@ -19,9 +20,12 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent {
   private readonly authState = inject(AuthState);
+  private readonly planService = inject(PlanService);
+  private readonly pacService = inject(PacientesService);
   public items: MenuItem[] | undefined;
   @ViewChild('profileMenu') profileMenu: any;
   public usuario: any
+  public paciente: any
   public viewPerfil: boolean
   public perfilBusqueda: boolean
 
@@ -43,11 +47,17 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.usuario = this.authState.getUser()
+    if(this.usuario.rol == 2){
+      this.pacService.getOnePaciente(this.usuario.id).subscribe(dat => {
+        console.log(dat)
+        this.paciente = dat.data.paciente
+      })
+    }
     this.authState.getUserByEmail(this.usuario.email).pipe(take(1)).subscribe(dat => {
       this.authState.getAllUsersExceptMe(dat.data.user.id)
     })
 
-    this.formularioService.getOnePlan(2).pipe(take(1)).subscribe(dat => {
+    this.planService.getOnePlan(this.usuario.id).pipe(take(1)).subscribe(dat => {
       this.datos = dat.data.plan.nombre_archivo
     })
   }

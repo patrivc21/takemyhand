@@ -32,14 +32,14 @@ const routes: Routes = [
   },
   { 
     path: 'pacientes', 
-    // canActivate: [AuthGuard], 
+    canActivate: [AdminGuard], 
     title: 'TMH • Pacientes',
     loadChildren: () => import('./pages/pacientes/pacientes.module').then(m => m.PacientesModule) 
   },
   { 
     path: 'profesionales', 
     title: 'TMH • Profesionales',
-    // canActivate: [AuthGuard], 
+    canActivate: [AdminGuard], 
     loadChildren: () => import('./pages/profesionales/profesionales.module').then(m => m.ProfesionalesModule) 
   },
   { 

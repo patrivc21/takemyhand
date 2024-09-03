@@ -26,9 +26,13 @@ import { FileUploadModule } from 'primeng/fileupload';
 import {CardModule} from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { RespuestaComponent } from './Components/respuesta/respuesta.component';
+import { ListadoComponent } from './Components/listado/listado.component';
+import { EditarComponent } from './Components/editar/editar.component';
 
 const routes: Routes = [{ path: '', component: ChatUsuariosComponent },
-  {path: 'crearPubli', component: CrearPublicacionComponent}
+  {path: 'crearPubli', component: CrearPublicacionComponent},
+  {path: 'listado', component: ListadoComponent},
+  {path: 'editar/:id', component: EditarComponent},
 ];
 
 
@@ -37,7 +41,9 @@ const routes: Routes = [{ path: '', component: ChatUsuariosComponent },
   declarations: [
     ChatUsuariosComponent,
     CrearPublicacionComponent,
-    RespuestaComponent
+    RespuestaComponent,
+    ListadoComponent,
+    EditarComponent
   ],
   imports: [
     CommonModule,

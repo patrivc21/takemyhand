@@ -75,10 +75,7 @@ export class CrearPublicacionComponent {
 
   public crear(): void {
     let data = this.form.value
-    console.log(data)
-    console.log(this.img)
 
-    console.log(this.usuario.id)
     this.authState.addPublicacion(this.img, this.usuario.id, data.titulo, data.mensaje)
     this.cerrar()
   }

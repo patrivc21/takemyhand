@@ -104,6 +104,10 @@ export class ChatUsuariosComponent {
   public volver(){
     this.router.navigate(['/home']);
   }
+
+  public verListado(){
+    this.router.navigate(['/forousuarios/listado']);
+  }
   
   public limpiar(){
     this.rangeDates = []

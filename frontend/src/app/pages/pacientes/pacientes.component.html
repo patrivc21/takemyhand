@@ -2,14 +2,14 @@
 <ng-container *ngIf="(allPacientes$ | async) as pacientes">
     <div class="mt-4">
       <div class="flex flex-row mb-3">
-        <p-button icon="pi pi-arrow-left" class="boton-tabla mr-2" (onClick)="volver()"></p-button>
+        <p-button icon="pi pi-arrow-left" class="boton-tabla-inverso2 mr-2 ml-4" (onClick)="volver()"></p-button>
         <h2>Total Pacientes de la Aplicación</h2>
       </div>
 
       <div class="d-flex justify-content-end align-items-end mb-3 ml-4">
         <div class="d-flex align-items-end">
           <!-- <p-button class="boton-guardar mr-4" (onClick)="abrirModalCrear()">Añadir pacientes</p-button> -->
-          <p-button icon="pi pi-download" class="boton-tabla mr-4" (onClick)="descargarExcel()"></p-button>
+          <p-button icon="pi pi-download" class="boton-tabla-inverso2 mr-4" (onClick)="descargarExcel()"></p-button>
         </div>
       </div>
      
@@ -33,7 +33,7 @@
             <th class="text-header-table">Email</th>
             <th class="text-header-table">Activo</th>
             <th class="text-header-table">Rol</th>
-            <th></th>
+           
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pack>

@@ -4,11 +4,12 @@
     overflow: hidden;                 /* Evita desbordes */
     height: 100vh;                    /* Ocupa toda la altura de la ventana */
     width: 100%;                      /* Ocupa todo el ancho */
+    overflow-y: scroll;
 }
 
 .fondo::before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
@@ -115,6 +116,10 @@
 .texto-home {
     color: black;
     font-family: "Monserrat";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .texto-home-small {

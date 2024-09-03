@@ -57,7 +57,6 @@ export class ChatComponent {
 
   private cargarMensajes(): void {
     this.chatState.getChatPrivado(this.usuario.id, this.id_receptor).pipe(take(1)).subscribe(dat => {
-      console.log(dat);
       this.scrollToTheLastElementByClassName();
     });
   }

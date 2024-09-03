@@ -26,9 +26,13 @@ import { CrearPublicacionComponent } from './Components/crear-publicacion/crear-
 import {CardModule} from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { RespuestaComponent } from './Components/respuesta/respuesta.component';
+import { ListadoComponent } from './Components/listado/listado.component';
+import { EditarComponent } from './Components/editar/editar.component';
 
 const routes: Routes = [{ path: '', component: ChatProfesionalesComponent },
-  {path: 'crearPubli', component: CrearPublicacionComponent}
+  {path: 'crearPubli', component: CrearPublicacionComponent},
+  {path: 'listado', component: ListadoComponent},
+  {path: 'editar/:id', component: EditarComponent},
 ];
 
 @NgModule({
@@ -36,7 +40,9 @@ const routes: Routes = [{ path: '', component: ChatProfesionalesComponent },
   declarations: [
     ChatProfesionalesComponent,
     CrearPublicacionComponent,
-    RespuestaComponent
+    RespuestaComponent,
+    ListadoComponent,
+    EditarComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,6 @@
 .fondo{
+    /* background-color: white; */
+    /* height: 100vh; */
     overflow: hidden;
     background-image: url('../../../assets/bg2.gif');
     background-size: cover;         

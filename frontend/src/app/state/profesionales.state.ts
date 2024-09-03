@@ -5,6 +5,7 @@ import { GenericResponse } from '../interfaces/GenericResponse';
 import { Profesionales } from '../interfaces/Profesionales';
 import { ProfesionalesService } from '../services/profesionales.service';
 import { RecursosState } from './recurso.state';
+import { ToastrService } from 'ngx-toastr';
 
 interface IProfesionalesState {
     allProfesionales?: Profesionales[];
@@ -12,6 +13,7 @@ interface IProfesionalesState {
     onePubli?: any;
     allCiudades?: any[];
     allRespuestas?: any[]
+    allPublisUser?: any[]
 }
 
 @Injectable({
@@ -45,11 +47,15 @@ export class ProfesionalesState {
         .asObservable()
         .pipe(map((state) => state && state.allRespuestas));
 
+    public readonly allPublisUser$: Observable<any[]> = this._state
+        .asObservable()
+        .pipe(map((state) => state && state.allPublisUser));
+
     private get state() {
         return this._state.getValue();
     }
 
-    constructor(private service: ProfesionalesService, private router: Router, private recursoState: RecursosState,) { }
+    constructor(private service: ProfesionalesService, private readonly toastr: ToastrService, private recursoState: RecursosState,) { }
 
     public reset(): void {
         this._state.next(this.initialState);
@@ -97,6 +103,8 @@ export class ProfesionalesState {
       data.pipe(take(1)).subscribe((response) => {
         if (response.cod == 200) {
           this.getAllComentarios()
+        }else{
+          this.toastr.error('El contenido de esta publicación no cumple con las políticas de la aplicación', 'Error')
         }
       });
       return data;
@@ -188,6 +196,8 @@ export class ProfesionalesState {
       data.pipe(take(1)).subscribe((response) => {
         if (response.cod == 200) {
           this.getRespuestas(id_hilo)
+        }else{
+          this.toastr.error('El contenido de esta publicación no cumple con las políticas de la aplicación', 'Error')
         }
       });
       return data;
@@ -205,5 +215,31 @@ export class ProfesionalesState {
         }
       })
       return data;
+    }
+
+    public getPublisUser(id:number): Observable<GenericResponse> {
+      const data = this.service.getPublisUser(id)
+      data.pipe(take(1)).subscribe((response) => {
+        console.log(response)
+        if (response.cod == 200) {
+          this._state.next({
+            ...this.state,
+            allPublisUser: response.data.publis
+          })
+        }
+      })
+      return data
+    }
+  
+    public borrarPublicaciones(id: number[]): Observable<GenericResponse> {
+      const data = this.service.deletePublis(id)
+      // this.getAllProfesionales()
+      return data
+    }
+
+    public getOneProf(id:number): Observable<GenericResponse> {
+      const data = this.service.getOneProfesional(id)
+    
+      return data
     }
 }

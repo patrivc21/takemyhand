@@ -14,7 +14,7 @@ export class ChatsComponent {
   public usuario: any
   public users$: Observable<User[]>
 
-  selectedUser: any = null;
+  public selectedUser: any = null;
 
   ngOnInit(): void {
     this.usuario = this.authState.getUser()
@@ -39,6 +39,5 @@ export class ChatsComponent {
   public volver(){
     this.router.navigate(['/home']);
   }
-  
 
 }

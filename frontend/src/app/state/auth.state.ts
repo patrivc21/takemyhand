@@ -21,6 +21,7 @@ interface IAuthState {
     onePubli?: any;
     showEstado: boolean
     allRespuestas?: any[]
+    allPublisUser?: any[]
 }
 
 @Injectable({
@@ -78,6 +79,10 @@ export class AuthState {
     .asObservable()
     .pipe(map((state) => state && state.allRespuestas));
 
+  public readonly allPublisUser$: Observable<any[]> = this._state
+    .asObservable()
+    .pipe(map((state) => state && state.allPublisUser));
+
   private get state() {
     return this._state.getValue()
   }
@@ -123,12 +128,10 @@ export class AuthState {
   public async login(data: UserLogin): Promise<void> {
     this._state.next({ ...this.state, loadingButton: true})
     this.authService.login(data).subscribe(res => {
-      console.log('login', res)
       if (res.cod == 200) {
         this.setUser(res.data.user);
         localStorage.setItem('token', res.data.token);
         this.toastr.success('Sesion iniciada con éxito', 'Éxito')
-        console.log('login', res.data.rol)
         if(res.data.user.rol == 1){
           this.router.navigate(['/home-admin']);
         }else if(res.data.user.rol == 2){
@@ -290,6 +293,8 @@ export class AuthState {
     data.pipe(take(1)).subscribe((response) => {
         if (response.cod == 200) {
           this.getAllComentarios()
+        }else{
+          this.toastr.error('El contenido de esta publicación no cumple con las políticas de la aplicación', 'Error')
         }
     });
     return data;
@@ -344,6 +349,8 @@ export class AuthState {
     data.pipe(take(1)).subscribe((response) => {
       if (response.cod == 200) {
         this.getRespuestas(id_hilo)
+      }else{
+        this.toastr.error('El contenido de esta publicación no cumple con las políticas de la aplicación', 'Error')
       }
     });
     return data;
@@ -361,5 +368,25 @@ export class AuthState {
       }
     })
     return data;
+  }
+
+  public getPublisUser(id:number): Observable<GenericResponse> {
+    const data = this.authService.getPublisUser(id)
+    data.pipe(take(1)).subscribe((response) => {
+      console.log(response)
+      if (response.cod == 200) {
+        this._state.next({
+          ...this.state,
+          allPublisUser: response.data.publis
+        })
+      }
+    })
+    return data
+  }
+
+  public borrarPublicaciones(id: number[]): Observable<GenericResponse> {
+    const data = this.authService.deletePublis(id)
+    // this.getAllProfesionales()
+    return data
   }
 }

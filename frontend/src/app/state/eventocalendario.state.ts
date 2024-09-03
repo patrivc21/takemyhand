@@ -100,13 +100,15 @@ export class eventoCalendarioState {
             // Si es un array, mapeamos cada objeto
             eventos = response.data.map(evento => ({
               title: evento.nombre_evento,
-              date: evento.fecha_hora
+              start: evento.fecha_hora_inicio,
+              end: evento.fecha_hora_fin
             }));
           } else if (response.data && typeof response.data === 'object') {
             // Si es un solo objeto, lo convertimos en un array de un solo elemento
             eventos = [{
               title: response.data.nombre_evento,
-              date: response.data.fecha_hora
+              start: response.data.fecha_hora_inicio,
+              end: response.data.fecha_hora_fin
             }];
 
             console.log('eventos', eventos)
