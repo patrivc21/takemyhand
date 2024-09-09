@@ -91,6 +91,7 @@ var sendEmail = function (to, subject, text) { return __awaiter(void 0, void 0, 
                     })];
             case 1:
                 info = _a.sent();
+                console.log(info);
                 return [3 /*break*/, 3];
             case 2:
                 error_2 = _a.sent();

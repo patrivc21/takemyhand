@@ -139,6 +139,7 @@ var getEventosUsuario = function (req, res) { return __awaiter(void 0, void 0, v
             case 1:
                 _a.trys.push([1, 3, , 4]);
                 body = req.body;
+                console.log(body);
                 return [4 /*yield*/, (0, eventoscalendario_service_1.getEventoUsuario)(body.id)];
             case 2:
                 result = _a.sent();

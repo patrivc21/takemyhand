@@ -11,9 +11,8 @@ var multer = require('multer');
 var upload = multer({ dest: "assets/" });
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: 'assets' });
-router.post('/addChatPrivado', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.addChatPrivado]); //AuthGuard,
+router.post('/addChatPrivado', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.addChatPrivado]);
 router.post('/getOneChatPrivado', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.getOneChatPrivado]);
 router.post('/buscador', auth_guard_1.AuthGuard, [chatprivado_controller_1.default.buscadorC]);
-router.post('/prueba', [chatprivado_controller_1.default.pruebaC]);
 exports.default = router;
 //# sourceMappingURL=chatprivado.routes.js.map

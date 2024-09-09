@@ -207,6 +207,7 @@ var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void
                 fechaActual = new Date();
                 fechaHaceCincoDias = new Date();
                 fechaHaceCincoDias.setDate(fechaActual.getDate() - 5);
+                console.log(fechaHaceCincoDias.setDate(fechaActual.getDate() - 5));
                 return [4 /*yield*/, typeorm_1.DB.getRepository(LoginRegister_1.LoginRegister).find({
                         where: {
                             id_usuario: id_usuario,
@@ -218,6 +219,7 @@ var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void
                     })];
             case 1:
                 registros = _b.sent();
+                console.log(registros);
                 return [4 /*yield*/, typeorm_1.DB.getRepository(Usuarios_1.Usuarios).findOne({
                         where: {
                             id: id_usuario
@@ -227,6 +229,7 @@ var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void
             case 2:
                 usuario = _b.sent();
                 if (!(registros.length >= 5 && registros.every(function (registro) { return registro.estado <= 3; }))) return [3 /*break*/, 11];
+                console.log('1');
                 return [4 /*yield*/, typeorm_1.DB.getRepository(PlanSeguridad_1.PlanSeguridad).findOne({
                         where: { id_usuario: id_usuario }
                     })];
@@ -236,6 +239,7 @@ var verificarEstadoAnimo = function (id_usuario) { return __awaiter(void 0, void
                 emails = planSeguridad.emails.includes(',')
                     ? planSeguridad.emails.split(',').map(function (email) { return email.trim(); }) // Si hay comas, separar los emails y eliminarlas
                     : [planSeguridad.emails.trim()];
+                console.log(emails);
                 _i = 0, emails_1 = emails;
                 _b.label = 4;
             case 4:

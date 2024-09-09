@@ -45,10 +45,11 @@ export const sendEmail = async (to: string, subject: string, text: string) => {
     try {
         const info = await transporter.sendMail({
             from: "takemyhand@server.com",
-            to,
-            subject,
-            text,
+            to: to,
+            subject: subject,
+            text: text ,
         })
+        console.log(info)
     } catch (error) {
         console.log(error)
         return false;

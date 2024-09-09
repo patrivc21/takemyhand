@@ -100,6 +100,7 @@ export const verificarEstadoAnimo = async (id_usuario: number): Promise<any> => 
     const fechaHaceCincoDias = new Date();
     fechaHaceCincoDias.setDate(fechaActual.getDate() - 5);
 
+    console.log(fechaHaceCincoDias.setDate(fechaActual.getDate() - 5));
     // 2. Obtener los registros de estado de ánimo de los últimos 5 días
     const registros = await DB.getRepository(LoginRegister).find({
         where: {
@@ -111,6 +112,8 @@ export const verificarEstadoAnimo = async (id_usuario: number): Promise<any> => 
         },
     });
 
+    console.log(registros)
+
     // 3. Obtener el nombre del usuario
     const usuario = await DB.getRepository(Usuarios).findOne({
         where: {
@@ -121,6 +124,7 @@ export const verificarEstadoAnimo = async (id_usuario: number): Promise<any> => 
 
     // 4. Verificar si hay al menos 5 registros y si todos tienen estado <= 3
     if (registros.length >= 5 && registros.every(registro => registro.estado <= 3)) {
+        console.log('1');
         // 5. Obtener el plan de seguridad del usuario
         const planSeguridad = await DB.getRepository(PlanSeguridad).findOne({
             where: { id_usuario }
@@ -131,7 +135,7 @@ export const verificarEstadoAnimo = async (id_usuario: number): Promise<any> => 
             const emails = planSeguridad.emails.includes(',')
                 ? planSeguridad.emails.split(',').map((email: string) => email.trim())  // Si hay comas, separar los emails y eliminarlas
                 : [planSeguridad.emails.trim()];  // Si no hay comas, simplemente agregar el único email a la lista
-                
+              console.log(emails)  
             for (const email of emails) {
                 await sendEmail(
                     email.trim(), 

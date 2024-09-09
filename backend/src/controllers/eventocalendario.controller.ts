@@ -61,6 +61,7 @@ export const getEventosUsuario = async (req:Request, res:Response) => {
     let resp = new RespGeneric();
     try {
         let body = req.body;
+        console.log(body)
         let result = await getEventoUsuario(body.id);
         resp.data = result;
         resp.cod = 200;

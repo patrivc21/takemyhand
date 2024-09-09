@@ -11,9 +11,9 @@ var multer = require('multer');
 var upload = multer({ dest: "assets/" });
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart({ uploadDir: 'assets' });
-router.post('/addEventoCalendario', [eventocalendario_controller_1.default.addEventoCalendario]); //AuthGuard,
-router.post('/updateEventoCalendario', [eventocalendario_controller_1.default.updateEventoCalendario]); //AuthGuard,
-router.post('/deleteEventoCalendario', [eventocalendario_controller_1.default.deleteEventoCalendario]); //AuthGuard,
+router.post('/addEventoCalendario', auth_guard_1.AuthGuard, [eventocalendario_controller_1.default.addEventoCalendario]);
+router.post('/updateEventoCalendario', auth_guard_1.AuthGuard, [eventocalendario_controller_1.default.updateEventoCalendario]);
+router.post('/deleteEventoCalendario', auth_guard_1.AuthGuard, [eventocalendario_controller_1.default.deleteEventoCalendario]);
 router.post('/getEventosUsuario', auth_guard_1.AuthGuard, [eventocalendario_controller_1.default.getEventosUsuario]);
 router.post('/getOneEvento', auth_guard_1.AuthGuard, [eventocalendario_controller_1.default.getOneEventoC]);
 exports.default = router;
