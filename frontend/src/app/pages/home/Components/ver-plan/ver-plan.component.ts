@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { PlanSeguridad } from 'src/app/interfaces/PlanSeguridad';
@@ -29,7 +29,7 @@ export class VerPlanComponent {
     this.iniciar()
   }
 
-  constructor(private router: Router, private authState: AuthState, private planState: PlanState) {
+  constructor(private router: Router, private authState: AuthState, private planState: PlanState, private cdr: ChangeDetectorRef) {
     this.setStateSelector()
   }
 
@@ -52,9 +52,9 @@ export class VerPlanComponent {
       }else {
         this.plan = null; // Si no hay plan, asegúrate de que 'plan' sea null
       }
+      this.cdr.detectChanges();
     });
   
-    console.log(this.plan);
   }
   
   public convertToArray(data: string): string[] {

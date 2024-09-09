@@ -54,6 +54,7 @@ export class ListadoComponent {
       if (dat.cod == 200) {
         this.authState.getPublisUser(this.usuario.id)
       } 
+      this.authState.getPublisUser(this.usuario.id)
     })
     this.authState.getPublisUser(this.usuario.id)
     this.publisSeleccionados = []

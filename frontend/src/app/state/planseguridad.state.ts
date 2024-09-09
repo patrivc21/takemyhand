@@ -42,6 +42,10 @@ export class PlanState {
 		data.pipe(take(1)).subscribe((response) => {
 			if (response.cod == 200) {
 				this.getOnePlan(id_usuario)
+                this._state.next({
+                    ...this.state,
+                    onePlan: response.data.plan
+                  })
 			}else{
                 this.toastr.error('El contenido de esta publicación no cumple con las políticas de la aplicación', 'Error')
               }

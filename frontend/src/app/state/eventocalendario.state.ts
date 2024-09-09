@@ -57,6 +57,16 @@ export class eventoCalendarioState {
     
     public borrarEventos(id: number[]): Observable<GenericResponse> {
       const data = this.service.deleteEvento(id)
+      data.pipe(take(1)).subscribe((response) => {
+        if (response.cod == 200) {
+          const eventos = Array.isArray(response.data) ? response.data : [response.data];
+          console.log(eventos)
+          this._state.next({
+            ...this.state,
+            eventoUser: eventos
+          });
+        }
+      });
       return data
     }
 

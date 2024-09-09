@@ -386,7 +386,15 @@ export class AuthState {
 
   public borrarPublicaciones(id: number[]): Observable<GenericResponse> {
     const data = this.authService.deletePublis(id)
-    // this.getAllProfesionales()
+    data.pipe(take(1)).subscribe((response) => {
+      console.log(response)
+      if (response.cod == 200) {
+        this._state.next({
+          ...this.state,
+          allPublisUser: response.data.publis
+        })
+      }
+    })
     return data
   }
 }

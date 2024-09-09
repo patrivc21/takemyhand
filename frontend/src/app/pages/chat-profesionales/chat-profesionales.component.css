@@ -1,13 +1,26 @@
-.fondo{
-    /* background-color: white; */
-    /* height: 100vh; */
-    overflow: hidden;
+.fondo {
+    position: relative;               /* Necesario para el pseudo-elemento */
+    overflow: hidden;                 /* Evita desbordes */
+    height: 100vh;                    /* Ocupa toda la altura de la ventana */
+    width: 100%;                      /* Ocupa todo el ancho */
+    overflow-y: scroll;
+  }
+  
+  .fondo::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('../../../assets/bg2.gif');
     background-size: cover;         
     background-position: center;     
-    background-repeat: no-repeat;   
+    background-repeat: no-repeat;    
+    filter: blur(5px);               /* Aplica el efecto de desenfoque */
+    z-index: -2;                      /* Asegura que esté detrás del contenido */
   }
-  
+
   
 .organizacion {
     display: flex;

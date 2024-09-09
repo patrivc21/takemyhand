@@ -34,12 +34,12 @@
       <li *ngFor="let comment of allPublis$ | async">
         <p-card class="card">
           <div>
-            <h4>{{ comment.profesional.nombre }} {{ comment.profesional.apellidos }} ha comentado:</h4>
-            <p>{{ comment.titulo }}</p>
+            <h3>{{ comment.profesional.nombre }} {{ comment.profesional.apellidos }} ha comentado:</h3>
+            <h4 class="mt-4">{{ comment.titulo }}</h4>
             <!-- <p [innerHTML]="comment.mensaje"></p> -->
             <p [innerHTML]="sanitizeHtml(comment.mensaje)"></p>
             <div *ngFor="let archivo of comment.archivos" class="d-flex justify-content-center">
-              <img *ngIf="archivo.id_respuesta === null"  [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="400" height="250" alt="Imagen">
+              <img *ngIf="archivo.id_respuesta === null"  [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="400" height="350" alt="Imagen">
             </div>
             <div>
               <small>{{ comment.fecha_hora | date }}</small>

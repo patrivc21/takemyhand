@@ -49,6 +49,7 @@ export class CrearPlanComponent {
   }
 
   public cerrar(): void {
+    window.location.reload();
     this.planState.getOnePlan(this.id_usuario)
     this.res.emit()
   }
@@ -100,8 +101,14 @@ export class CrearPlanComponent {
     const emails = result.personasEmails.map((item: any) => item.email);
 
     // Llamar a addPlan con personas y emails por separado
-    this.planState.addPlan(files, this.id_usuario, result.lugares, personas, result.hobbies, emails);
-    this.cerrar();
+    this.planState.addPlan(files, this.id_usuario, result.lugares, personas, result.hobbies, emails)
+    .pipe(take(1))
+    .subscribe(() => {
+      this.planState.getOnePlan(this.id_usuario).pipe(take(1)).subscribe(() => {
+        this.cerrar(); 
+        window.location.reload();
+      });
+    });
   }
 
   public readFile(variable: string, file: File){
