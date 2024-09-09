@@ -231,4 +231,53 @@ export const getAllPublicacionesUser = async (id_usuario: number):Promise<HiloUs
     return res;
 }
 
+export const deleteArchivosPublicacion = async (id_hilo: number): Promise<boolean> => {
+    try {
+        const archivos = await DB.getRepository(ArchivosHiloUsuario).find({ where: { id_hilo } });
+
+        if (archivos.length > 0) {
+            for (const archivo of archivos) {
+                // Eliminar el archivo de la base de datos
+                await DB.getRepository(ArchivosHiloUsuario).remove(archivo);
+            }
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Error eliminando archivos:', error);
+        return false;
+    }
+};
+
+export const editPublicacion = async (id: number, publicacion: any, archivos_adjuntos: any): Promise<any> => {
+    // Buscar la publicación existente
+    let publicacionExistente = await DB.getRepository(HiloUsuarios).findOneBy({ id });
+
+    if (!publicacionExistente) {
+        throw new Error('La publicación no existe.');
+    }
+
+    // Validar el contenido del mensaje
+    if (publicacion.mensaje && !validarContenido(publicacion.mensaje)) {
+        throw new Error('El mensaje contiene contenido inapropiado.');
+    }
+
+    // Actualizar los campos
+    publicacionExistente.titulo = publicacion.titulo || publicacionExistente.titulo;
+    publicacionExistente.mensaje = publicacion.mensaje || publicacionExistente.mensaje;
+    publicacionExistente.fecha_hora = new Date();
+
+    // Guardar la publicación actualizada
+    let resultado = await DB.getRepository(HiloUsuarios).save(publicacionExistente);
+
+    // Eliminar archivos adjuntos antiguos
+    let archivosBorrados = await deleteArchivosPublicacion(id);
+
+    if (archivosBorrados && archivos_adjuntos && archivos_adjuntos.length > 0) {
+        // Agregar nuevos archivos
+        await addArchivoPublicacion(archivos_adjuntos, id);
+    }
+
+    return resultado;
+};
 

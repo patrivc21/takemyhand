@@ -25,7 +25,7 @@ var HiloProfesionales = /** @class */ (function () {
         __metadata("design:type", String)
     ], HiloProfesionales.prototype, "titulo", void 0);
     __decorate([
-        (0, typeorm_1.Column)(),
+        (0, typeorm_1.Column)({ type: 'text' }),
         __metadata("design:type", String)
     ], HiloProfesionales.prototype, "mensaje", void 0);
     __decorate([

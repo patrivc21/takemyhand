@@ -10,6 +10,6 @@ const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({ uploadDir: 'assets' })
 
 router.post('/addPlan', AuthGuard, multipartMiddleware, [planController.addPlanSeguridadC]);
-router.post('/getOnePlan',  [planController.getOpnePlanC]);
+router.post('/getOnePlan', AuthGuard,  [planController.getOpnePlanC]);
 
 export default router;

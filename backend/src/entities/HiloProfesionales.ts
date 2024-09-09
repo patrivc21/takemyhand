@@ -10,8 +10,9 @@ export class HiloProfesionales {
   @Column()
   titulo!: string;
 
-  @Column()
+  @Column({type: 'text'})
   mensaje!: string;
+  
   @Column()
   fecha_hora!: Date;
 

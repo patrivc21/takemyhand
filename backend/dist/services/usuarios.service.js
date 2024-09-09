@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllPublicacionesUser = exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.updatePublicacion = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
+exports.editPublicacion = exports.deleteArchivosPublicacion = exports.getAllPublicacionesUser = exports.getRespuestas = exports.addArchivoRespuestaPublicacion = exports.addRespuestaPublicacion = exports.buscarPublis = exports.getOnePublicacion = exports.getAllPublicaciones = exports.updatePublicacion = exports.deletePublicacion = exports.addArchivoPublicacion = exports.addPublicacion = exports.getAllUsersExceptMe = exports.updateUsuariosService = exports.getAllRoles = exports.getUserByEmail = exports.getAllUsers = exports.getOneUser = exports.addUsuarios = void 0;
 var Usuarios_1 = require("../entities/Usuarios");
 var typeorm_1 = require("../config/typeorm");
 var typeorm_2 = require("typeorm");
@@ -407,4 +407,74 @@ var getAllPublicacionesUser = function (id_usuario) { return __awaiter(void 0, v
     });
 }); };
 exports.getAllPublicacionesUser = getAllPublicacionesUser;
+var deleteArchivosPublicacion = function (id_hilo) { return __awaiter(void 0, void 0, void 0, function () {
+    var archivos, _i, archivos_1, archivo, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 6, , 7]);
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosHiloUsuarios_1.ArchivosHiloUsuario).find({ where: { id_hilo: id_hilo } })];
+            case 1:
+                archivos = _a.sent();
+                if (!(archivos.length > 0)) return [3 /*break*/, 5];
+                _i = 0, archivos_1 = archivos;
+                _a.label = 2;
+            case 2:
+                if (!(_i < archivos_1.length)) return [3 /*break*/, 5];
+                archivo = archivos_1[_i];
+                // Eliminar el archivo de la base de datos
+                return [4 /*yield*/, typeorm_1.DB.getRepository(ArchivosHiloUsuarios_1.ArchivosHiloUsuario).remove(archivo)];
+            case 3:
+                // Eliminar el archivo de la base de datos
+                _a.sent();
+                _a.label = 4;
+            case 4:
+                _i++;
+                return [3 /*break*/, 2];
+            case 5: return [2 /*return*/, true];
+            case 6:
+                error_2 = _a.sent();
+                console.error('Error eliminando archivos:', error_2);
+                return [2 /*return*/, false];
+            case 7: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deleteArchivosPublicacion = deleteArchivosPublicacion;
+var editPublicacion = function (id, publicacion, archivos_adjuntos) { return __awaiter(void 0, void 0, void 0, function () {
+    var publicacionExistente, resultado, archivosBorrados;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).findOneBy({ id: id })];
+            case 1:
+                publicacionExistente = _a.sent();
+                if (!publicacionExistente) {
+                    throw new Error('La publicación no existe.');
+                }
+                // Validar el contenido del mensaje
+                if (publicacion.mensaje && !(0, validatorcontenido_helper_1.validarContenido)(publicacion.mensaje)) {
+                    throw new Error('El mensaje contiene contenido inapropiado.');
+                }
+                // Actualizar los campos
+                publicacionExistente.titulo = publicacion.titulo || publicacionExistente.titulo;
+                publicacionExistente.mensaje = publicacion.mensaje || publicacionExistente.mensaje;
+                publicacionExistente.fecha_hora = new Date();
+                return [4 /*yield*/, typeorm_1.DB.getRepository(HiloUsuarios_1.HiloUsuarios).save(publicacionExistente)];
+            case 2:
+                resultado = _a.sent();
+                return [4 /*yield*/, (0, exports.deleteArchivosPublicacion)(id)];
+            case 3:
+                archivosBorrados = _a.sent();
+                if (!(archivosBorrados && archivos_adjuntos && archivos_adjuntos.length > 0)) return [3 /*break*/, 5];
+                // Agregar nuevos archivos
+                return [4 /*yield*/, (0, exports.addArchivoPublicacion)(archivos_adjuntos, id)];
+            case 4:
+                // Agregar nuevos archivos
+                _a.sent();
+                _a.label = 5;
+            case 5: return [2 /*return*/, resultado];
+        }
+    });
+}); };
+exports.editPublicacion = editPublicacion;
 //# sourceMappingURL=usuarios.service.js.map

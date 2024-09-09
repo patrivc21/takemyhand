@@ -143,7 +143,7 @@ var getAllUsersControllers = function (_req, res) { return __awaiter(void 0, voi
 }); };
 exports.getAllUsersControllers = getAllUsersControllers;
 var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, user, exist_user, token, original_password, hash, result, email, e_4;
+    var resp, user, exist_user, token, original_password, hash, result, profesionales, idSeleccionado, email, e_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -151,7 +151,7 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 user = req.body;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 13, , 14]);
+                _a.trys.push([1, 15, , 16]);
                 console.log('1', user);
                 return [4 /*yield*/, (0, usuarios_service_1.getUserByEmail)(user.email)];
             case 2:
@@ -176,40 +176,48 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [4 /*yield*/, (0, administradores_service_1.addAdmin)(__assign(__assign({}, user), { id_usuario: result.id }))];
             case 5:
                 _a.sent();
-                return [3 /*break*/, 10];
+                return [3 /*break*/, 12];
             case 6:
-                if (!(user.rol == 2)) return [3 /*break*/, 8];
-                return [4 /*yield*/, (0, pacientes_service_1.addPaciente)(__assign(__assign({}, user), { id_usuario: result.id, resultado_formulario: 0 }))];
+                if (!(user.rol == 2)) return [3 /*break*/, 10];
+                return [4 /*yield*/, (0, profesional_service_1.getAllProfesionales)()];
             case 7:
-                _a.sent();
-                return [3 /*break*/, 10];
+                profesionales = _a.sent();
+                if (!(profesionales && profesionales.length > 0)) return [3 /*break*/, 9];
+                idSeleccionado = profesionales[Math.floor(Math.random() * profesionales.length)].id;
+                // 3. Añadir paciente con el profesional asignado
+                return [4 /*yield*/, (0, pacientes_service_1.addPaciente)(__assign(__assign({}, user), { id_usuario: result.id, resultado_formulario: 0, id_profesional_asociado: idSeleccionado }))];
             case 8:
-                if (!(user.rol == 3)) return [3 /*break*/, 10];
-                return [4 /*yield*/, (0, profesional_service_1.addProfesional)(__assign(__assign({}, user), { id_usuario: result.id }))];
-            case 9:
+                // 3. Añadir paciente con el profesional asignado
                 _a.sent();
-                _a.label = 10;
+                _a.label = 9;
+            case 9: return [3 /*break*/, 12];
             case 10:
+                if (!(user.rol == 3)) return [3 /*break*/, 12];
+                return [4 /*yield*/, (0, profesional_service_1.addProfesional)(__assign(__assign({}, user), { id_usuario: result.id }))];
+            case 11:
+                _a.sent();
+                _a.label = 12;
+            case 12:
                 resp.data = { user: __assign(__assign({}, user), { password: '' }), token: token };
                 resp.cod = result ? 200 : 400;
-                if (!result) return [3 /*break*/, 12];
+                if (!result) return [3 /*break*/, 14];
                 return [4 /*yield*/, (0, mail_helper_1.sendLoginEmail)(__assign(__assign({}, user), { password: original_password }))];
-            case 11:
+            case 13:
                 email = _a.sent();
                 if (!email) {
                     resp.msg = "Error al enviar el email de registro.";
                     resp.cod = 500;
                 }
-                _a.label = 12;
-            case 12: return [3 /*break*/, 14];
-            case 13:
+                _a.label = 14;
+            case 14: return [3 /*break*/, 16];
+            case 15:
                 e_4 = _a.sent();
                 console.error(e_4);
                 resp.msg = e_4;
                 resp.cod = 500;
-                return [3 /*break*/, 14];
-            case 14:
-                res.json(resp); // Devolvemos objeto respuesta siempre
+                return [3 /*break*/, 16];
+            case 16:
+                res.json(resp);
                 return [2 /*return*/];
         }
     });
@@ -599,35 +607,37 @@ var getAllPublisUser = function (req, res) { return __awaiter(void 0, void 0, vo
 }); };
 exports.getAllPublisUser = getAllPublisUser;
 var updatePublicaciones = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, publis, result, e_15;
+    var resp, infor, archivos_adjuntos, datos, publiEditada, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 resp = new RespGeneric_1.default();
+                infor = req.body;
+                archivos_adjuntos = req.files;
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                publis = req.body;
-                return [4 /*yield*/, (0, usuarios_service_1.updatePublicacion)(publis)];
+                datos = { infor: infor, archivos_adjuntos: archivos_adjuntos };
+                console.log(datos);
+                return [4 /*yield*/, (0, usuarios_service_1.editPublicacion)(infor.id, infor, archivos_adjuntos)];
             case 2:
-                result = _a.sent();
-                resp.cod = result ? 200 : 400;
-                resp.data = { evento: result };
+                publiEditada = _a.sent();
+                resp.data = publiEditada;
+                resp.cod = 200;
                 return [3 /*break*/, 4];
             case 3:
-                e_15 = _a.sent();
-                resp.msg = e_15;
+                error_3 = _a.sent();
+                console.log(error_3);
+                resp.msg = error_3.message || 'Error inesperado';
                 resp.cod = 500;
                 return [3 /*break*/, 4];
-            case 4:
-                res.json(resp);
-                return [2 /*return*/];
+            case 4: return [2 /*return*/, res.json(resp)];
         }
     });
 }); };
 exports.updatePublicaciones = updatePublicaciones;
 var deletePublicaciones = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var resp, ids, result, e_16;
+    var resp, ids, result, e_15;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -647,8 +657,8 @@ var deletePublicaciones = function (req, res) { return __awaiter(void 0, void 0,
                 resp.msg = "Publicaciones eliminadas con exito.";
                 return [3 /*break*/, 4];
             case 3:
-                e_16 = _a.sent();
-                resp.msg = e_16;
+                e_15 = _a.sent();
+                resp.msg = e_15;
                 resp.cod = 500;
                 resp.msg = "Error al eliminar publicaciones";
                 return [3 /*break*/, 4];

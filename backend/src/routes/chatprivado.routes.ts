@@ -9,11 +9,10 @@ const upload = multer({ dest: "assets/" });
 const multipart = require('connect-multiparty');
 const multipartMiddleware = multipart({ uploadDir: 'assets' })
 
-router.post('/addChatPrivado', AuthGuard, [chatController.addChatPrivado]); //AuthGuard,
+router.post('/addChatPrivado', AuthGuard, [chatController.addChatPrivado]); 
 router.post('/getOneChatPrivado', AuthGuard, [chatController.getOneChatPrivado]);
 
 router.post('/buscador', AuthGuard, [chatController.buscadorC]);
 
-router.post('/prueba', [chatController.pruebaC]);
 
 export default router;

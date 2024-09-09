@@ -28,7 +28,7 @@ router.post('/addRecursos',  AuthGuard, multipartMiddleware, [profesionalControl
 router.get('/getCiudades', AuthGuard, [profesionalController.getAllCiudades]);
 router.post('/getProfByCiudad', AuthGuard, [profesionalController.getProfByCiudadC]);
 
-router.post('/addRespuesta', multipartMiddleware, [profesionalController.addRespuesta]);
-router.post('/getRespuestas', [profesionalController.getRespuestasC]);
+router.post('/addRespuesta', AuthGuard,  multipartMiddleware, [profesionalController.addRespuesta]);
+router.post('/getRespuestas', AuthGuard,  [profesionalController.getRespuestasC]);
 
 export default router;

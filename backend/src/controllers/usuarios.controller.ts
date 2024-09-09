@@ -1,12 +1,12 @@
 import { Request, Response } from 'express';
 import RespGeneric from '../models/RespGeneric';
 import { Usuarios } from '../entities/Usuarios';
-import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion, buscarPublis, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas, getAllPublicacionesUser, updatePublicacion} from '../services/usuarios.service';
+import { addUsuarios, getAllUsers, getOneUser, getUserByEmail, getAllRoles, updateUsuariosService, getAllUsersExceptMe, deletePublicacion, getAllPublicaciones, getOnePublicacion, addPublicacion, addArchivoPublicacion, buscarPublis, addRespuestaPublicacion, addArchivoRespuestaPublicacion, getRespuestas, getAllPublicacionesUser, updatePublicacion, editPublicacion} from '../services/usuarios.service';
 import authHelper from '../helpers/auth.helper';
 import { sendLoginEmail } from '../helpers/mail.helper';
 
 import { addPaciente, updatePacientesService} from '../services/pacientes.service';
-import { addProfesional, updateProfesionalesService} from '../services/profesional.service';
+import { addProfesional, getAllProfesionales, updateProfesionalesService} from '../services/profesional.service';
 import { addAdmin} from '../services/administradores.service';
 import { HiloUsuarios } from '../entities/HiloUsuarios';
 
@@ -82,7 +82,21 @@ const register = async (req: Request, res: Response) => {
         if(user.rol == 1){
             await addAdmin({ ...user, id_usuario: result.id })
         }else if(user.rol == 2){
-            await addPaciente({ ...user, id_usuario: result.id, resultado_formulario: 0 })
+            const profesionales = await getAllProfesionales();
+
+            if (profesionales && profesionales.length > 0) {
+                // 2. Seleccionar un profesional aleatorio
+                const idSeleccionado = profesionales[Math.floor(Math.random() * profesionales.length)].id;
+
+                // 3. Añadir paciente con el profesional asignado
+                await addPaciente({ 
+                    ...user, 
+                    id_usuario: result.id, 
+                    resultado_formulario: 0, 
+                    id_profesional_asociado: idSeleccionado 
+                });
+            }
+
         }else if(user.rol == 3){
             await addProfesional({ ...user, id_usuario: result.id })
         }
@@ -103,7 +117,7 @@ const register = async (req: Request, res: Response) => {
         resp.msg = e as string;
         resp.cod = 500;
     }
-    res.json(resp); // Devolvemos objeto respuesta siempre
+    res.json(resp);
 }
 
 const login = async (req: Request, res: Response) => {
@@ -333,18 +347,25 @@ export const getAllPublisUser = async (req:Request, res:Response) => {
 
 export const updatePublicaciones = async (req: Request, res: Response) => {
     let resp = new RespGeneric();
+    let infor = req.body
+    const archivos_adjuntos = (req as any).files;
     try {
-        let publis : HiloUsuarios = req.body as HiloUsuarios;
-        let result = await updatePublicacion(publis);
-        resp.cod = result ? 200 : 400;
-        resp.data = {evento: result};
-    }
-    catch (e) {
-        resp.msg = e as string;
+        let datos = {infor, archivos_adjuntos}
+        console.log(datos)
+
+        // Editar la publicación y manejar archivos adjuntos
+        let publiEditada = await editPublicacion(infor.id, infor, archivos_adjuntos);
+
+        resp.data = publiEditada;
+        resp.cod = 200;
+    } catch (error) {
+        console.log(error as string);
+        resp.msg = (error as Error).message || 'Error inesperado';
         resp.cod = 500;
     }
-    res.json(resp)
-}
+    return res.json(resp);
+};
+
 
 export const deletePublicaciones = async (req: Request, res: Response) => {
     let resp = new RespGeneric();

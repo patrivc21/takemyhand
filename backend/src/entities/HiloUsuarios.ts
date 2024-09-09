@@ -10,7 +10,7 @@ export class HiloUsuarios {
   @Column()
   titulo!: string;
 
-  @Column()
+  @Column({type: 'text'})
   mensaje!: string;
 
   @Column()
