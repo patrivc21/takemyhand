@@ -47,17 +47,28 @@
   .recurso-archivos h3 {
     margin-bottom: 5px;
   }
-  
+
   .recurso-archivos ul {
     list-style-type: none;
     padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Esto permitirá que las imágenes se envuelvan si es necesario */
+    gap: 20px; /* Espacio entre las imágenes */
   }
   
   .recurso-archivos li {
     margin-bottom: 10px;
+    flex: 1 1 auto;
+    max-width: 30%; /* Ajusta este valor según el número de imágenes que quieras en una fila */
   }
   
   .recurso-imagen {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  
+  .recurso-video {
     max-width: 100%;
     height: auto;
   }

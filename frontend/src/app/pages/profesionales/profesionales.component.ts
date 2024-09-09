@@ -75,4 +75,6 @@ export class ProfesionalesComponent {
   public cerrarMapa (): void {
     this.mapView = false
   }
+
+  
 }

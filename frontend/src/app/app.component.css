@@ -32,7 +32,7 @@ html, body {
   }
   
   .custom-footer {
-    background-color: #b3b3b399; /* Color de fondo similar al de la imagen */
+    background-color: #b3b3b399;
     padding: 20px 0;
     text-align: center;
     width: 100%;
@@ -46,21 +46,21 @@ html, body {
   }
   
   .footer-logo {
-    width: 150px; /* Ajusta el tamaño del logo */
+    width: 150px; 
     height: auto;
-    margin-bottom: 10px; /* Espacio entre el logo y el texto */
+    margin-bottom: 10px; 
   }
   
   .footer-text {
     font-size: 16px;
-    color: #4a4a4a; /* Color del texto */
+    color: #4a4a4a; 
     margin: 0;
-    padding: 0 20px; /* Ajusta el padding si es necesario */
+    padding: 0 20px;
   }
   
   .footer-credits {
     font-size: 14px;
-    color: #6c757d; /* Color del texto de los créditos */
+    color: #6c757d;
     margin-top: 20px;
   }
   

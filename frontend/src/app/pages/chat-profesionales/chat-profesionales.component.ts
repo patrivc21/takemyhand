@@ -5,6 +5,7 @@ import { ProfesionalesState } from 'src/app/state/profesionales.state';
 import { Observable, take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-chat-profesionales',
@@ -42,7 +43,7 @@ export class ChatProfesionalesComponent {
     this.usuario = this.authState.getUser()
   }
 
-  constructor(private readonly profesionalState: ProfesionalesState, private router: Router) {
+  constructor(private readonly profesionalState: ProfesionalesState, private router: Router, private sanitizer: DomSanitizer) {
     this.setStateSelector()
     this.generateLoginForm()
   }
@@ -60,6 +61,9 @@ export class ChatProfesionalesComponent {
     });
   }
 
+  public sanitizeHtml(content: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
+  }
 
   public crearPlan(){
     this.crearPubli = true

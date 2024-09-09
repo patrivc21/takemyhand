@@ -50,8 +50,6 @@ export class AuthService {
     return this.http.post<GenericResponse>(`${BACKEND_API}/getAllUsersExceptMe`, {id}).pipe(shareReplay());
   }
 
-
-
   public addPublicacion(archivo_adjunto: File, id_usuario: number, titulo: string, mensaje: string): Observable<GenericResponse> {
 
     const formData = new FormData();
@@ -143,5 +141,22 @@ export class AuthService {
   public deletePublis(ids: number[]): Observable<GenericResponse> {
     return this.http.post<GenericResponse>(`${BACKEND_API}/deletePubli`, { ids }).pipe(shareReplay());
   }
+
+  public editPublicacion(id: number, archivo_adjunto: File, id_usuario: number, titulo: string, mensaje: string): Observable<GenericResponse> {
+    console.log(mensaje)
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('id_usuario', id_usuario.toString());
+    formData.append('titulo', titulo ? titulo : '');
+    formData.append('mensaje', mensaje ? mensaje : '');
+  
+    // Si hay un archivo adjunto, añadirlo al FormData
+    if (archivo_adjunto != null) {
+      formData.append('archivo_adjunto', archivo_adjunto, archivo_adjunto.name);
+    }
+
+    return this.http.post<GenericResponse>(`${BACKEND_API}/updatePubli`, formData).pipe(shareReplay());
+  }
+
 
 }

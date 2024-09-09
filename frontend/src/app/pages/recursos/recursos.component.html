@@ -34,15 +34,15 @@
   
         <div class="recurso-archivos" *ngIf="recurso.archivos.length > 0">
           <h3>Archivos:</h3>
-          <ul>
-            <li *ngFor="let archivo of recurso.archivos">
-              <ng-container [ngSwitch]="getFileType(archivo.nombre_archivo)">
-                <img *ngSwitchCase="'image'" [src]="getFileUrl(archivo.nombre_archivo)" alt="{{ archivo.nombre_archivo }}" class="recurso-imagen" />
-                <video *ngSwitchCase="'video'" [src]="getFileUrl(archivo.nombre_archivo)" controls class="recurso-video"></video>
-                <a *ngSwitchDefault [href]="getFileUrl(archivo.nombre_archivo)" target="_blank">{{ archivo.nombre_archivo }}</a>
-              </ng-container>
-            </li>
-          </ul>
+          <p-carousel [value]="recurso.archivos" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="3000">
+            <ng-template pTemplate="item" let-archivo>
+                <ng-container [ngSwitch]="getFileType(archivo.nombre_archivo)">
+                    <img *ngSwitchCase="'image'" [src]="getFileUrl(archivo.nombre_archivo)" alt="{{ archivo.nombre_archivo }}" class="recurso-imagen" />
+                    <video *ngSwitchCase="'video'" [src]="getFileUrl(archivo.nombre_archivo)" controls class="recurso-video"></video>
+                    <a *ngSwitchDefault [href]="getFileUrl(archivo.nombre_archivo)" target="_blank">{{ archivo.nombre_archivo }}</a>
+                </ng-container>
+            </ng-template>
+        </p-carousel>
         </div>
       </div>
     </div>

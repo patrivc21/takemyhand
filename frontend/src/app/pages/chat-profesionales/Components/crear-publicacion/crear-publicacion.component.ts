@@ -16,8 +16,15 @@ export class CrearPublicacionComponent {
   @Output() res: EventEmitter<boolean> = new EventEmitter<boolean>()
   public Editor = CKEditor.default;  
   public editorConfig = {
-    toolbar: ['bold', 'italic', 'link']
+    toolbar: ['bold', 'italic', 'link', 'mediaEmbed'],
+    mediaEmbed: {
+      previewsInData: true,
+    },
+    link: {
+      addTargetToExternalLinks: true
+    }
   };
+  
   @ViewChild('fileUpload') fileUpload: FileUpload;
   private readonly authState = inject(AuthState);
   private readonly fb = inject(FormBuilder)

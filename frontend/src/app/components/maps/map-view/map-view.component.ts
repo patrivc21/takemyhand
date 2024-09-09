@@ -11,12 +11,12 @@ import { DialogModule } from 'primeng/dialog'
   <script src='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js'></script>
   <link href='https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css' rel='stylesheet' />
 
-  <p-dialog header="Mapa" [(visible)]="display" [modal]="true" [style]="{ width: '60vw' }" [draggable]="false" [resizable]="false" (onHide)="cerrarMapa()">
-    <div class="text-center h-1rem" style="font-family: 'Monserrat';">
+  <p-dialog header="Mapa" [(visible)]="display" [modal]="true" [style]="{ width: '70vw' }" [draggable]="false" [resizable]="false" [maximizable]="true" (onHide)="cerrarMapa()">
+    <div class="text-center h-1rem mb-4" style="font-family: 'Monserrat';">
       <p>{{ this.address }}</p>
     </div>
     <br>
-    <div class="map-frame">
+    <div class="map-frame mt-2">
       <div *ngIf="isLoading" class="loader">Loading...</div>
       <div class="map" #map></div>
     </div>

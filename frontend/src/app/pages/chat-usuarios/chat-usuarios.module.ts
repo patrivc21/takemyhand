@@ -32,7 +32,7 @@ import { EditarComponent } from './Components/editar/editar.component';
 const routes: Routes = [{ path: '', component: ChatUsuariosComponent },
   {path: 'crearPubli', component: CrearPublicacionComponent},
   {path: 'listado', component: ListadoComponent},
-  {path: 'editar/:id', component: EditarComponent},
+  // {path: 'editar/:id', component: EditarComponent},
 ];
 
 

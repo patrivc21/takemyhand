@@ -64,4 +64,9 @@ export class ListadoComponent {
     this.viewEditar = true
   }
 
+  public cerrar(): void {
+    // this.idSelec = null
+    this.viewEditar = false;
+  }
+
 }

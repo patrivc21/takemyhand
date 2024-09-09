@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, take } from 'rxjs';
 import { AuthState } from 'src/app/state/auth.state';
@@ -30,7 +31,7 @@ export class ChatUsuariosComponent {
 
   public BACKEND_FILES = environment.BACKEND_FILES
 
-  constructor(private readonly authState: AuthState, private router: Router) {
+  constructor(private readonly authState: AuthState, private router: Router, private sanitizer: DomSanitizer) {
     this.setStateSelector()
   }
 
@@ -42,6 +43,10 @@ export class ChatUsuariosComponent {
     this.allPublis$ = this.authState.allPublis$;
     this.onePubli$ = this.authState.onePubli$
     this.allRespuestas$ = this.authState.allRespuestas$
+  }
+
+  public sanitizeHtml(content: string) {
+    return this.sanitizer.bypassSecurityTrustHtml(content);
   }
 
   public crearPlan(){

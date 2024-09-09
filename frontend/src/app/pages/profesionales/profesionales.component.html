@@ -2,13 +2,12 @@
   <ng-container *ngIf="(allProfesionales$ | async) as profesionales">
     <div class="mt-6">
       <div class="flex flex-row mb-3">
-        <p-button icon="pi pi-arrow-left" class="boton-tabla-inverso2 mr-4" (onClick)="volver()"></p-button>
+        <p-button icon="pi pi-arrow-left" class="boton-tabla-inverso2 mr-2 ml-4" (onClick)="volver()"></p-button>
         <h2>Total Profesionales de la Aplicación</h2>
       </div>
 
       <div class="d-flex justify-content-end align-items-end mb-3 ml-4">
         <div class="d-flex align-items-end">
-          <!-- <p-button class="boton-guardar mr-4" (onClick)="abrirModalCrear()">Añadir pacientes</p-button> -->
           <p-button icon="pi pi-download" class="boton-tabla-inverso2 mr-4" (onClick)="descargarExcel()"></p-button>
         </div>
       </div>
@@ -19,6 +18,7 @@
         [loading]="!view"
         [paginator]="true"
         [rows]="10"
+        dataKey="id"
         [showCurrentPageReport]="true"
         currentPageReportTemplate="Página {currentPage} de {totalPages}"
         styleClass="p-datatable-sm"
@@ -33,7 +33,36 @@
             <th class="text-header-table">Email</th>
             <th class="text-header-table">Activo</th>
             <th class="text-header-table">Ubicacion</th>
-        
+          </tr>
+
+          <tr>
+            <th></th>
+            <th *ngIf="profSeleccionados.length > 0"></th>
+            <th>
+              <p-columnFilter 
+                  type="text"
+                  field="nombre" 
+                  placeholder="Buscar" 
+                  ariaLabel="Filtrar por nombre" />
+              </th>
+
+              <th>
+                <p-columnFilter 
+                    type="text"
+                    field="username" 
+                    placeholder="Buscar" 
+                    ariaLabel="Filtrar por Username" />
+              </th>
+
+              <th>
+                <p-columnFilter 
+                    type="text"
+                    field="email" 
+                    placeholder="Buscar" 
+                    ariaLabel="Filtrar por Email" />
+              </th>
+              <th></th>
+              <th></th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pro>

@@ -36,15 +36,17 @@
           <div>
             <h4>{{ comment.profesional.nombre }} {{ comment.profesional.apellidos }} ha comentado:</h4>
             <p>{{ comment.titulo }}</p>
-            <p [innerHTML]="comment.mensaje"></p>
+            <!-- <p [innerHTML]="comment.mensaje"></p> -->
+            <p [innerHTML]="sanitizeHtml(comment.mensaje)"></p>
             <div *ngFor="let archivo of comment.archivos" class="d-flex justify-content-center">
-              <img *ngIf="archivo.id_respuesta === null"  [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
+              <img *ngIf="archivo.id_respuesta === null"  [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="400" height="250" alt="Imagen">
             </div>
             <div>
               <small>{{ comment.fecha_hora | date }}</small>
             </div>
           </div>
           <p-button label="Leer más" (click)="readMore(comment.id)" class="leer-mas"></p-button>
+
           <div class="d-flex flex-column justify-content-center mt-4">
             <p-button label="Responder" (click)="responder(comment.id)" class="respuesta d-flex justify-content-end mt-4"></p-button>
             <p-button 
@@ -61,9 +63,9 @@
                   <div>
                     <h4>{{ respuesta.nombre }} {{ respuesta.apellidos }} ha respondido:</h4>
                     <p class="respuesta-titulo">{{ respuesta.titulo }}</p>
-                    <p class="respuesta-mensaje" [innerHTML]="respuesta.mensaje"></p>
+                    <p class="respuesta-mensaje" [innerHTML]="sanitizeHtml(respuesta.mensaje)"></p>
                     <div *ngFor="let archivo of respuesta.archivos" class="respuesta-archivo">
-                      <img [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="120" height="100" alt="Imagen">
+                      <img [src]="BACKEND_FILES + '/' + archivo.archivo_adjunto" width="400" height="250" alt="Imagen">
                     </div>
                     <div class="respuesta-fecha">
                       <small>{{ respuesta.fecha_hora | date }}</small>
@@ -81,12 +83,12 @@
   </div>
 </div>
 
-<p-dialog header="Detalles del comentario" [(visible)]="show" [style]="{ width: '70%', height: '60%' }">
+<p-dialog header="Detalles del comentario" [(visible)]="show" [style]="{ width: '50%', height: 'auto' }">
   <div *ngIf="selectedComment">
       <h4>Comentario de {{ selectedComment.autor }}</h4>
-      <p [innerHTML]="selectedComment.mensaje"></p>
+      <p [innerHTML]="sanitizeHtml(selectedComment.mensaje)"></p>
       <div *ngIf="selectedComment.imagen" class="d-flex justify-content-center">
-          <img [src]="BACKEND_FILES + '/' + selectedComment.imagen" width="100" height="80">
+          <img [src]="BACKEND_FILES + '/' + selectedComment.imagen" width="200" height="150">
       </div>
       <p>Fecha: {{ selectedComment.fecha_hora | date }}</p>
   </div>

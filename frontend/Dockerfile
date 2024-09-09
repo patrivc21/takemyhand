@@ -1,32 +1,23 @@
-###### Install dependencies only when needed ######
-FROM node:20.11.1-bullseye AS builder
+FROM node:20
 
-# Make /app as working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
-# Copy package.json file
-COPY package.json .
+# Copia los archivos package.json y package-lock.json primero
+COPY package*.json ./
 
-# Install dependencies
-RUN npm install --legacy-peer-deps
+# Instala las dependencias dentro del contenedor
+RUN npm install 
 
-# Copy the source code to the /app directory
+# Copia el resto del código de la aplicación
 COPY . .
 
-# Build the application
-RUN npm run build --  --output-path=dist --configuration=$CONFIGURATION --output-hashing=all
+# Copia el archivo .env al directorio dist
+# RUN cp .env dist/.env
 
-######  Use NgInx alpine image  ######
-FROM nginx:stable-alpine
+# Construye el proyecto
+RUN npm run build
 
-# Remove default nginx website
-RUN rm -rf /usr/share/nginx/html/*
+EXPOSE 3000
 
-# # Copy nginx config file
-# COPY ../../nginx/nginx.conf /etc/nginx/nginx.conf
-
-# Copy dist folder fro build stage to nginx public folder
-COPY --from=builder /app/dist /usr/share/nginx/html
-
-# Start NgInx service
-CMD ["nginx", "-g", "daemon off;"]
+# Usa wait-for-it.sh para esperar a la base de datos
+CMD ["npm", "start"]

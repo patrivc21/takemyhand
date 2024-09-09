@@ -5,6 +5,8 @@ import { AuthState } from 'src/app/state/auth.state';
 import * as CKEditor from '@ckeditor/ckeditor5-build-classic';
 import { take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AuthService } from 'src/app/services/auth.service';
+import { Conditional } from '@angular/compiler';
 
 @Component({
   selector: 'app-editar',
@@ -20,6 +22,7 @@ export class EditarComponent {
   };
   @ViewChild('fileUpload') fileUpload: FileUpload;
   private readonly authState = inject(AuthState);
+  private readonly authService= inject(AuthService);
   private readonly fb = inject(FormBuilder)
   public form!: FormGroup;
   public enviado: boolean = false;
@@ -36,14 +39,20 @@ export class EditarComponent {
   }
 
   ngOnInit(): void {
+    this.usuario = this.authState.getUser()
     this.generateLoginForm();
     this.authState.getOnePubli(this.id_publi).pipe(take(1)).subscribe(dat => {
       this.form.patchValue({
         titulo: dat.data.result[0].titulo,
         mensaje: dat.data.result[0].mensaje,
-        archivo_adjunto: dat.data.result[0].archivos[0].archivo_adjunto
+        archivo_adjunto: dat.data.result[0].archivos[0]?.archivo_adjunto || ''
       });
-      this.img_url = this.BACKEND_FILES + '/' + dat.data.result[0].archivos[0].archivo_adjunto;
+
+      if (dat.data.result[0].archivos[0]?.archivo_adjunto) {
+        this.img_url = this.BACKEND_FILES + '/' + dat.data.result[0].archivos[0].archivo_adjunto;
+      } else {
+        this.img_url = null; 
+      }
 
     })
   }
@@ -83,8 +92,10 @@ export class EditarComponent {
 
   public crear(): void {
     let data = this.form.value
-
-    this.authState.addPublicacion(this.img, this.usuario.id, data.titulo, data.mensaje)
+    console.log('aqui', data)
+    this.authService.editPublicacion(this.id_publi, this.img, this.usuario.id, data.titulo, data.mensaje).subscribe(dat => {
+    console.log(dat)
+    })
     this.cerrar()
   }
 

@@ -16,6 +16,8 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { RouterModule, Routes } from '@angular/router';
 import { PasswordModule } from 'primeng/password';
 import { MapaViewComponent } from 'src/app/components/maps/map-view/map-view.component'
+import { InputIconModule } from 'primeng/inputicon';
+import { IconFieldModule } from 'primeng/iconfield';
 
 const routes: Routes = [{ path: '', component: ProfesionalesComponent }];
 
@@ -41,7 +43,9 @@ const routes: Routes = [{ path: '', component: ProfesionalesComponent }];
     CascadeSelectModule,
     RouterModule.forChild(routes),
     PasswordModule,
-    MapaViewComponent
+    MapaViewComponent,
+    InputIconModule,
+    IconFieldModule
   ]
 })
 export class ProfesionalesModule { }
