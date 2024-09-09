@@ -1,0 +1,37 @@
+version: '3.9'
+
+services:
+  frontend:
+    build: ./frontend
+    image: frontend-tmh
+    container_name: frontend-tmh
+    ports:
+      - "8002:80"
+    restart: unless-stopped
+    volumes:
+      - ./src/assets:/usr/share/nginx/html/assets 
+
+  backend:
+    build: ./backend
+    image: backend-tmh
+    container_name: backend-tmh
+    ports:
+      - "4004:3000"  # Asegúrate de que este puerto coincida con el que usa tu aplicación backend
+    depends_on:
+      - db
+    volumes:
+      - ./backend/.env:/usr/src/app/.env
+
+  db:
+    image: mariadb:latest
+    container_name: db
+    ports:
+      - "3308:3306" 
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: tfg_bd
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
