@@ -18,7 +18,6 @@ const envSchema = Joi.object({
     SECRET_KEY: Joi.string().required(),
     SECRET_KEY_EMAIL: Joi.string().required(),
     EMAIL_USER: Joi.string().required(),
-    API_KEY: Joi.string().required(),
     ORGANIZATION: Joi.string().required(),
 }).unknown().required();
 
@@ -41,7 +40,6 @@ const configEnv = {
     SECRET_KEY: value.SECRET_KEY,
     SECRET_KEY_EMAIL: value.SECRET_KEY_EMAIL,
     EMAIL_USER: value.EMAIL_USER,
-    API_KEY: value.API_KEY,
     ORGANIZATION: value.ORGANIZATION
 };
 

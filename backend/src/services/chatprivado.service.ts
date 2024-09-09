@@ -1,13 +1,7 @@
-import OpenAI from "openai";
-import configEnv from "../config/config";
+
 import { DB } from "../config/typeorm";
 import { ChatPrivado } from "../entities/ChatPrivado";
 import { Usuarios } from "../entities/Usuarios";
-
-const openai = new OpenAI({
-    apiKey: configEnv.API_KEY,
-    organization: configEnv.ORGANIZATION
-});
 
 export const addChat = async (chat: ChatPrivado): Promise<boolean> => {
     let datos = {
@@ -45,16 +39,3 @@ export const buscadorUsuarios = async (texto: string): Promise<any> => {
     return res;
 }
 
-export const prueba = async (texto: string): Promise<any> => {
-
-    //conexión a chatgpt para obtener los detalles
-    const chatCompletion = await openai.chat.completions.create({
-        messages: [{ role: 'user', 
-            content: '¿Este texto es aceptable en una página para la prevención del suicido?' + texto + '"' }],
-        model: "gpt-3.5-turbo"
-    });
-
-    const data = chatCompletion.choices[0].message.content;
-
-    return data;
-}
